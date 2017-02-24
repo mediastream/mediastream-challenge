@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const mongodb = require('mongodb');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,7 +27,30 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+const router = expres.Router();
 
-// TODO
+router.get(__dir+"database.csv",function (req,res){
+  var MongoClient = mongodb.MongoClient;
+
+  MongoClient.connect("mongodb://localhost",function(err,db){
+    if (err){
+      console.log('Unable to connect ' + err);
+    }else{
+      var collection = db.collection('users');
+      collection.find({}).toArray(function(err,result){
+        if(err){
+          result.send(err);
+
+        } else if (result.length){
+          res.render('users',{"name":result,"email":email});
+        }else{
+          res.send("No documents found");
+        }
+        db.close();
+      });
+    }
+  })
+})
+
 
 app.listen(3000);

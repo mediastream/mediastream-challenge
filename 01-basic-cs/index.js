@@ -10,6 +10,7 @@ We don't care which hats are.
 You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
+O(n) as we are just interating through the objects 3/4 times depending on how you grab three maximums
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -32,6 +33,23 @@ const database = require('./database.json');
 
 
 const total = 0 // TODO
+
+
+//given a database of people and the hats they bought return the total number of the top 3 hats sold.
+function findTotal (){
+  var person,id,hat;
+  var hatsSold=[];
+  for (person in database){
+    for (hat in database[person].hats){
+        hatsSold.push(database[person].hats[hat]);
+    }
+  }
+  var sortedList= _.countBy(hatsSold,"id");
+
+  //total = max3 from sortedList; I was unable to get countBy to give me a sorted array, and ran out of time.
+}
+
+findTotal();
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
