@@ -45,8 +45,17 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+  alert(){
+    console.log(this.props.history(index));
+  }
+
   render() {
-    return null;
+    return (
+      <div>
+        {for date in this.props{}
+        <Row onClick={this.alert.bind(this)} = >{date.slice(0,9)}</Row>
+        {}}
+      </div>
+    )
   }
 }
