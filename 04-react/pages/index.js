@@ -22,6 +22,13 @@ NOTE: You can use ES7+ here and install any library not tied to React.
 Example:
 - lodash: OK
 - react-dates: NOPE
+
+At the end please describe how did you get to the answer with details?
+Example: 
+I knew it before the test.
+or
+I found it in stack overflow
+
 `);
 
 import React from 'react';

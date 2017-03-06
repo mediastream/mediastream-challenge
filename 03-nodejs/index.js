@@ -13,6 +13,12 @@ Run the database seed with:
 $ node utils/seed.js
 
 -> Warning: It contains hundreds of entities and our production server is quite small
+
+At the end please describe how did you get to the answer with details?
+Example: 
+I knew it before the test. 
+or
+I found it in stack overflow
 `);
 
 const express = require('express');

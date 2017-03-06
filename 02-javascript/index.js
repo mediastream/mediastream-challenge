@@ -11,6 +11,12 @@ Take a look at the 'requester' function.
 - How it is called this design pattern or technique?
 
 HINT: Use https://api.github.com/users/mediastream
+
+At the end please describe how did you get to the answer with details?
+Example: 
+I knew it before the test.
+or
+I found it in stack overflow
 `);
 
 // Add fetch polyfill for Node.js
