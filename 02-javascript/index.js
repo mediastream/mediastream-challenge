@@ -22,10 +22,10 @@ I found it in stack overflow
 // Add fetch polyfill for Node.js
 require('isomorphic-fetch'); // See: https://github.com/matthew-andrews/isomorphic-fetch
 
-//function requester(method, base, headers = { Accept: '*/*' }) {
-//  return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
-//    .then(r => r.json());
-//}
+function requester(method, base, headers = { Accept: '*/*' }) {
+  return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
+    .then(r => r.json());
+}
 
 console.log(`El código esta hecho en ES6. Recibe como parametros el método a utilizar para la petición WEB ` +
             `ademas de una URL Base a la cuál se le realiza la petición. Utiliza condicionales ternarias para la ` +
