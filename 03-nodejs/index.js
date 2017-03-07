@@ -52,8 +52,6 @@ app.get('/users', function (req, res){
                     res.download(__dirname + '/file.csv', 'file.csv');
                 });
             } catch (err) {
-                // Errors are thrown for bad options, or if the data is empty and no fields are provided.
-                // Be sure to provide fields if it is possible that your data array will be empty.
                 console.error(err);
             }
         }
