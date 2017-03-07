@@ -32,6 +32,7 @@ I found it in stack overflow
 `);
 
 import React from 'react';
+import Moment from 'react-moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -52,8 +53,22 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
   render() {
-    return null;
+      return (
+          <ul>
+              {this.props.children ? this.props.children : null}
+              {this.props.dates ? this.props.dates.map(function(listValue, key){
+                  return (
+                      <li id={key} onClick={ () => alert(key) }>
+                          <Moment parse="YYYY-MM-DD" format="DD/MMM/YYYY">{listValue}</Moment>
+                      </li>
+                  );
+              }) : null}
+          </ul>
+      )
   }
 }
+
+console.log(`Se crea la lista que imprime las fechas; para el formato de las fechas se hace uso de la libreria`+
+            `"react-moment" que nos permite tanto formatear la salida de la fecha, como parsear la misma` +
+            `se itera a traves de los valores en props y se imprimen las fechas`)
