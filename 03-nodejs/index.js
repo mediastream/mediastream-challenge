@@ -27,6 +27,20 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+const json2csv = require('json2csv');
+
+
+// create route
+app.get('/users', (req, res) => {
+
+    User.find( ).exec().then( (v => {
+        var csv = json2csv({ data: v, fields: [ 'name', 'email'] });
+        console.log(csv);
+        res.attachment('users.csv');
+        res.status(200).send( csv );
+    }))
+    
+
+});
 
 app.listen(3000);
