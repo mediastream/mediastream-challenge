@@ -31,7 +31,42 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+let total = 0 
+
+
+let hats = []; // agrupamiento tempral de hats
+let hats_ids = []; // conservar los IDs de los hats
+let hats_object = []; // array de hats
+let ordered_hats = []; // array ordenado de hats
+
+// clasificar y contar los hats
+_.forEach( database, function( itm_ ) {
+    _.forEach( itm_.hats, function( hat ) {
+        if( hats[hat.id] ) {
+            hats[hat.id].counter += 1;
+        }
+        else {
+            hats[hat.id] = { id : hat.id ,name : hat.name , counter : 1 };
+            hats_ids.push( hat.id );
+        }
+    } );
+});
+
+// poner los hats clasificados en un array indexado
+_.forEach( hats_ids, function( hat_id_ ) {
+    hats_object.push(hats[ hat_id_ ]);
+})
+
+// ordenar array por mas vendidos
+ordered_hats = _.orderBy( hats_object, ['counter'], ['desc'] );
+
+// tomar top 3
+_.times(3, function(i){
+    total += ordered_hats[i].counter;
+    console.log('Hat: ' + ordered_hats[i].name + ' total sold: ' + ordered_hats[i].counter );
+});
+
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
