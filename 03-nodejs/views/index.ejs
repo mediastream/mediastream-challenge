@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mongo and Nodejs app</title>
+</head>
+<body>
+<!-- Use EJS to print out our data-->  
+  <% for (var i = 0; i < data.length; i++) { %>
+    <p> <strong>Name: </strong> <%= data[i].name %> <strong> User: </strong><%= data[i].email %></p>
+  <% } %>
+  
+</body>
+</html>
+

@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('../models/User');
 
 const AMMOUNT = {
-  USERS: 100000,
+  USERS: 10,
 };
 
 const users = _.times(AMMOUNT.USERS, n => ({
