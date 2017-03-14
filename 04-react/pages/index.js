@@ -46,7 +46,11 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  constructor() {
+    super();
+  }
+
   render() {
-    return null;
+    return (<div></div>);
   }
 }
