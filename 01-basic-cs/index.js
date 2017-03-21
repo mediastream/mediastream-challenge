@@ -30,10 +30,36 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
-
-const total = 0 // TODO
+const total = _.chain(database)
+.reduce((sum, n) => {
+  return _.concat(sum, n.hats)
+}, [])
+.countBy('id')
+.sortBy((o) => o)
+.takeRight(3)
+.sum()
+.value();
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+/**
+ * Solution:
+  _.chain(database)
+  .reduce((sum, n) => {
+    return _.concat(sum, n.hats)
+  }, []) // Gives us only the hats in an array
+  .countBy('id') // Counts the number of items per id
+  .sortBy((o) => o) // Sorts by number of sells ASC
+  .takeRight(3) // Takes last three items (three most selling hats)
+  .sum() // Sums values of the array
+  .value(); //Returns the value of the array
+
+  By Instruction:
+    Sorting: n^2
+    Reduce, Count and Sum: n
+    TakeRight, Value: 1
+  Complexity: f(n) = n^(2) + 3n
+ */

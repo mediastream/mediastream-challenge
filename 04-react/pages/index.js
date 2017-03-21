@@ -25,6 +25,11 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment/moment';
+
+function formatDate (date) {
+  return moment(date).format('DD/MMM/YYYY');
+}
 
 export default class MyApp extends React.Component {
   render() {
@@ -45,8 +50,23 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+
   render() {
-    return null;
+    const dates = this.props.dates || [];
+    const header = this.props.children ? this.props.children.props.children : '';
+    return (
+      <div>
+        <h3>{header}</h3>
+        <ul>
+          {this.props.dates.map((date, index) => (
+            <li key={index} onClick={this.handleClick.bind(this, index)}>{formatDate(date)}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  handleClick(index, e) {
+    alert('Clicked on date ' + index);
   }
 }
