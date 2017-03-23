@@ -29,9 +29,25 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+let uniqueHats = [];
 
+_.forEach(database, (value, key) => {
+    if(value.hats.length !== 0){
+        _.forEach(value.hats, (hat) => {
+            let match = _.find(uniqueHats, item => item.id === hat.id);
+            if (match) {
+                match.total ++;
+            }
+            else {
+                uniqueHats.push({total : 1, id : hat.id});
+            }
+        });
+    }
+});
 
-const total = 0 // TODO
+const topHats = 3;
+const total = _.reduce(_.slice(_.orderBy(uniqueHats, ['total'], ['desc']), 0, topHats), (sum, n) => sum + n.total, 0);
+console.log(total);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
