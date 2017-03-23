@@ -25,28 +25,75 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
-
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
+	constructor(){
+		super();
+		this.showIndex = this.showIndex.bind(this);
+		this.state = {
+			dates : [
+						{
+							date : '2017-02-20T13:33:52.889Z'
+						},
+						{
+							date : '2013-06-25T14:31:24.888Z', 
+							child : 'New Date'
+						},
+						{
+							date : moment().format(), 
+							child : 'Today'
+						}
+					]
+		};
+	}
+	
+	showIndex(id){
+		alert(`The index is ${id}`);
+	}
+ 	 render() {
+		return (
+		<div>
+			<h1>04 - React</h1>
+			<hr/>
+				{
+					this.state.dates.map((date, indice) => 
+						<List 
+							date={date.date}
+							index={indice}
+							key={indice}
+							showIndex={this.showIndex}
+						>
+						{date.child}
+						</List>
+					)
+				}
+		</div>
     );
   }
 }
 
-
-class List extends React.Component {
-  // TODO
+class List extends React.Component {  
+  header(child){
+	  if(child){
+		  return <header>{child}</header>
+	  }
+  }
   render() {
-    return null;
+	  const divStyle = {
+  		fontSize : '2em',
+		cursor : 'pointer', 
+		borderBottom : '1px solid red', 
+		padding : '5px', 
+		fontWeight : 'bold', 
+		fontFamily : "Arial"
+	  };
+    return <div style={divStyle}
+				onClick={() => this.props.showIndex(this.props.index)}>
+				{
+					this.header(this.props.children)
+				}
+				{moment(this.props.date).utc().format("DD/MMMM/YYYY")}
+			</div>
   }
 }
