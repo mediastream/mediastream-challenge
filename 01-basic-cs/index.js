@@ -27,13 +27,34 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
-
 const database = require('./database.json');
 
+// retorna un arreglo con las cantidades de los top-3 sombreros más vendidos
+function topThreeSold(callback) {
+	var hatsArray = [];
+	_.forEach(database, function (element) {
+		_.forEach(element.hats, function (hat) {
+			hatsArray.push(hat.id);
+		});
+	});
+	callback(_.takeRight(_.orderBy(_.countBy(hatsArray), [], ['asc', 'desc']), 3));
+}
 
-const total = 0 // TODO
+// al obtener los sobreros se muestra el resultado por pantalla
+topThreeSold(function (result) {
+	console.log("result: " + result[0] + " + " + result[1] + " + " + result[2]
+		+ " => " + (result[0] + result[1] + result[2])
+	);
+});
 
-// Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+console.log(`
+La función "topThreeSold" se realiza con callback para no bloquear el programa. Su complejidad
+en tiempo es O(n^2) que viene dada por los ciclos anidados "forEach", los filtros en el array son O(n)
+por lo que no cuentan. La complejidad en espacio es de O(n+m), siendo n el espacio que ocupa
+"database" y m el espacio que ocupa "hatsArray", a lo que se debe sumar el espacio del proceso
+de filtrado que será inferior a m;
 
-console.log('Success!');
+topThreeSold:
+	1.- Se extraen los sobmbreros de la base de datos y se mapean sus id's a un arreglo
+	2.- El arreglo se filtra en el siguiente orden: contar > ordenar > extraer top-3
+`);

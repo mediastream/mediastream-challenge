@@ -27,6 +27,12 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+// enlace de las rutas
+var routes = require('./routes/User')(app);
+
+// inicio
+app.get('/', function (req, res) {
+  res.send("Express!");
+});
 
 app.listen(3000);
