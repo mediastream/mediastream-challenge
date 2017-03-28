@@ -18,15 +18,16 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const UserCtrl = require('./controllers/User');
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
+
 
 // Setup Express.js app
 const app = express();
 
 // TODO
+app.get('/users', UserCtrl.usersToCsv);
 
 app.listen(3000);
