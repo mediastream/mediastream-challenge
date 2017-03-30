@@ -47,6 +47,19 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    return (
+		<table>
+			{
+				dates.map(function(date) {
+
+					return (
+						<tr>
+							<td>{date}</td>
+						</tr>
+					)
+				})
+			}
+		</table>
+	)
   }
 }

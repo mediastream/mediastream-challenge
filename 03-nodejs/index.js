@@ -18,7 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+var json2csv = require('json2csv');
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
@@ -27,6 +27,19 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.get('/users', function(req, res) {
+	
+	User.find({}, function(err, users) {
+	  if (err) throw err;
+		var fields = ['name', 'email'];
+		var csv = json2csv({ data: users, fields: fields, fieldNames:["Name","Email"]});		
+		res.setHeader('Content-disposition', 'attachment; filename=Users.csv');
+		res.set('Content-Type', 'text/csv');
+		res.status(200).send(new Buffer(csv));
+			
+	});
+	
+});
+
 
 app.listen(3000);
