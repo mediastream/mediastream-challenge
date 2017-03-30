@@ -27,6 +27,26 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
+
 // TODO
 
-app.listen(3000);
+var UserController = require('./controllers/users');
+
+var router = express.Router();
+
+router.get('/', function(req, res) {
+  res.send("Hello world!");
+});
+
+app.use(router);
+
+var users = express.Router();
+
+users.route('/users')
+	.get(UserController.findAllUsers);
+
+app.use(users);
+
+app.listen(3001, function() {
+  console.log("Node server running on http://localhost:3001");
+});
