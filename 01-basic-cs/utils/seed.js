@@ -20,6 +20,6 @@ const users = _.times(AMMOUNT.USERS, n => ({
   id: faker.random.uuid(),
   email: faker.internet.email(),
   hats: _.sampleSize(hats, _.random(0, 5))
-}));
+}))
 
 console.log(JSON.stringify(users, null, 2));

@@ -50,3 +50,8 @@ class List extends React.Component {
     return null;
   }
 }
+
+/* no me manejo en reactJs, me encantaría saber más de esto en todo caso
+pero creo que no alcanzo en un par de minutos */
+
+
