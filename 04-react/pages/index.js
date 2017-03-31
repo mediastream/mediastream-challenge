@@ -24,7 +24,22 @@ Example:
 - react-dates: NOPE
 `);
 
+console.log(`
+Respuesta:
+Se incorpora la dependencia Moment para trabajar con las fechas en nuestro ejemplo con ReactJS,
+dentro de los metodos que posee Moment es la forma de visualizar las fechas para ello se emplea
+un formateo simple, pero adicional a ello se configura para que los nombres y estructura de las fechas
+sea en idioma español.
+
+NOTA: Se dejo configurada la libreria para que el mes se mostrara completo (enero, febrero, etc),
+si queremos que solo se visualice las primeras 3 letras del mes se debe cambiar lo siguiente en la linea 75
+{Moment(date).format("DD/MMMM/YYYY")} por {Moment(date).format("DD/MMM/YYYY")}, dejando solo 3 M.
+`);
+
 import React from 'react';
+import Moment from 'moment';
+
+Moment.locale('es');
 
 export default class MyApp extends React.Component {
   render() {
@@ -46,7 +61,29 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  static propTypes = {
+    dates: React.PropTypes.arrayOf(
+      React.PropTypes.string
+    )
+  };
+
   render() {
-    return null;
+    let html = [];
+    this.props.dates.forEach((date, key) => {
+      html.push(
+        <li key={key} onClick={() => { alert(`El indice es ${key+1}`); }}>
+          {Moment(date).format("DD/MMMM/YYYY")}
+        </li>
+      );
+    });
+
+    return (
+      <div>
+        {this.props.children}
+        <ul>
+          {html}
+        </ul>
+      </div>
+    );
   }
 }
