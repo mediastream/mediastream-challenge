@@ -30,10 +30,14 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
-
-const total = 0 // TODO
+let listOfSeledHats = _.flatMapDeep(database, 'hats');
+let sellsByHat = _.countBy(listOfSeledHats, 'id');
+let rankedSellsByHat = _.orderBy(sellsByHat, [], ['desc']);
+const total = rankedSellsByHat[0] + rankedSellsByHat[1] + rankedSellsByHat[2];
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
+
+console.log('Linear comnplexity ==> O(n)');
 
 console.log('Success!');
