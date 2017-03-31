@@ -15,7 +15,17 @@ $ node utils/seed.js
 -> Warning: It contains hundreds of entities and our production server is quite small
 `);
 
+console.log(`
+Respuesta:
+Se agrega la libreria csv-express para poder generar los registros y poder exportarlos en el
+formato solicitado en el enunciado.
+Cuando se realiza la peticion a la WebAPI, esta realiza la busqueda de todos los datos a traves de Mongoose,
+una vez recopilada toda la informacion, genera la estructura necesaria con la recopilazion de los datos y, una vez
+culminada dicha operacion, se procede a generar el archivo con los datos seteados segun formato.
+`);
+
 const express = require('express');
+const csv = require('csv-express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
@@ -28,5 +38,18 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.get('/users', function(req, res) {
+    User.find({}, function(error, response) {
+        if (error) {
+            res.send(error);
+        }
+        let export_csv = [];
+        export_csv.push(['Id', 'Name', 'Email']);
+        response.forEach((row) => {
+            export_csv.push([row._id, row.name, row.email]);
+        });
+        res.csv(export_csv);
+    });
+});
 
 app.listen(3000);
