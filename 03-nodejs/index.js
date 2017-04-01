@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,7 +27,22 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
-
+app.use(morgan('combined'))
 // TODO
+app.get("/users", function(req,res){
+
+	User.find({}, function(err, users) {
+		  if (err) throw err;
+		  
+		res.writeHead(200, {"Content-Disposition" : "attachment;filename=users.csv"});
+		res.write("Nombre, Email\n");
+		_.map(users).map(function(x) {
+			res.write(x.name + "," + x.email + "\n");
+		});
+
+		res.end();
+	});
+
+});
 
 app.listen(3000);
