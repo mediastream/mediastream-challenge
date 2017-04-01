@@ -1,0 +1,20 @@
+{
+  "plugins": [
+  ],
+  "quotes": {
+    "type": "single",
+    "avoidEscape": true
+  },
+  "whiteSpace": {
+    "before": {
+      "PropertyName": 1
+    }
+  },
+  "collapseObjects": {
+    "ObjectExpression": {
+      "maxLineLength": 180,
+      "maxKeys": 3,
+      "maxDepth": 2
+    }
+  }
+}
