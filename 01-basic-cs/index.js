@@ -30,10 +30,40 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const result =
+  _.orderBy( //order results by sold's quantity  in desc order
+    _.mapValues( //map over hat groups and return the numbers of hats sold
+      _.groupBy( //group the hat list by hat ID
+        _.reduce(database, (acc, user) => acc.concat(user.hats), []), //get all the hats bought from the data set
+        'id'),
+      group => ({ sold: group.length })), ['sold'], ['desc'])
+  .slice(0, 3) //get the top 3;
 
-const total = 0 // TODO
+
+const total = result.reduce((subtotal, hat) => subtotal + hat.sold, 0);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+
+console.log(`
+  Computational complexity in O() notation of time and space
+
+    Solutions steps:
+      * reduce -> O(A) -> A (Size of User's records) generates B(Size of Hat's records) 
+      * groupBy -> O(B) -> B generates C(Size of grouped records by hat id)
+      * mapValues -> O(C)
+      * orderBy -> O(C)
+      * slice -> O(1) -> generates D (size of chunked records) 
+      * reduce -> O(D) 
+
+      TOTAL: O(A * B * C * D) + O(1) = O(N + 1) = O(N);
+
+      The max amount of time and space that will be take to perform
+      the analysis is directly proportional to the size of the initial data,
+      this is because we need to map over the set and take a property of every record.
+
+      thus, the complexity of time and space is O(N)
+`);

@@ -25,13 +25,13 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-    return (
-      <div>
+    return ( <div>
         <h1>04 - React</h1>
         <List dates={dates} />
         <hr />
@@ -45,8 +45,52 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
+
+
+  static propTypes = {
+    dates: React.PropTypes.array,
+    children: React.PropTypes.element
   }
+  
+  constructor(props) {
+    super(props);
+    this.state = {dates: props.dates};
+  }
+
+  _onClick(index) {
+    alert(`I'm the ${index} in your life`);
+  }
+  
+  render() {
+
+    const dates = this.state.dates.map(
+        (date, key) => <Row key={key} index={key} date={date} onClick={this._onClick}/>
+      );
+
+    return (
+     <div>
+      {this.props.children}
+      <ul>{dates}</ul>
+    </div>);
+  }
+}
+
+
+const Row = ({date, index, onClick}) => {
+
+  const formattedDate = moment(date).format('DD/MMM/YYYY');
+    
+  return (
+    <li>
+      <a href="#" onClick={() => onClick(index)}>
+        {`(${formattedDate})`}
+      </a>
+    </li>
+  );
+}
+
+Row.propTypes = {
+  date: React.PropTypes.string.isRequired,
+  index: React.PropTypes.number.isRequired,
+  onClick: React.PropTypes.func.isRequired
 }
