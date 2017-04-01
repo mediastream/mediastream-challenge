@@ -27,13 +27,47 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
-
 const database = require('./database.json');
 
+let hatsArr = []
 
-const total = 0 // TODO
+_.map(database, (sombreros) => {
 
+	let hats = sombreros.hats
+	if(hats != "") {
+		_.map(hats, (objs) => {
+			let object
+			if(object = _.find(hatsArr,{'id':objs.id})){
+				_.pull(hatsArr, object)
+				object.sold = object.sold +1
+				hatsArr.push(object)
+			} else {
+				hatsArr.push({'id':objs.id,'sold':1})
+			}
+		});
+	}
+})
+
+hatsArr.sort( function(a, b) {
+	 if (a.sold < b.sold) {
+	 	return 1
+	 }
+	 if(a.sold > b.sold){
+		 return -1
+	 }
+	 return 0
+});
+
+
+let total = parseInt(0)
+
+for (var i = 0; i < 3; i++) {
+	total = parseInt(total) + parseInt(hatsArr[i].sold)
+}
+
+console.log(total);
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
+
 
 console.log('Success!');
