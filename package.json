@@ -9,7 +9,7 @@
   "scripts": {
     "1": "nodemon --harmony-async-await 01-basic-cs/",
     "2": "nodemon --harmony-async-await 02-javascript/",
-    "3": "nodemon --harmony-async-await 03-nodejs/",
+    "3": "nodemon 03-nodejs/",
     "4": "cd 04-react; npm start"
   },
   "dependencies": {

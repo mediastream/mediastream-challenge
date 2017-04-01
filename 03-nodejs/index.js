@@ -49,16 +49,15 @@ app.get('/users', function(req, res){
       fs.writeFile('./03-nodejs/utils/allUsers.csv', csv, function(err) {
         if (err) throw err;
         console.log('Archivo csv guardado');
+        res.download(__dirname +'/utils/allUsers.csv', 'allUsers.csv', (err) =>{
+          if (err) {
+            console.log(err);
+          }else {
+            console.log('Descarga correcta');
+          }
+        });
       });
-
-      //res.status(200).send('exito');
-      res.download('./03-nodejs/utils/allUsers.csv', 'allUsers.csv', (err) =>{
-        if (err) {
-          console.log(err);
-        }else {
-          console.log('Descarga correcta');
-        }
-      })
+      
     }
   })
 });
