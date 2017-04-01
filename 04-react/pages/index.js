@@ -43,10 +43,50 @@ export default class MyApp extends React.Component {
   }
 }
 
-
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+    
+    render() {
+      let title = 'encabezado principal'
+      if (this.props.children) title = this.props.children.props.children
+      const fechas = this.props.dates
+      const listItems = fechas.map((fechas) =>
+        <Row showDate={fechas} key={fechas} />
+      )
+      if(this.props.dates.length>0)
+        return (
+          <div>
+            <h4><b>{title}</b></h4>
+            {listItems}
+          </div>
+        )
+      return null;
+    }
+
+}
+
+class Row extends React.Component {
+
+    onClick(e){
+      alert(e.target.textContent)
+    }
+    SetFecha(data){
+      const fecha = new Date(data);
+      const anio  = fecha.getFullYear();
+      const meses = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'];
+      let mes = fecha.getMonth()+1;
+      let dia = fecha.getDate();
+
+      if(dia < 10) {
+        dia = '0' + dia;
+      }
+
+      return dia + '/' + meses[mes] + '/' + anio;
+
+    }
+    render () {   
+      return(
+      <p onClick={this.onClick.bind(this)}>{this.SetFecha(this.props.showDate)}
+      </p>)
+    }
+    
 }
