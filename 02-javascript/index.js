@@ -20,3 +20,12 @@ function requester(method, base, headers = { Accept: '*/*' }) {
   return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
     .then(r => r.json());
 }
+
+/*
+* Resp:
+* La función requester() hace referencia a una ejecución de un Endpoint
+* recibiendo como parametros el tipo de verbo http a utilzar, la uri del Endpoint,
+* como tambien un objeto(header) para enviar las cabeceras de la consulta como
+* tipo de respuesta, useragent.etc.
+* recibiendo como respuesta un json.
+*/
