@@ -29,10 +29,26 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+var topH = {};
 
+var total = 0 // TODO
 
-const total = 0 // TODO
+//lodash recursivo
+_.map(database).map(function(x) {
+	_.map(x["hats"]).map(function(h){
+							if(typeof(topH[h["id"]]) == 'object'){
+							   topH[h["id"]]["contador"]++
+							}else{
+							   topH[h["id"]] = { "contador": 1};
+							}
+						}
+					)
+	});
 
+var sorted = _.sortBy(topH, "contador");
+_.reverse(sorted);
+
+total = sorted[0]["contador"] + sorted[1]["contador"] + sorted [2]["contador"];
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
