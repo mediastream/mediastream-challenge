@@ -48,15 +48,21 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+
   render() {
     var dateNodes = this.props.dates.map((date, index)=>{
       return <li onClick={()=>{alert(index)}}>{Moment(date).format('DD/MMM/YYYY')}</li>
     }, this);
   
-    return <div>
-        {this.props.children}
-        {dateNodes}        
-    </div>;
+    return (
+      <div>
+          {this.props.children}
+          {dateNodes}        
+      </div>
+    )
   }
+}
+
+List.propTypes = {
+   dates: React.PropTypes.array.isRequired
 }
