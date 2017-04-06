@@ -51,7 +51,7 @@ class List extends React.Component {
 
   render() {
     var dateNodes = this.props.dates.map((date, index)=>{
-      return <li onClick={()=>{alert(index)}}>{Moment(date).format('DD/MMM/YYYY')}</li>
+      return <li key={index} onClick={()=>{alert(index)}}>{Moment(date).format('DD/MMM/YYYY')}</li>
     }, this);
   
     return (
