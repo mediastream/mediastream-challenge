@@ -51,9 +51,12 @@ class List extends React.Component {
   // TODO
   render() {
     var dateNode = this.props.dates.map((date)=>{
-      return Moment(date).format('DD/MMM/YYYY');
-    })
+      return <li>{Moment(date).format('DD/MMM/YYYY')}</li>
+    }, this);
   
-    return <li>{dateNode}</li>;
+    return <div>
+        {this.props.children}
+        {dateNode}        
+    </div>;
   }
 }
