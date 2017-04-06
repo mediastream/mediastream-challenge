@@ -26,7 +26,7 @@ Example:
 
 import React from 'react';
 
-// awesome library for date format
+// Awesome library for date format.
 import Moment from 'moment';
 
 export default class MyApp extends React.Component {
@@ -50,13 +50,13 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    var dateNode = this.props.dates.map((date)=>{
-      return <li>{Moment(date).format('DD/MMM/YYYY')}</li>
+    var dateNodes = this.props.dates.map((date, index)=>{
+      return <li onClick={()=>{alert(index)}}>{Moment(date).format('DD/MMM/YYYY')}</li>
     }, this);
   
     return <div>
         {this.props.children}
-        {dateNode}        
+        {dateNodes}        
     </div>;
   }
 }
