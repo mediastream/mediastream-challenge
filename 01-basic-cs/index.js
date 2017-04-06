@@ -31,7 +31,13 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+var hats = _.flattenDeep(_.map(database,'hats')); // Array of all hats sold
+
+var countAndOrder = _.sortBy(_.countBy(hats,'id')).reverse() // Count hats sold by Id, sort and reverse() for order desc
+
+var topThree = _.take(countAndOrder,3); // take only the top 3 hats in the countAndOrder array
+
+const total = _.sum(topThree); // One line solution --> _.sum(_.take(_.sortBy(_.countBy(_.flattenDeep(_.map(database,'hats')),'id')).reverse(),3));
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
