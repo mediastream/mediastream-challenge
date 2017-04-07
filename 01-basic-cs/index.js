@@ -31,9 +31,34 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+var total = 0 // TODO
+
+var hats = [];
+
+//1.- get total hats sold
+_.forEach(database,(function(person){
+    _.forEach(person.hats, (function(hat){
+        var hat_index = _.findIndex(hats, {id:hat.id});
+        if(hat_index===-1){
+            hat.sold = 1; //counter for sold
+            hats.push(hat);
+        }else{
+            hats[hat_index].sold += 1;
+        }
+    }));
+}));
+
+//2.- sorty by sold
+hats = _.orderBy(hats,['sold'],['desc']);
+
+//3.- sum of the top-3 most selling hats.
+total = hats[0].sold+hats[1].sold+hats[2].sold;
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+// What is the complexity in O() notation of time and space?
+//
+// Honestly I don't know the complexity of lodash, but because the double "foreach", I suppose O (n ^ 2).

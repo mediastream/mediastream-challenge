@@ -47,6 +47,47 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    return (<div>
+      {this.props.children}
+    <Row dates={this.props.dates}></Row>
+    </div>)
+  }
+}
+
+class Row extends React.Component {
+  constructor(props){
+    super();
+    this.dates = props.dates;
+    this.dates = this.formatDate(this.dates);
+  }
+
+  formatDate(dates){
+    var list_dates = [];
+    var monthNames = [
+      "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec"];
+
+      dates.forEach(function(element) {
+        let date = new Date(element);
+        let day = date.getDate();
+        let monthIndex = date.getMonth();
+        let year = date.getFullYear();
+        let date_format = '('+day+'/'+monthNames[monthIndex]+'/'+year+')';
+        list_dates.push(date_format);
+      }, this);
+
+    return list_dates;
+  }
+
+  showMessage(index) {
+    alert('date index: '+index);
+  }
+
+  render () {
+    return (
+        <ul>
+          {this.dates.map((value, index)=>{
+            return <li onClick={this.showMessage.bind(this, index)}>{value}</li>})}
+        </ul>
+      )
   }
 }
