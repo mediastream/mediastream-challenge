@@ -29,4 +29,7 @@ const app = express();
 
 // TODO
 
+
+app.use('/users', require('./controllers/users'))
+
 app.listen(3000);
