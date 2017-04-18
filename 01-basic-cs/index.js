@@ -30,10 +30,35 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+var hats_sold = []
 
-const total = 0 // TODO
+// get only hats bought
+_.forEach(database, function(item){
+  if (item.hats.length > 0){
+    hats_sold = _.concat(item.hats, hats_sold)
+  }
+})
+
+//get total hat bought
+const total = _.orderBy( //order hats sold desc
+                _.countBy(hats_sold, 'id'),  //count hats sold
+              [], ['desc']).slice(0,3).reduce((sum,n)=>sum+n,0) // sum
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+
+console.log(`
+  1. What is the complexity in O() notation of time and space?
+    functions use
+    foreach = n+1
+    orderby = n
+    countBy = n
+    slide = 1
+    reduce = n
+      n + 1 + n + n + 1 + n = O(n)
+
+  `)
