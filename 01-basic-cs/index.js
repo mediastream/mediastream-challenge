@@ -25,15 +25,37 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 -> Expected result: 7 + 7 + 9 => 23
 `);
 
-const _ = require('lodash'); // https://lodash.com/docs/4.17.4
-const assert = require('assert');
+const _ = require('lodash')
+const data = require('./database.json')
+var total = 0
+var topSales = []
 
-const database = require('./database.json');
 
 
-const total = 0 // TODO
+// const topHats = data.splice(0,3)
+_.each(data, (item) => {
+	console.log()
+	const hats = item.hats
+	_.each(hats, (hat) => {
+		const hatIndex = _.findIndex(topSales, (i) => { return i.hatId == hat.id } )
+		if(hatIndex >= 0) topSales[hatIndex].total += Number(hat.price)
+		else  topSales.push({hatId: hat.id, total: Number(hat.price)})
+	})
+})
+topSales.sort((a, b) => {
+	if( b.total < a.total ) return -1
+	if( b.total > a.total ) return 1
+	return 0
+})
 
-// Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+topSales = topSales.splice(0,3)
+console.log('HATS:', "\t\t\t\t\t", 'SUB-TOTAL' )
+console.log("_____________________________________________________")
+_.each(topSales, (sale) => {
+	console.log(sale.hatId, "\t", sale.total )
+	total += sale.total
+})
+console.log("_____________________________________________________")
+console.log("\t\t\t\t", 'TOTAL', "\t", total)
 
 console.log('Success!');

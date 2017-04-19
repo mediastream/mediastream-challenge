@@ -16,17 +16,28 @@ $ node utils/seed.js
 `);
 
 const express = require('express');
+const csv = require('csv-express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const _ = require('lodash')
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
 
+
+
 // Setup Express.js app
 const app = express();
-
+app.get('/users', (req, res) => {	
+	User.find({}, (err, users) => {
+		var usersList = []
+		_.each(users, (user) => {
+			usersList.push({id: user._id, name: user.name, email: user.email})
+		})
+		res.csv(usersList, true)
+	})
+})
 // TODO
 
 app.listen(3000);
