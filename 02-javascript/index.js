@@ -32,16 +32,16 @@ The use case for this, would be common requests to the same API, we might have t
 base API endpoint in an enviroment variable o in a service and we wouldn't have to
 declare it in any request.
 -> Example:
-[requester('POST', $ENV.API_URL)(\`user/{user.id}/posts\`)]
+[requester('POST', $ENV.API_URL)([\`user/{user.id}/posts\`])]
 
 3. If the base url is falsy, then the raw path is used and URL. For example, to
 request uncommon external APIs.
 -> Example:
-[requester('POST', null)('https://api.another.com/users')]
+[requester('POST', null)(['https://api.another.com/users'])]
 
 4. The optional headers might be a simple way to include authorization heade, for example.
 -> Example:
-[requester('POST', null, {Authorization: user.token})('https://api.another.com/users')]
+[requester('POST', null, {Authorization: user.token})(['https://api.another.com/users'])]
 
 5. The most useful feature of this function is the ability to share the configurations
 of the request for many paths:

@@ -9,7 +9,7 @@ Find the total sum of the top-3 most selling hats.
 We don't care which hats are.
 You can use lodash/underscore (recommended)
 
-What is the complexity in O() notation of time and space? 0(2)
+What is the complexity in O() notation of time and space? 0(N2)
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
