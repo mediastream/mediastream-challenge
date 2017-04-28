@@ -9,7 +9,7 @@ Find the total sum of the top-3 most selling hats.
 We don't care which hats are.
 You can use lodash/underscore (recommended)
 
-What is the complexity in O() notation of time and space?
+What is the complexity in O() notation of time and space? 0(N2)
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -28,10 +28,58 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
-const database = require('./database.json');
+/**
+ * Holds every user and a relation with its hats
+ * @type {Array}
+ */
+const users = require('./database.json');
+
+/**
+ * Holds every hat available
+ * @type {Collection}
+ */
+const hats = {};
+
+/**
+ * The sample size
+ */
+const limit = 3;
+
+// Fills the 'hats' variable with it agrupation
+_.each(users, user => {
+  // We skip this user if doesn't have hats
+  const hasHats = !! user.hats.length;
+  if (!hasHats) {
+    return true;
+  }
+
+  _.each(user.hats, hat => {
+    // Append the hat to the 'hats' object.
+    const exists = _.has(hats, hat.id);
+
+    if (!exists) {
+      // We initialize an index for this hat
+      hats[hat.id] = {
+        size: 1,
+      };
+      // We don't have anything else to do
+      return true;
+    }
+
+    // If the hat exists, we just increase its count
+    ++hats[hat.id].size;
+  });
+});
 
 
-const total = 0 // TODO
+// Turn the hat object into an array
+const counts = _.values(hats);
+
+// Sorts and limit the sells array
+const total = _(counts)
+  .sortBy('size')
+  .takeRight(limit)
+  .sumBy('size');
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
