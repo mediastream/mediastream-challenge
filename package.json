@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "express": "^4.14.1",
+    "heap": "^0.2.6",
     "isomorphic-fetch": "^2.2.1",
+    "json-query": "^2.2.2",
+    "json2csv-stream": "^0.1.4",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.8.4",

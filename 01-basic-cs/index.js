@@ -9,7 +9,7 @@ Find the total sum of the top-3 most selling hats.
 We don't care which hats are.
 You can use lodash/underscore (recommended)
 
-What is the complexity in O() notation of time and space?
+What is the complexity in O() notation of time and space? O(n log(n))
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -27,11 +27,25 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
-
+const Heap = require('heap');
+const jsonQuery = require('json-query')
 const database = require('./database.json');
 
+const total_hats = jsonQuery('hats', {
+  data: database
+})
 
-const total = 0 // TODO
+let total = 0 // TODO
+const hats_map = new Map();
+
+ for(let hat of total_hats.value){
+   hats_map.set(hat.id, hats_map.has(hat.id) ? hats_map.get(hat.id)+1 : 1);                
+ }
+
+let huts = Array.from(hats_map.values());
+let top = Heap.nlargest(huts, 3);  // [9, 7, 7] ;
+
+_.forEach(top, h=>{ total += h;});
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

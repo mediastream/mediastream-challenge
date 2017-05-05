@@ -18,6 +18,8 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const jsonToCvsStream = require("json2csv-stream");
+const parser = new jsonToCvsStream();
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +30,23 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.get('/users', function (req, res) {  
+    let limit       = 100000;
+    let offset      = 0;
+    let skip        = 0;
+    let filename    = 'users.csv'; 
+    let chunkList = [];
+    let total       = 0;   
+    
+        let headers = {
+            'Content-Type': 'text/csv',
+            'Content-disposition': 'attachment;filename=' + filename
+        }
+        res.writeHead(200, headers);
+            let query   = User.find();          
+            let mongoStream = query.stream({transform: JSON.stringify});   
+            //run streams
+         return  mongoStream.pipe(parser).pipe(res);  
+ })
 
 app.listen(3000);
