@@ -1,6 +1,6 @@
 'use strict';
 
-console.log(`
+console.log("
 4.
 ---
 
@@ -22,7 +22,7 @@ NOTE: You can use ES7+ here and install any library not tied to React.
 Example:
 - lodash: OK
 - react-dates: NOPE
-`);
+");
 
 import React from 'react';
 
@@ -43,10 +43,52 @@ export default class MyApp extends React.Component {
   }
 }
 
-
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
+  constructor(props) {
+    super(props);
   }
+
+  render() {
+    const dates = this.props.dates.map((date, index) =>
+      <ListItem key={index} index={index} value={date} />
+    );
+
+    return ( 
+      <ul>
+        {this.props.children}
+        {dates}
+      </ul>
+    );
+  }
+}
+
+
+class ListItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.index != '' ? alert(this.props.index) : alert('Unknown element index');
+  }
+
+  render() {
+    return (<li onClick={this.handleClick}>{fixDate(this.props.value)}</li>);
+  }
+}
+
+
+//Custom Date function
+function fixDate(date){
+  ISOdate = new Date(date);
+  const mArr = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+
+  var day = date.getDate();
+  day = day < 10 ? '0' + day : day;
+
+  const fixDate = '(' + day + '/' + mArr[date.getMonth()] + '/' + date.getFullYear() + ')';
+
+  return fixDate;
 }
