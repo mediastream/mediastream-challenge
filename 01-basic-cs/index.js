@@ -1,6 +1,6 @@
 'use strict';
 
-console.log(`
+/*console.log(`
 1.
 ---
 
@@ -23,15 +23,22 @@ Hat(048d8fbf-7653-461f-a59c-68c73b8855e5) sold 7.
 Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 -> Expected result: 7 + 7 + 9 => 23
-`);
+`);*/
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
 
+const hats_sold = _.reduceRight(_.map(database, 'hats'), (flattened, other) => {
+    return flattened.concat(other);
+}, []);
+const soldById = _.countBy(hats_sold, 'id');
 
-const total = 0 // TODO
+const top3 = _.takeRight(_.sortBy(Object.keys(soldById).map(x => ({ id: x, sold: soldById[x] })), 'sold'), 3);
+
+const total = _.sumBy(top3, o => o.sold)
+console.log('total', total);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
