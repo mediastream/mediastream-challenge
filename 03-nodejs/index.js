@@ -41,7 +41,7 @@ app.get('/users', function(req, res) {
 	    const fields = ['_id','name','email'];
 
 	    try {
-			  var result = json2csv({ data: users, fields: fields });
+			  const result = json2csv({ data: users, fields: fields });
 			  
 			  res.setHeader('Content-disposition', 'attachment; filename=users.csv');
 		      res.set('Content-Type', 'text/csv');
