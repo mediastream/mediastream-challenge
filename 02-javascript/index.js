@@ -1,6 +1,6 @@
 'use strict';
 
-console.log(`
+console.log("
 2.
 ---
 
@@ -11,7 +11,7 @@ Take a look at the 'requester' function.
 - How it is called this design pattern or technique?
 
 HINT: Use https://api.github.com/users/mediastream
-`);
+");
 
 // Add fetch polyfill for Node.js
 require('isomorphic-fetch'); // See: https://github.com/matthew-andrews/isomorphic-fetch

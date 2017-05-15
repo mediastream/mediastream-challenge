@@ -1,6 +1,6 @@
 'use strict';
 
-console.log(`
+console.log("
 4.
 ---
 
@@ -22,7 +22,7 @@ NOTE: You can use ES7+ here and install any library not tied to React.
 Example:
 - lodash: OK
 - react-dates: NOPE
-`);
+");
 
 import React from 'react';
 

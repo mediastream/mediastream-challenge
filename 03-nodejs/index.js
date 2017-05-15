@@ -1,6 +1,6 @@
 'use strict';
 
-console.log(`
+console.log("
 3.
 ---
 
@@ -13,7 +13,7 @@ Run the database seed with:
 $ node utils/seed.js
 
 -> Warning: It contains hundreds of entities and our production server is quite small
-`);
+");
 
 const express = require('express');
 const morgan = require('morgan');
