@@ -19,6 +19,9 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
+//Library to export CSV
+const json2csv = require('json2csv');
+
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
@@ -27,6 +30,28 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+//I put the route directly here to be simple and not create another routes folder and have to import the reference.
+//Thi is not a recommended behavior, but enough for the exercise.
+app.get('/users', function(req, res) {
+
+	User.find({}, function(err, users) {
+	    if (err)
+	    	console.log(err);
+
+	    const fields = ['_id','name','email'];
+
+	    try {
+			  var result = json2csv({ data: users, fields: fields });
+			  
+			  res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+		      res.set('Content-Type', 'text/csv');
+		      res.status(200).send(result);
+
+			} 
+		catch (err) {
+			  console.error(err);
+			}
+	});
+});
 
 app.listen(3000);
