@@ -25,6 +25,9 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid, Row, Col } from 'react-bootstrap';
+const moment = require('moment');
 
 export default class MyApp extends React.Component {
   render() {
@@ -47,6 +50,21 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    return (
+      <div>
+        {this.props.children}
+        <Grid>
+
+          {this.props.dates.map((listValue, index) => {
+            const date = moment(listValue).format('DD/MMM/YYYY')
+            return <Row key={index}><Col xs={12}>{date}</Col></Row>;
+          })}
+        </Grid>
+      </div>
+    )
   }
 }
+
+List.propTypes = {
+  dates: PropTypes.array,
+};
