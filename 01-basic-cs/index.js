@@ -30,10 +30,54 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+class TopThreeSold {
+    constructor(database) {
+        this.top = [];
+        this.data = database;
+        this.withHats = this.getUsersWithHatsbought();
+    }
 
-const total = 0 // TODO
+    getSumOfTopThree() {
+        return _.reduce(this.top, (last, current) => {
+            return last + current;
+        }, 0)
+    }
+
+    getUsersWithHatsbought() {
+        return _.filter(this.data, (user) => {
+            return user.hats.length;
+        });
+    }
+
+    countEveryHat(hat, store) {
+        const { id } = hat;
+        store[id] = (store[id] + 1) || 1;
+    }
+
+    getTopThree(hatsAsObject) {
+        const valuesSorted = _.sortBy(_.values(hatsAsObject));
+        this.top = _.slice(valuesSorted, (valuesSorted.length - 3));
+    };
+
+    countHatsById() {
+        const counter = _.reduce(this.withHats, (last, current) => {
+            const { hats } = current;
+            _.each(hats, (hat) => this.countEveryHat(hat, last));
+            return last;
+        }, {});
+
+        this.getTopThree(counter);
+    }
+}
+
+const topSold = new TopThreeSold(database);
+topSold.countHatsById();
+const total = topSold.getSumOfTopThree();
+
+console.log('\x1b[36m%s\x1b[0m', `Done - Total: ${total} :D`);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+

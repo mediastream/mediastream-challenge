@@ -18,6 +18,9 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const path = require("path");
+// import our router
+const users = require("./routes/users.js");
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,6 +29,14 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+
+// config our views folder to be rendered
+app.set("views", path.join(__dirname, 'views'));
+
+// config our engine templates
+app.set("view engine", "jade");
+
+app.use("/", users);
 
 // TODO
 
