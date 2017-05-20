@@ -24,29 +24,111 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import moment from "moment";
 
-export default class MyApp extends React.Component {
+export default class AppDates extends Component {
+
+  renderDates(dates) {
+    return dates.map((date, index) => {
+      return <List date={date} key={`${index}-${date}`}/>;
+    });
+  }
+
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
     return (
       <div>
         <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
+        {this.renderDates(dates)}
       </div>
     );
   }
 }
 
 
-class List extends React.Component {
+class List extends Component {
+  static propTypes = {
+    date: PropTypes.string
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.switchDateParser = this.switchDateParser.bind(this);
+
+    this.parser = {
+      true: "moment",
+      false: "custom"
+    };
+
+    this.state = {
+      currentDate: props.date,
+      dispalyDate: props.date,
+      parser: true,
+      displayParser: this.parser[true]
+    };
+  }
+
+  componentDidMount() {
+    const { currentDate, parser } = this.state;
+    this.switchDateParser(parser);
+  }
+
+  switchDateParser() {
+    const { currentDate, parser } = this.state;
+    let displayDate;
+    const currentParser = !parser;
+    const displayParser = this.parser[currentParser];
+    const dateParsered = currentParser ? moment(currentDate).format("DD/MMM/YYYY") : this.customParser(currentDate);
+
+    displayDate = `With ${displayParser} parser : ${dateParsered}`;
+
+    this.setState({
+      displayDate,
+      parser: currentParser,
+      displayParser
+    });
+  }
+
+  customParser(date) {
+    const months = {
+      0: "Ene",
+      1: "Feb",
+      2: "Mar",
+      3: "Abr",
+      4: "May",
+      5: "Jun",
+      6: "Jul",
+      7: "Ago",
+      8: "Sep",
+      9: "Oct",
+      10: "Nov",
+      11: "Dic"
+    };
+
+    const currentDate = new Date(date);
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
+    return `${day}/${months[month]}/${year}`;
+  }
+
   // TODO
   render() {
-    return null;
+    const { displayDate, parser, displayParser } = this.state;
+
+    return (
+      <div style={{border: "1px solid blue", marginBottom: "10px", padding: "10px", fontSize: "16px", fontWeight: "bold"}}>
+        <p>
+          {displayDate}
+          <button style={{marginLeft: "10px"}} onClick={() => this.switchDateParser()}>
+            {`Switch to ${displayParser} parser`}
+          </button>
+        </p>
+      </div>
+    );
   }
 }
