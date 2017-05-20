@@ -28,20 +28,17 @@ import React, { Component, PropTypes } from 'react';
 import moment from "moment";
 
 export default class AppDates extends Component {
-
-  renderDates(dates) {
-    return dates.map((date, index) => {
-      return <List date={date} key={`${index}-${date}`}/>;
-    });
-  }
-
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
     return (
       <div>
         <h1>04 - React</h1>
-        {this.renderDates(dates)}
+        <List dates={dates} />
+        <hr />
+        <List dates={dates}>
+          <h1>Optional Header</h1>
+        </List>
       </div>
     );
   }
@@ -50,46 +47,41 @@ export default class AppDates extends Component {
 
 class List extends Component {
   static propTypes = {
-    date: PropTypes.string
+    dates: PropTypes.array,
+    index: PropTypes.number
   };
 
   constructor(props) {
     super(props);
 
-    this.switchDateParser = this.switchDateParser.bind(this);
+    this.parseDate = this.parseDate.bind(this);
+    this.row = this.row.bind(this);
 
     this.parser = {
       true: "moment",
       false: "custom"
     };
 
+    const parser = false;
+
     this.state = {
-      currentDate: props.date,
-      dispalyDate: props.date,
-      parser: true,
-      displayParser: this.parser[true]
+      parser,
+      displayParser: this.parser[parser]
     };
   }
 
-  componentDidMount() {
-    const { currentDate, parser } = this.state;
-    this.switchDateParser(parser);
+  parseDate(date) {
+    const { parser } = this.state;
+    let displayDate;
+    const displayParser = this.parser[currentParser];
+    const dateParsered = parser ? moment(date).format("DD/MMM/YYYY") : this.customParser(date);
+    displayDate = `With ${displayParser} parser : (${dateParsered})`;
+
+    return displayDate;
   }
 
-  switchDateParser() {
-    const { currentDate, parser } = this.state;
-    let displayDate;
-    const currentParser = !parser;
-    const displayParser = this.parser[currentParser];
-    const dateParsered = currentParser ? moment(currentDate).format("DD/MMM/YYYY") : this.customParser(currentDate);
-
-    displayDate = `With ${displayParser} parser : ${dateParsered}`;
-
-    this.setState({
-      displayDate,
-      parser: currentParser,
-      displayParser
-    });
+  showOwnIndex(index) {
+    alert(`My index is ${index}`);
   }
 
   customParser(date) {
@@ -116,18 +108,33 @@ class List extends Component {
     return `${day}/${months[month]}/${year}`;
   }
 
+  row() {
+    const { dates, children, index } = this.props;
+
+    return dates.map((date, index) => {
+      return (
+        <div key={`${new Date * 1}-${index}`} style={{border: "border:1px solid green"}}>
+          <p>
+            {this.customParser(date)}
+            <button style={{marginLeft: "10px"}} onClick={() => this.showOwnIndex(index)}>
+              {`Show my index`}
+            </button>
+          </p>
+        </div>
+      );
+    })
+  }
+
   // TODO
   render() {
-    const { displayDate, parser, displayParser } = this.state;
+    
+    const { children } = this.props;
 
     return (
       <div style={{border: "1px solid blue", marginBottom: "10px", padding: "10px", fontSize: "16px", fontWeight: "bold"}}>
-        <p>
-          {displayDate}
-          <button style={{marginLeft: "10px"}} onClick={() => this.switchDateParser()}>
-            {`Switch to ${displayParser} parser`}
-          </button>
-        </p>
+        {this.row()}
+        <hr/>
+        {children}
       </div>
     );
   }
