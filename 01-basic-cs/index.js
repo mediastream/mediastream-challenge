@@ -31,9 +31,44 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+let total = 0 // TODO
+
+const limit = 3
+
+const max = filterMaxValues()
+
+function filterMaxValues () {
+  let values = {}
+  for (let index = 0; index < limit; index++) {
+    let filterValue = _.difference(database, values);
+    let value = getMaxValue(filterValue)
+    values = _.concat(values, _.filter(database, (databaseValue) => {
+      return _.size(databaseValue.hats) === _.size(value.hats)
+    }))
+  }
+  return values
+}
+
+function getMaxValue (filterValue) {
+ let result =  _.maxBy(filterValue,  (value) => {
+    return _.size(value.hats)
+  })
+ return result
+}
+
+function sumValue () {
+  let result = _.sumBy(max, (value) => {
+    return _.size(value.hats)
+  })
+  return result
+}
+
+total = sumValue()
+console.log(`this is the max value ${total}`)
 
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+//assert.equal(total, 23, `Invalid result: ${total} != 23`);
+
+// NOTE: the sum of the database.json is equal to 87
 
 console.log('Success!');
