@@ -43,10 +43,34 @@ export default class MyApp extends React.Component {
   }
 }
 
-
+/*
+no entendí muy bien lo que hay que hacer y tengo poco conocimiento de react.
+*/
 class List extends React.Component {
   // TODO
-  render() {
-    return null;
+  render() {  
+
+    const titulo="Encabezado";
+    var mes=["Ene","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];  
+    var fechas = this.props.dates.map(function(item) {
+
+      var f = item.substring(8,10)+" / "+mes[Number(item.substring(5,7))]+" / "+item.substring(0,4);
+      return (
+        <div key={f}>
+          <a href={''}>{f}</a>
+        </div>
+      );
+    });
+
+    return <div><Hijo titulo={titulo} />{fechas}</div>;
+  }
+}
+class Hijo extends React.Component {
+  // TODO
+  render() {    
+    
+    return (
+      <h3>{this.props.titulo}</h3>
+    );
   }
 }

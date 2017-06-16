@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,6 +27,29 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+
+
+
+//recibe peticion get /Users
+app.get('/users',function(req,res,next){
+	//cabeceras de respuetsa
+	res.setHeader('Content-Disposition', 'attachment; filename=users.csv');
+	res.setHeader('Content-type', 'text/csv');
+	//busco todos los registors
+	User.find({},function(err,resm){
+		if(!err){
+			let n=resm.length;
+			for(var i=0; i<n; i++){
+				//los envío uno  a unop
+				res.write(resm[i].name+","+resm[i].email+"\r\n");
+			}
+			//finaliza la respuesta
+			res.end();
+		}
+	});
+
+});
+
 
 // TODO
 
