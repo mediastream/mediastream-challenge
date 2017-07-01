@@ -16,6 +16,7 @@ $ node utils/seed.js
 `);
 
 const express = require('express');
+const csv = require('express-csv');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
@@ -27,6 +28,16 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.get('/users', (req, res) => {
+    res.attachment('users.csv');
+    res.write('name,email\n');
+
+    var usersStream = User.find({}).stream();
+    usersStream.on('data', (chunk) => {
+        res.write(`${chunk.name},${chunk.email}\n`);
+    }).on('end', () => {
+        res.end();
+    });
+});
 
 app.listen(3000);
