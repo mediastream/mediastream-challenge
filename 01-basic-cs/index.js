@@ -30,8 +30,21 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+var hatsCount = {}
+database.forEach((user) => {
+    user.hats.forEach((hat) => {
+        if (hatsCount[hat.id] !== undefined) {
+            hatsCount[hat.id] += 1;
+        } else {
+            hatsCount[hat.id] = 1;
+        }
+    });
+});
 
-const total = 0 // TODO
+var sortedCounts = Object.values(hatsCount).sort((a, b) => {return b - a;});
+const total = sortedCounts.slice(0, 3).reduce((sum, value) => {
+    return sum + value;
+})
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
