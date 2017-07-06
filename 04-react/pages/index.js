@@ -45,8 +45,38 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+    // TODO
+    render() {
+        var dates = [];
+        var optionalHeader = null;
+
+        // check if List have children
+        if(this.props.children){
+            optionalHeader = this.props.children;
+        }
+
+        // make the rows
+        this.props.dates.forEach(function(date, index){
+            var d = new Date(date);
+            var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+
+            var date = d.getDate() + '/' + months[d.getMonth()]  + '/' + d.getFullYear()
+
+            dates.push(<Row date={date} index={index} />)
+        });
+
+        return (
+            <div>
+                {optionalHeader}
+                {dates}
+            </div>
+        );
+    }
+}
+
+class Row extends React.Component {
+
+    render(){
+        return(<div onClick={() => {alert(this.props.index)}}>{this.props.date}</div>);
+    }
 }
