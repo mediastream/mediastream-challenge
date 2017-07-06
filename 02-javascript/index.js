@@ -20,3 +20,27 @@ function requester(method, base, headers = { Accept: '*/*' }) {
   return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
     .then(r => r.json());
 }
+
+// 1.- Make a http request (like ajax), receiving a HTTP method and a URL and return a promise
+// 2.-
+
+var request = requester('GET', 'https://api.github.com/users/mediastream')
+request()
+    .then(function(json){
+        console.log(json);
+    })
+    .catch(function(){
+        console.log("error");
+    });
+
+var request2 = requester('GET', 'http://www.google.com')
+request2()
+    .then(function(json){
+        console.log(json);
+    })
+    .catch(function(){
+        console.log("error");
+    });
+
+// 3.- Promises.
+
