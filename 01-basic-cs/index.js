@@ -31,7 +31,35 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+// Solution:
+// - Loop the users, then loop the hats.
+// - By every unique hat sum 1
+// - Sort descendant
+// - Sum top 3
+
+// It takes:
+// Time: O(m*n)
+// Space: O(n)
+// where m -> number of users and n-> number of hats
+
+var top_selling = {};
+
+_.forEach(database, function(user){
+    _.forEach(user.hats, function(hat){
+        if (_.has(top_selling, hat.id)){
+            ++top_selling[hat.id];
+        }
+        else{
+            top_selling[hat.id] = 1;
+        }
+    });
+});
+
+const total = _.chain(top_selling)
+    .sortBy()
+    .takeRight(3)
+    .sum();
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
