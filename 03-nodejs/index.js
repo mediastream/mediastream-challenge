@@ -29,4 +29,17 @@ const app = express();
 
 // TODO
 
+app.get('/users', function(req, res){
+    res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    User.find({}, function(err, users){
+        if(!err){
+            users.forEach(function(user){
+                res.write(user.name + "," + user.email  + "\r\n");
+            });
+            res.end();
+        }
+    });
+});
+
 app.listen(3000);
