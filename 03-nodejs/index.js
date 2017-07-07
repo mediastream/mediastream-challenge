@@ -27,6 +27,17 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
+app.get('/users', function(req, res) {
+  User.find(function(err, users) {
+  	const csv = new Array();
+  	csv.push(['id', 'name', 'email', '\n']);
+  	users.forEach(user => csv.push([user.id, user.name, user.email, '\n']));
+  	res.attachment('users.csv');
+    res.send(new Buffer(csv.join('')));
+  });
+})
+
+
 // TODO
 
 app.listen(3000);
