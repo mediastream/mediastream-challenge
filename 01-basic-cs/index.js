@@ -34,7 +34,8 @@ console.log(_.isArray(database), database.length)
 
 console.log(_.sum(_.slice(_.sortBy(_.countBy(_.flatten(_.map(database, item => item.hats)),'id')),-3)))
 
-const total = _.sum(_.slice(_.sortBy(_.countBy(_.flatten(_.map(database, item => item.hats)),'id')),-3))
+const total = _(database).map(user => user.hats).flatten().countBy('id').sortBy().slice(-3).sum()
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
