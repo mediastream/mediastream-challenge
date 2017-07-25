@@ -25,6 +25,9 @@ Example:
 `);
 
 import React from 'react';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -43,10 +46,40 @@ export default class MyApp extends React.Component {
   }
 }
 
-
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
+  shouldComponentUpdate(nextProps) {
+    return (
+      // Deep comparison
+      _.isEqual(this.props.dates, nextProps.dates)
+    );
   }
+  render() {
+    const rows = _.map(this.props.dates,(date, index)=>{
+      //Moment was adding a weird dot after the month name, that's why I use replace.
+      const formattedDate = moment(date).format(`D/MMM/YYYY`).replace('.','');
+      return <Row key={index} index={index} date={formattedDate}/>;
+    })
+    return (
+      <div>
+        {this.props.children}
+        {rows}
+      </div>
+    );
+  }  
+}
+
+List.propTypes = {
+  children: PropTypes.element,
+  dates: PropTypes.arrayOf((prop, index) => {
+      if(!moment(prop[index]).isValid()) throw new Error(`${prop[index]} is not a valid date.`)
+  })
+}
+
+const Row = ({index, date}) => {
+  const clickHandler = () => {
+    alert(`Index of element in this list: ${index}`)
+  }
+  return (
+    <div onClick={clickHandler}>{`(${date})`}</div>
+    );
 }
