@@ -30,11 +30,22 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
-console.log(_.isArray(database), database.length)
+const total = _(database) // Wrap object in lodash object to allow method chaining.
+              .map(user => user.hats) // Simple map to get all hats by everyone.
+              .flatten() // Merge all hats arrays into one, plus remove any empty ones.
+              .countBy('id') // Count all hats of each unique id.
+              .sortBy() // Convert into a value-only array, sorted in ascending order.
+              .slice(-3) // Get last three, since it's sorted this gets the ones with highest value.
+              .sum() // Add them up to get the total.
 
-console.log(_.sum(_.slice(_.sortBy(_.countBy(_.flatten(_.map(database, item => item.hats)),'id')),-3)))
-
-const total = _(database).map(user => user.hats).flatten().countBy('id').sortBy().slice(-3).sum()
+//  ***** What is the Big-O complexity in time and space? *****
+// Since we are chaining the methods, they will execute one after the other. This means the
+// complexity in TIME will be the one of the most complex method used, in this case I would say it's
+// the sortBy, since most sorting algorithms are O(N^2). NOTE: 'sortBy' could be replaced with a
+// more efficient, solution-specific algorithm, but for sakes of readability, and since there aren't
+// that many elements in the array after 'countBy', I think this works best.
+// Without looking into how every lodash method works, the amount of data is reduced after every method,
+// so the SPACE complexity is O(N), N being the size of the input database.
 
 
 // Throws error on failure
