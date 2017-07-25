@@ -25,6 +25,8 @@ function requester(method, base, headers = { Accept: '*/*' }) {
 // It's a higher order function, so it adds custom functionality to another function, in this case 'fetch()', and return a new function.
 // The added functionality would be a customized, more flexible way to introduce parameters, and an already parsed JSON response.
 
+//Pattern: Functional programming
+
 // Use cases:
 // Concat all parts of uri, usefull when even the base uri is dynamic. Validation for 'base' with a ternary op makes this possible.
 requester('GET')(['https://api.github.com','users','mediastream']).then(res=>console.log(typeof res)); 
@@ -40,7 +42,7 @@ requester('GET','https://api.github.com/users/mediastream',{Accept:'application/
 
 // Creating an already set up methods for making requests. (Best use case in my opinion)
 
-function requestUser(user){
+const requestUser = (user) => {
   return requester('GET','https://api.github.com/users',{Accept:'application/json'})([user])
 }
 

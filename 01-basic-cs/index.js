@@ -38,14 +38,15 @@ const total = _(database) // Wrap object in lodash object to allow method chaini
               .slice(-3) // Get last three, since it's sorted this gets the ones with highest value.
               .sum() // Add them up to get the total.
 
+
+
 //  ***** What is the Big-O complexity in time and space? *****
-// Since we are chaining the methods, they will execute one after the other. This means the
+// Since we are chaining the methods, they will execute one after the last one has finished. This means the
 // complexity in TIME will be the one of the most complex method used, in this case I would say it's
 // the sortBy, since most sorting algorithms are O(N^2). NOTE: 'sortBy' could be replaced with a
 // more efficient, solution-specific algorithm, but for sakes of readability, and since there aren't
 // that many elements in the array after 'countBy', I think this works best.
-// Without looking into how every lodash method works, the amount of data is reduced after every method,
-// so the SPACE complexity is O(N), N being the size of the input database.
+// SPACE complexity is O(NM), N being the amount of users, M being the amount of hats.
 
 
 // Throws error on failure
