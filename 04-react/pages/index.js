@@ -45,8 +45,59 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+
+  renderHeader() {
+    const header = this.props.children
+    if(header) {
+      return (
+        <thead>
+          <tr>
+            <th>{header.props.children}</th>
+          </tr>
+        </thead>
+      )
+    }
+  }
+
+  renderBody() {
+    return (
+      <tbody>
+      {
+        this.props.dates.map((date, index) => {
+          return (
+            <Row date={date} index={index}/>
+          )
+        })
+      }
+      </tbody>
+    )
+  }
+
   render() {
-    return null;
+    return (
+      <table>
+        {this.renderHeader()}
+        {this.renderBody()}
+      </table>
+    )
+  }
+}
+
+class Row extends React.Component {
+
+  formatDate() {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const date = new Date(this.props.date)
+    return `(${date.getUTCDate()}/${monthNames[date.getUTCMonth()]}/${date.getUTCFullYear()})`
+  }
+
+  render() {
+    return (
+      <tr onClick={() => alert(this.props.index)}>
+        <td>
+          {this.formatDate()}
+        </td>
+      </tr>
+    )
   }
 }

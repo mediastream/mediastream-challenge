@@ -30,10 +30,33 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const total = sumOfTopMostSellingHats(database, 3)
 
-const total = 0 // TODO
+console.log(`
+  - The complexity of the algorithm in terms of time is O(n) where n is the number
+    of hats stored in database.
+  - The complexity of the algorithm in terms of space is O(n) + O(2m) where n is
+    the number of hats stored in database and m is the number of hats grouped by id.
+`)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+function sumOfTopMostSellingHats(users, top) {
+  const hatsAndQuantity = users.reduce((result, user) => {
+    if(user.hats && user.hats.length > 0) {
+      user.hats.forEach(hat => {
+        result[hat.id] = (result[hat.id] || 0) + 1
+      })
+    }
+    return result
+  }, {})
+  const orderedQuantities = _.orderBy(hatsAndQuantity, [], ['desc'])
+  let result = 0
+  for(let i = 0, len = (top % orderedQuantities.length); i < len; i++) {
+    result += orderedQuantities[i]
+  }
+  return result
+}
