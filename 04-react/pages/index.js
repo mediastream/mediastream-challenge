@@ -43,10 +43,43 @@ export default class MyApp extends React.Component {
   }
 }
 
+const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+class ListElement extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDateClick = this.handleDateClick.bind(this);
+  }
+
+  handleDateClick() {
+    alert(`${this.props.index}`);
+  }
+
+  render() {
+    let date = new Date(this.props.date);
+    let str_date = "("+ date.getDate() + '/' + months[date.getMonth()] + '/' + date.getFullYear()+')';
+    return(
+      <div className={'list_element'} onClick={this.handleDateClick}>
+        {str_date}
+      </div>
+    );
+  }
+}
 
 class List extends React.Component {
-  // TODO
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return null;
+    let dates = this.props.dates;
+    return (
+      <div className={'list'}>
+        {this.props.children}
+        {dates.map((date, index) =>
+          <ListElement date={date} index={index}>
+          </ListElement>)}
+      </div>
+    );
   }
 }

@@ -30,8 +30,67 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+var total = 0 // TODO
 
-const total = 0 // TODO
+const MAX_TOPS = 3;
+
+//for this function is O(users * hats), because the hat which are conting is checked and update in O(1)
+function get_hats_sells(database) {
+	var hats_sells = {};
+	for(var u in database) {
+		var hats = database[u].hats;
+		for(var h in hats) {
+			var hat = hats[h];
+			if(!(hat.id in hats_sells)) {
+				hats_sells[hat.id] = 0;
+			}
+			hats_sells[hat.id]++;
+		}
+	}
+
+	return hats_sells;
+}
+
+//for this function is O(hats_sells * MAX_TOPS), but in the best case scenario(the top sells are at the begining) is O(hats_sells + MAX_TOPS)
+function get_tops_sells(hats_sells, MAX_TOPS) {
+	var tops = [];
+
+	for(var i = 0; i < MAX_TOPS; i++) {
+		tops.push(0);
+	}
+
+	var min_val_tops = 0;
+	var min_pos_tops = 0;
+
+	for(var hat_id in hats_sells) {
+		var hat_sells = hats_sells[hat_id];
+
+		//if is greater than the min top we correct the tops and the min top
+		if(hat_sells > min_val_tops) {
+			tops[min_pos_tops] = hat_sells;
+			min_val_tops = hat_sells;
+
+			for(var j = 0; j < MAX_TOPS; j++) {
+				if(tops[j] <= min_val_tops) {
+					min_val_tops = tops[j];
+					min_pos_tops = j;
+				}
+			}
+		}
+	}
+
+	return tops;
+}
+
+var hats_sells = get_hats_sells(database);
+console.log(hats_sells);
+
+var tops_sells = get_tops_sells(hats_sells, MAX_TOPS);
+console.log(tops_sells);
+
+for(var t in tops_sells) {
+	total += tops_sells[t];
+}
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
