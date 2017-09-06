@@ -28,5 +28,29 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.use(morgan('combined'));
+
+app.get('/', function (req, res) {
+  res.send('use GET /users');
+});
+
+app.get('/users', function (req, res) {
+	res.statusCode = 200;
+	res.setHeader('Content-type', 'application/csv');
+	res.setHeader('Access-Control-Allow-Origin', '*');
+
+	// Header to force download
+	res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+
+	res.write("NAME,EMAIL\n");
+
+	User.find({}).cursor()
+		.on('data', function(user) {
+			res.write('"' + user.name + '","' + user.email + "\"\n");
+		})
+		.on('end', function() {
+			res.end();
+		});	
+});
 
 app.listen(3000);
