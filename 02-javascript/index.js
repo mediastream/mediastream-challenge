@@ -20,7 +20,7 @@ Take a look at the 'requester' function.
   requester("DELETE","api.com")(["user","as12"])
 
 - How it is called this design pattern or technique?
-  Its called a Serializer
+  Its called an Adapter
 
 HINT: Use https://api.github.com/users/mediastream
 `);
