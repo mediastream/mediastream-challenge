@@ -43,10 +43,42 @@ export default class MyApp extends React.Component {
   }
 }
 
+const Row = ({date, onDateclick}) => {
+  return <h3 onClick={onDateclick}>{date}</h3>
+}
 
 class List extends React.Component {
+
   // TODO
   render() {
-    return null;
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    const dates = this.props.dates.map((date, index) => {
+      const d = new Date(date)
+      return (<Row key={index} onDateclick={() => {
+        alert(index)
+      }}
+        date={`${d.getDate()}/${month[d.getMonth()].substring(0, 3)}/${d.getFullYear()}`}
+      />)
+    })
+    console.log(dates)
+    return (
+      <div>
+        {this.props.children && this.props.children}
+        {dates}
+      </div>)
+
   }
 }

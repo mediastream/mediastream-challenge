@@ -23,17 +23,28 @@ Hat(048d8fbf-7653-461f-a59c-68c73b8855e5) sold 7.
 Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 -> Expected result: 7 + 7 + 9 => 23
-`);
+`)
 
-const _ = require('lodash'); // https://lodash.com/docs/4.17.4
-const assert = require('assert');
+const _ = require('lodash') // https://lodash.com/docs/4.17.4
+const assert = require('assert')
 
-const database = require('./database.json');
+const database = require('./database.json')
 
+// first create an array of hats
+const hats = database.reduce((acc, user) => {
+  return [...acc, ...user.hats]
+}, [])
+// count them
+let results = _.countBy(hats, (hat) => hat.id)
+// sort them
+results = (_.sortBy(results)).reverse()
+// take top 3
+results = _.take(results, 3)
+// print results
+console.log(results)
 
-const total = 0 // TODO
-
+const total = results.reduce((a, b) => a + b)
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+assert.equal(total, 23, `Invalid result: ${total} != 23`)
 
-console.log('Success!');
+console.log('Success!')
