@@ -18,6 +18,8 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const fs = require("fs")
+const os = require("os")
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,7 +28,19 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+app.get("/users", (req,res,next)=>{
 
-// TODO
+  var stream = User.find().cursor();
+  var writeStream = fs.createWriteStream('out.csv');
+
+  writeStream.write("id,name,email");
+  stream.on("data",function(user){
+    let string = [user.id,user.name,user.email].join(",") + os.EOL;
+    writeStream.write(string);
+  }).on("close",function(){
+    writeStream.end();
+  });
+  next("ok");
+})
 
 app.listen(3000);

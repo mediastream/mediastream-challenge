@@ -30,10 +30,55 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+// TASK
+var hats = {};
+var users = database;
 
-const total = 0 // TODO
+// 1 - Group && count Hats First
+for(let i=0;i<users.length;i++){
+
+  // Validate
+  let user = users[i];
+  if( !user.hats.length ) continue;
+
+  // group hats by type
+  for(let j=0; j<user.hats.length; j++){
+    let hat = user.hats[j];
+    let total = hats[hat.id];
+    hats[hat.id] = isNaN(total)? 1: ++total;
+  }
+}
+
+// Generate Array with Total x Each Hat
+var totalList = Object.keys(hats).map(function (key) { return hats[key]; });
+bubbleSort(totalList);
+
+// Sett Total
+const total = totalList[0] + totalList[1] + totalList[2]
+
+console.log(`
+    The time and complexity in Space is 0(n^2)
+`);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+/**
+ * Inverse Bubble Sort
+ **/
+function bubbleSort(a){
+    var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < a.length-1; i++) {
+            if (a[i] < a[i+1]) {
+                var temp = a[i];
+                a[i] = a[i+1];
+                a[i+1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+}

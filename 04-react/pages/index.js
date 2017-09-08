@@ -26,6 +26,9 @@ Example:
 
 import React from 'react';
 
+const { array, date, number, string } = React.PropTypes
+const months = ["jan", "feb", "mar", "apr", "may", "jun","jul", "aug", "sep", "oct", "nov", "dec"];
+
 export default class MyApp extends React.Component {
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
@@ -44,9 +47,55 @@ export default class MyApp extends React.Component {
 }
 
 
+/**
+ * Date List Component
+ **/
 class List extends React.Component {
+
   // TODO
   render() {
-    return null;
+    var dates = this.props.dates;
+    return (
+        <div>
+          {this.props.children}
+          {this.props.dates.map((item,index)=> (
+            <Row key={index} index={index} date={item} />
+          ))}
+        </div>
+    );
   }
+}
+List.propTypes = {
+  dates: React.PropTypes.arrayOf(String).isRequired
+}
+
+/**
+ * Date Component
+ **/
+class Row extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(){
+    alert(this.props.index)
+  }
+
+  // TODO
+  render() {
+    let date = new Date(this.props.date);
+    let string = [date.getDate(),months[date.getMonth()],date.getFullYear()].join("/");
+    return (
+      <div onClick={this.handleClick}>
+      ({string})
+      </div>
+    );
+  }
+}
+
+Row.propTypes = {
+  index: number.isRequired,
+  date: string
 }
