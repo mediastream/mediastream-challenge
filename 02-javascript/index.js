@@ -20,3 +20,14 @@ function requester(method, base, headers = { Accept: '*/*' }) {
   return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
     .then(r => r.json());
 }
+// its meant to make fetch available in both the browser and the server,
+// it fetched data from an api address
+// this is the way its used:
+requester('get', 'https://api.github.com/users/mediastream')().then(console.log)
+// we could pass a path as a parameter in the curried function
+requester('get', 'https://api.github.com')(['users/mediastream']).then(console.log)
+// we can separate the resources like an array so it can be easier to dinamically populate it
+requester('get', 'https://api.github.com')(['users', 'mediastream']).then(console.log)
+// this technique is called currying
+// I cant think of a way to pass the body of the request in this function,
+// if I wanted to post a new resource for example
