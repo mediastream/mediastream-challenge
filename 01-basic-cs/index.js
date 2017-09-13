@@ -30,8 +30,12 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const hats = _.flatMap(database, 'hats');
+const hatsCount = _.countBy(hats, 'id');
+const hatsCountOrder = _.orderBy(hatsCount, [], ['desc']);
+const top = _.take(hatsCountOrder, 3)
 
-const total = 0 // TODO
+const total = _.sum(top); // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
