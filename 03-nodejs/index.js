@@ -16,17 +16,20 @@ $ node utils/seed.js
 `);
 
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
-
-// Setup database
-mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
 
-// TODO
+// View engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use('/users', require('./controllers/users'));
+
+app.get('/', (req, res) => {
+  res.render('index.pug');
+});
 
 app.listen(3000);
