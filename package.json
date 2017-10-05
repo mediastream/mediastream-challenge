@@ -7,7 +7,7 @@
   "author": "Patricio López <lopezjuripatricio@gmail.com>",
   "license": "UNLICENCED",
   "scripts": {
-    "1": "nodemon --harmony-async-await 01-basic-cs/",
+    "1": "nodemon --watch 01-basic-cs --exec babel-node -- 01-basic-cs/index.js",
     "2": "nodemon --harmony-async-await 02-javascript/",
     "3": "nodemon --harmony-async-await 03-nodejs/",
     "4": "cd 04-react; npm start"
@@ -23,6 +23,10 @@
   "devDependencies": {
     "faker": "^3.1.0",
     "jest": "^18.1.0",
+    "babel-cli": "^6.10.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
     "nodemon": "^1.11.0"
   }
 }
