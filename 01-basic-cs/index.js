@@ -30,10 +30,23 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const total =  
+   _.chain(database)
+  .map(function(o) {
+    return {hats: o.hats.length}; 
+  })
+  .sortBy('hats')
+  .reverse()
+  .slice(0, 3) 
+  .reduce(function(s, entry) {
+    return s + parseFloat(entry.hats);
+  }, 0)
+  .value();
 
-const total = 0 // TODO
 
 // Throws error on failure
+console.log(total);
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
+
 
 console.log('Success!');
