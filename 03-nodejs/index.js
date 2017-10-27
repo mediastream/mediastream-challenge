@@ -31,5 +31,5 @@ const app = express();
 const userRoute = require('./routes/user-csv');
 
 app
-  .use('/users', userRoute)
+  .use('/', userRoute)
   .listen(3000);

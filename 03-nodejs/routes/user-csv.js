@@ -4,7 +4,7 @@ const User = require('../models/User')
 
 const {csvfication} = require('../utils/csv')
 
-router.get('/', (req, res) => {
+router.get('/users', (req, res) => {
 
   res.writeHead(200, {
     'Content-Type': 'application/octet-stream',

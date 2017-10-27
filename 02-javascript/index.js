@@ -33,7 +33,7 @@ console.log(`
   - base (the url origin)
   - headers (object to set the headers of the following requests)
 
-  to make a request with this functions it is needed to call it, in order to
+  to make a request with this function it is needed to call it, in order to
   configure the request, and then call the returned function with an array
   containing the parts of the url pathname.
 
@@ -43,7 +43,7 @@ console.log(`
     requester('GET', 'https://api.github.com')(['users', 'mediastream'])
       .then(response => console.log(response))
 
-  - 2: previously configurated object
+  - 2: previously configured object
 
     apiReq = requester('GET', 'https://api.github.com')
 
