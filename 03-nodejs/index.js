@@ -28,5 +28,8 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+const userRoute = require('./routes/user-csv');
 
-app.listen(3000);
+app
+  .use('/users', userRoute)
+  .listen(3000);
