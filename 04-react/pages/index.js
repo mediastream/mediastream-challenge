@@ -24,7 +24,8 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+import React, {PropTypes} from 'react';
+import moment from 'moment'
 
 export default class MyApp extends React.Component {
   render() {
@@ -46,7 +47,41 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
-  render() {
-    return null;
+
+  onRowClick(i) {
+    alert(`Hey you just clicked date number ${i + 1}!!`)
   }
+
+  render() {
+    const {children, dates} = this.props
+    return (
+      <div>
+        {children}
+        <ul>
+          {dates.map((date, i) => (
+            <Row date={date} i={i} key={i} onClick={this.onRowClick}/>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  static propTypes = {
+    dates: PropTypes.array,
+    children: PropTypes.element
+  }
+}
+
+const Row = ({date, i, onClick}) => (
+  <li>
+    <a href="#" onClick={() => onClick(i)}>
+      ({moment(date).format('DD/MM/YYYY')})
+    </a>
+  </li>
+)
+
+Row.propTypes = {
+  date: PropTypes.string.isRequired,
+  i: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired
 }
