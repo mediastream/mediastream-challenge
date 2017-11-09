@@ -46,7 +46,34 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  rewriteDate(date) {
+    let months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    let day = date.getDate();
+    let month = months[date.getMonth()];
+    let year = date.getFullYear();
+
+    return day + '/' + month + '/' + year;
+  }
+
   render() {
-    return null;
+    const {dates, children} = this.props;
+    const dateItems = dates.map((date, index) => (
+      <Row date={this.rewriteDate(new Date(date))} index={index} />
+    ));
+
+    return (
+      <div>
+        {(children) ? children : null}
+        <ul>
+          {dateItems}
+        </ul>
+      </div>
+    );
   }
 }
+
+const Row = props => (
+  <li onClick={() => {alert(props.index)}}>
+    {props.date}
+  </li>
+)
