@@ -3,7 +3,10 @@
     "start": "next"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
+    "moment": "^2.19.1",
     "next": "^1.2.3",
+    "prop-types": "^15.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

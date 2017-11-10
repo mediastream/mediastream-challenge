@@ -9,7 +9,7 @@
   "scripts": {
     "1": "nodemon 01-basic-cs/",
     "2": "nodemon 02-javascript/",
-    "3": "nodemon --inspect 03-nodejs/",
+    "3": "nodemon 03-nodejs/",
     "4": "cd 04-react; npm start"
   },
   "dependencies": {
