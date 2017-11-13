@@ -28,11 +28,11 @@ function requester(method, base, headers = { Accept: '*/*' }) {
 };
 
 requester('get', new Array('//api.github.com','users','mediastream')).then((json) =>  {
-  console.log('funcion basada en promesas');
+  console.log('funcion request con ajax basada en promesas');
   console.log(json);
 });
 
 requester('get', ['//api.github.com/users/mediastream']).then((json) =>  {
-  console.log('funcion basada en promesas sin join');
+  console.log('funcion request con ajax basada en promesas sin join');
   console.log(json);
 });
