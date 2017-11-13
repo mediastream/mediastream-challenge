@@ -29,11 +29,45 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+var objList = new Array;
+var hatList = new Array;
+for (var i = 0; i < database.length; i++) {
+    for (var j = 0; j < database[i].hats.length; j++) {
+        hatList.push(database[i].hats[j].id);
+    }
+    if(Object.keys(database).length-1 == i){
+        for (let p = 0; p < hatList.length; p++) {
+            if(objList[hatList[p]] == undefined){
+                objList[hatList[p]] = 1;
+            } else {
+                objList[hatList[p]] = objList[hatList[p]]+1;
+            }
+            if(Object.keys(hatList).length-1 == p){
+                var listAux = new Array;
+                var cont = 0;
+                Object.keys(objList).forEach(ele => {
+                    listAux.push({
+                        'id' : ele,
+                        'num' : objList[ele]
+                    });
+                    cont++;
+                    if(Object.keys(objList).length == cont){
+                        listAux.sort(function(a,b) {
+                            if ( a.num > b.num )
+                                return -1;
+                            if ( a.num < b.num )
+                                return 1;
+                            return 0;
+                        });
 
+                       var total = listAux[0].num+listAux[1].num+listAux[2].num;
+                       assert.equal(total, 23, `Invalid result: ${total} != 23`);
+                    }
+                });
+            }
+        }
+    }
+}
 
-const total = 0 // TODO
-
-// Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
