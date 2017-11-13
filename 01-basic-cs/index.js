@@ -62,6 +62,7 @@ for (var i = 0; i < database.length; i++) {
 
                        var total = listAux[0].num+listAux[1].num+listAux[2].num;
                        assert.equal(total, 23, `Invalid result: ${total} != 23`);
+                       console.log(listAux[0].num+' + '+listAux[1].num+' + '+listAux[2].num+' => '+total);
                     }
                 });
             }
