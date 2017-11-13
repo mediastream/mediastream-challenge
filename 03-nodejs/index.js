@@ -23,11 +23,10 @@ const csv      = require('csv-express');
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
-
+console.log('Por favor entra en http://localhost:3000/ para descargar el csv');
 // Setup Express.js app
 const app = express();
 app.get('/', (req, res, next) => {
-
     User.find({}, (err, users) => {
         if (err) res.send(err);
         var userMap = [];
@@ -43,8 +42,6 @@ app.get('/', (req, res, next) => {
         res.csv(userMap, true);
 
     });
-    
-
 });
 
 // TODO
