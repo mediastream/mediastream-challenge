@@ -28,12 +28,31 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
+
 const database = require('./database.json');
+var hats = [];
 
+_.forEach(database, function(index) {
+    _.forEach(index.hats,function(hat){        
+        hats.push(hat);
+    });
+});
 
-const total = 0 // TODO
+var counts = _.countBy(hats,'id');
+var data = _.orderBy(_.map(counts, function(value, key){
+    return {
+        key: key,
+        count: value
+    };
+}),['count'],['desc']);
+
+var total = 0 // TODO
+
+for(let i =0; i<=2; i++){
+    total += data[i].count;
+}
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-
 console.log('Success!');
+console.log('The complexity is O(n)')

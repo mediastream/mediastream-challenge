@@ -5,11 +5,11 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/mediastream-challenge');
+mongoose.connect('mongodb://developer:developer@ds137207.mlab.com:37207/videoplayer');
 const User = require('../models/User');
 
 const AMMOUNT = {
-  USERS: 100000,
+  USERS: 100,
 };
 
 const users = _.times(AMMOUNT.USERS, n => ({
