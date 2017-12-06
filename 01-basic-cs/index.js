@@ -30,8 +30,31 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+// We get all hats sales
+let sales = [];
+_.forEach(database, function(value) {
+	if (typeof value.hats !== 'undefined' && value.hats.length > 0) {
+    	sales = _.concat(sales, value.hats);
+    }
+});
 
-const total = 0 // TODO
+// Calculating the total sales per hat
+const hatsSold = _.reduce(sales, function(result, value, key) {
+	const index = _.findIndex(result, ['id', value.id]);
+	if (index === -1) {
+    	result.push({ id: value.id, sold: 1 });
+    } else {
+    	result[index].sold += 1;
+    }
+  	return result;
+}, []);
+
+// Sorting the hat sales in ascending way, the most sold are at the end
+const hatsSoldAscending = _.sortBy(hatsSold, [function(h) { return h.sold; }]);
+const total = 
+	hatsSoldAscending[hatsSoldAscending.length - 1].sold +
+	hatsSoldAscending[hatsSoldAscending.length - 2].sold +
+	hatsSoldAscending[hatsSoldAscending.length - 3].sold;
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
