@@ -18,6 +18,8 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const JSONStream = require('JSONStream');
+const path = require("path");
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +30,19 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+// let total = 0;
+
+// End point that downloads the .csv file using a jquery request
+// and parsing from JSON to CSV using papaparse.
+app.get('/users', function (req, res) {
+	res.sendFile(path.join(__dirname+'/backup.html'));
+});
+// End point that stream the database.
+app.get('/backup', function (req, res) {
+  User.find()
+    .cursor()
+    .pipe(JSONStream.stringify())
+    .pipe(res.type('json'));
+});
 
 app.listen(3000);

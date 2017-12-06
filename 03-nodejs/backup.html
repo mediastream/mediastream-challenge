@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>03-nodejs</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.3.6/papaparse.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		function createBackup() {
+			// We get the database in JSON using jquery and
+			// it is parsed to csv using papaparse
+			$.get("http://localhost:3000/backup", function(data, status){
+		        const csvData = new Blob([Papa.unparse(data)], {type: 'text/csv;charset=utf-8;'});
+		        const exportFilename = 'database-backup.csv';
+				//IE11 & Edge
+				if (navigator.msSaveBlob) {
+				    navigator.msSaveBlob(csvData, exportFilename);
+				} else {
+				    //In FF link must be added to DOM to be clicked
+				    var link = document.createElement('a');
+				    link.href = window.URL.createObjectURL(csvData);
+				    link.setAttribute('download', exportFilename);
+				    document.body.appendChild(link);    
+				    link.click();
+				    document.body.removeChild(link);    
+				}
+				$("#message").text("Database backup is done... thank you for your patience.");
+		    });
+		}
+	</script>
+</head>
+<body onload="createBackup()">
+	<p id="message">The system is generating the database backup, please wait...</p>
+</body>
+</html>
