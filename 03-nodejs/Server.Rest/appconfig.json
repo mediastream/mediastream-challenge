@@ -1,0 +1,12 @@
+{
+	"Server":{
+		"IP": "127.0.0.1",
+		"Port": 3000,
+		"BandwidthLimit": 4
+	},
+	"MongoDBServer": {
+		"IP": "mongodb://127.0.0.1",
+		"PORT": 27017,
+		"BBDD": "mediastream-challenge"
+	}
+}

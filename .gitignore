@@ -129,3 +129,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,osx,windows,linux
+
+01-basic-cs/node_modules/
+02-javascript/node_modules/
+03-nodejs/node_modules/
+03-nodejs/Server.Rest/node_modules/
+03-nodejs/Server.Rest/Server.Services/Servicio.GestionUsuarios/node_modules/

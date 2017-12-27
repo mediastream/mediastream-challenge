@@ -1,0 +1,19 @@
+{
+  "name": "NodeJS.Servidor.MediastreamChallenge",
+  "version": "1.0.0",
+  "description": "Servidor NodeJS - API RESTfull - Mediastream Challenge",
+  "main": "Server.LoginCobranzas.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Jose Alfredo Trujillo Hidalgo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "date-and-time": "^0.5.0",
+    "express": "^4.15.3",
+    "helmet": "^3.6.1",
+    "log4js": "^1.0.1",
+    "mongoose": "^4.7.0"
+  }
+}

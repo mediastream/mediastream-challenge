@@ -15,18 +15,17 @@ $ node utils/seed.js
 -> Warning: It contains hundreds of entities and our production server is quite small
 `);
 
-const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+/*
+* Para este proyecto, he implementado una arquitectura reducida para ésta entrega, de desarrollo propio de API Rest que llevo implementando en todos mis desarrollos.
+* decidí implementar esto, por el rendimiento que genera utilizar dicha implementación, donde cada servicio de la API es un módulo
+* instanciable y que luego se destruye al finalizar su ejecución.
+*
+* Importante a tener en cuenta: No me preocupé de levantar poolConnections de MongoDB,sólo la utilizo su conexión en la capa DAL - UsuariosDAO.js
+*
+* Respecto a la entrega del ejercicio 4, no alcanzo a realizarlo.
+*/
+const Servidores =  require("./Start.Rest.Config");
 
-// Setup database
-mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
-
-// Setup Express.js app
-const app = express();
-
-// TODO
-
-app.listen(3000);
+//Servidores.Rest.Http.start();
+Servidores.Rest.Express.Normal.start();
+//Servidores.Rest.Express.SSL.start();
