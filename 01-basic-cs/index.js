@@ -30,8 +30,26 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+// extract the hats
+let hatsSold = _.map(database, 'hats');
 
-const total = 0 // TODO
+//convert the array of arrays in one level array
+hatsSold = _.flatten(hatsSold); 
+
+//count the elements existents by their id
+let hatCounts = _.countBy(hatsSold, 'id');
+
+// i need to orden the results by the total
+hatCounts = _.orderBy(hatCounts, [], ['desc']);
+
+//in the future can be different of 3 :)
+let topElements = 3;
+
+//Once ordered, i can take the firsts 3 array elements
+let total = 0;
+for (let i = 0; i < topElements; i++) {
+  total += hatCounts[i];
+}
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
