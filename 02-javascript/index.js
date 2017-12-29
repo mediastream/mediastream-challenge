@@ -26,6 +26,7 @@ console.log(`
 	The function require 3 parameters, the first is mandatory, 
     if the second parameter is not provide, use the path
     the headers params have a default value
+    use arrow function: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Funciones/Arrow_functions
     use spread operator: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Operadores/Spread_operator
 	use the fetch method to retrieve data from a URL and corvert the result in JSON format
 `);
