@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const mongooseToCsv = require('mongoose-csv');
 
-const User = mongoose.model('User', {
-  name: String,
-  email: String,
+const UserSchema = new mongoose.Schema({
+  name  : {type: String},
+  email : {type: String},
 });
 
-module.exports = User;
+UserSchema.plugin(mongooseToCsv);
+
+module.exports = mongoose.model('User', UserSchema);
