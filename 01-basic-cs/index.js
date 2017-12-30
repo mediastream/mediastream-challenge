@@ -30,8 +30,26 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+// Search all hats and put on a temp array to count
+const hatsCount = {};
+_.each(database, function(user) {
+    if (Array.isArray(user.hats)) {
+        _.each(user.hats, function(hat) {
+            hatsCount[hat.id] = hatsCount[hat.id] !== undefined ? hatsCount[hat.id] + 1 : 1;
+        });
+    }
+});
+/* O(N*M) with N = Users, M = Hats */
 
-const total = 0 // TODO
+const list = [];
+_.each(hatsCount, function(count, hatId) {
+    list.push({ hatId: hatId, count: count});
+});
+/* O(M) with M = Hats*/
+
+// Order by count, get top 3 and sum them
+const total = _.sumBy(_.slice(_.orderBy(list, ['count'], ['desc']), 0, 3), 'count');
+/* Mmmm... I don't know what is the method to lodash use for orderBy function :( */
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
