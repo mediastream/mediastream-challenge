@@ -7,10 +7,11 @@
   "author": "Patricio López <lopezjuripatricio@gmail.com>",
   "license": "UNLICENCED",
   "scripts": {
-    "1": "nodemon --harmony-async-await 01-basic-cs/",
-    "2": "nodemon --harmony-async-await 02-javascript/",
-    "3": "nodemon --harmony-async-await 03-nodejs/",
-    "4": "cd 04-react; npm start"
+    "1": "nodemon 01-basic-cs/",
+    "2": "nodemon 02-javascript/",
+    "3": "nodemon 03-nodejs/",
+    "4": "cd 04-react; npm start",
+    "test": "mocha"
   },
   "dependencies": {
     "express": "^4.14.1",
@@ -21,8 +22,12 @@
     "morgan": "^1.8.1"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "colors": "^1.1.2",
     "faker": "^3.1.0",
     "jest": "^18.1.0",
-    "nodemon": "^1.11.0"
+    "mocha": "^5.0.0",
+    "nodemon": "^1.11.0",
+    "sinon": "^4.1.6"
   }
 }

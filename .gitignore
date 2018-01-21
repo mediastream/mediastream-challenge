@@ -1,22 +1,5 @@
-*.solved.js
 .next
-
-# Created by https://www.gitignore.io/api/node,osx,windows,linux
-
-### Linux ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
+# Created by https://www.gitignore.io/api/osx,node,visualstudiocode
 
 ### Node ###
 # Logs
@@ -87,7 +70,6 @@ typings/
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -107,25 +89,13 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
 
-# Folder config file
-Desktop.ini
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# End of https://www.gitignore.io/api/node,osx,windows,linux
+# End of https://www.gitignore.io/api/osx,node,visualstudiocode
