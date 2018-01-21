@@ -1,0 +1,4 @@
+/* 
+    Really simple use case and almost nothing to test. 
+    Works basically as a proxy to UserRepository. See UserRepository test cases.
+*/
