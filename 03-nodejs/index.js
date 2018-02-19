@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * Created by Edgardo Barría Melián - 19/02/2018
+ * edgardo.barriam@gmail.com
+ */
+
 console.log(`
 3.
 ---

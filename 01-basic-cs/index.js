@@ -1,9 +1,9 @@
+'use strict';
+
 /**
  * Created by Edgardo Barría Melián - 19/02/2018
  * edgardo.barriam@gmail.com
  */
-
-'use strict';
 
 console.log(`
 1.
