@@ -49,7 +49,7 @@ database.forEach(user => {
   });
 });
 
-// Sort hats by count (desc) so we hace the three top values in the first 3 indexes
+// Sort hats by count (desc) so we have the three top values in the first 3 indexes
 allHats = _.orderBy(allHats,['count'],['desc']);
 
 const total = allHats[0].count + allHats[1].count + allHats[2].count
