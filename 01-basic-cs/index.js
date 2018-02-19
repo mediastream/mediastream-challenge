@@ -27,11 +27,29 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
-
 const database = require('./database.json');
 
+var allHats = [];
 
-const total = 0 // TODO
+database.forEach(user => {
+  user.hats.forEach(hat => {
+    var res = _.find(allHats, (h) => {return h.id == hat.id});
+    
+    if (!res) {
+      allHats.push({
+        id: hat.id,
+        count: 1
+      });
+    } else {
+      var oldHatIndex = allHats.map((existingHat) => {return existingHat.id}).indexOf(res.id);
+      allHats[oldHatIndex].count++;
+    }
+  });
+});
+
+allHats = _.orderBy(allHats,['count'],['desc']);
+
+const total = allHats[0].count + allHats[1].count + allHats[2].count// TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
