@@ -23,6 +23,6 @@
   "devDependencies": {
     "faker": "^3.1.0",
     "jest": "^18.1.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.12.1"
   }
 }

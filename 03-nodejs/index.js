@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+var routes = require("/routes.js");
 
 // Setup database
 mongoose.Promise = Promise;
@@ -26,7 +27,9 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
-
 // TODO
+routes(app);
+app.listen(3000, function(){
 
-app.listen(3000);
+	console.log("esperamos requests en el puerto 3000")
+});

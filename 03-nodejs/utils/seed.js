@@ -21,3 +21,15 @@ User.insertMany(users).then(() => {
   console.log('Seed complete');
   process.exit(0);
 }, console.error.bind(console))
+
+function bdcompleta (req, res) {
+
+.......
+}
+
+  
+module.exports = {
+
+  bdcompleta: bdcompleta
+
+};
