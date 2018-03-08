@@ -1,0 +1,21 @@
+{
+	"MongoDBServer": {
+		"IP": "mongodb://127.0.0.1",
+		"PORT": 27017,
+		"BBDD": "mediastream-challenge"
+	},
+	"LogProperties": {
+		"TIPOLOG_EXITO": "Exito",
+		"TIPOLOG_INFO": "Info",
+		"TIPOLOG_ALERTA": "Alerta",
+		"TIPOLOG_ERROR": "Error",
+		"TIPOLOG_FATAL": "Fatal",
+		"TIPOLOG_DEPURACION": "Depuracion",
+		"TIPOLOG_TRAZA": "Traza",
+		"AMBIENTE": "Desarrollo"
+	},
+	"ValidationProperties": {
+		"EXITO": "OK",
+		"ERROR": "ERROR"
+	}
+}

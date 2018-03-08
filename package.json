@@ -13,6 +13,7 @@
     "4": "cd 04-react; npm start"
   },
   "dependencies": {
+    "async": "^2.6.0",
     "express": "^4.14.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
