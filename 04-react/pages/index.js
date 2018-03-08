@@ -28,6 +28,9 @@ import React from 'react';
 
 export default class MyApp extends React.Component {
   render() {
+
+    // Para el formato de las fechas quizás convenía usar una librería pero asumí que este sería
+    // el formato que llevarían otras fechas, así que hice el formateo "cableado"
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
     return (
@@ -46,7 +49,38 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return null;
+
+    const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec'];
+
+    const getMonthName = (month => {
+      return monthNames[parseInt(month)];
+    });
+
+    const formatting = (date => {
+      const parts = date.split('T')[0].split('-');
+      return '(' + parts[2] + '/' + getMonthName(parts[1]) + '/' + parts[0] + ')';
+    });
+
+    const dates = this.props.dates.map((date, index) => {
+
+      if(this.props.children)
+        return (<li key={index}> <h1>{this.props.children.props.children}</h1> {formatting(date)}</li>);
+      return (<li key={index}>{formatting(date)}</li>);
+
+    });
+
+    return (
+      <div>
+        <ul>
+          {dates}
+        </ul>
+      </div>
+    );
   }
 }
