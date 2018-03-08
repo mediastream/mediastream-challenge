@@ -31,7 +31,26 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+const topLimit = 3;
+
+var hash_hat = {};
+
+
+_.forEach(database,function(user,key){
+	if(user.hats.length > 0){
+		_.forEach(user.hats,function(hat,key_hat){
+			if(typeof(hash_hat[hat.id]) == "undefined"){
+				hash_hat[hat.id] = {sell:1};
+			}else{
+				hash_hat[hat.id].sell++;
+			}
+		})
+	}
+});
+
+hash_hat = _.orderBy(hash_hat,['sell'],['desc']).slice(0,topLimit);
+
+const total = _.sumBy(hash_hat,'sell');
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

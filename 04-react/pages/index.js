@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -47,6 +48,23 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+      var datesList = this.props.dates.map((date, index) => {
+        return <Row date={date} index={index}/>;
+      });
+      return React.createElement('div', 
+        {className: 'list'}, 
+        <span>{this.props.children}</span>, 
+        datesList
+      );
   }
 }
+
+class Row extends React.Component{
+    render() {
+        return (
+            <div className="row" onClick={() => alert('Index: ' + this.props.index)}>
+                {moment(this.props.date).format('DD/MMM/YYYY')}
+            </div>
+        );
+    }
+ }
