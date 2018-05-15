@@ -18,14 +18,31 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const csv      = require('csv-express');
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
-
+console.log('Por favor entra en http://localhost:3000/ para descargar el csv');
 // Setup Express.js app
 const app = express();
+app.get('/', (req, res, next) => {
+    User.find({}, (err, users) => {
+        if (err) res.send(err);
+        var userMap = [];
+        users.forEach(element => {
+            userMap.push({ 'id': element._id,
+                'name' : element.name,
+                'email': element.email });
+        });
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader("Content-Disposition", 'attachment; filename=archivo.csv');
+        res.csv(userMap, true);
+
+    });
+});
 
 // TODO
 
