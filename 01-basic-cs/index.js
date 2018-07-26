@@ -30,10 +30,39 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
-
-const total = 0 // TODO
+const total = _.reduce( // sum hats count
+  _.slice( // get first 3 hats
+    _.orderBy( // order desc by hats count 
+      _.mapValues( // get hats count per group
+        _.groupBy( // group hats by id
+          _.reduce(database, (acc, u) => [...acc, ...u.hats], []), // list all the hats
+          'id'
+        ),
+        g => ({hatsCount: g.length})
+      ),
+      ['hatsCount'], ['desc']
+    ),
+    0, 3
+  ),
+  (acc, i) => acc + i.hatsCount, 0
+)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+console.log(`
+Complexity in O() notation of time and space:
+
+  A: User records
+
+  - reduce:    O(A) => B (Hat records) 
+  - groupBy:   O(B) => C (Grouped Hat records by id)
+  - mapValues: O(C) => D (Hats Count records)
+  - orderBy:   O(D) => E (Ordered Hats Count records)
+  - slice:     O(1) -> F (Chunked Ordered Hats Count records) 
+  - reduce:    O(F) => G (Sum of chunked ordered hats count records)
+ 
+  complexity: O(A * B * C * D * E * F) + O(1) = O(N + 1) ≈ O(N)
+`)
