@@ -31,7 +31,23 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+var total = 0 // TODO
+
+var acumHats = []
+database.forEach(user => {
+  user.hats.forEach(hat => {
+    let index = acumHats.findIndex(acumHat => acumHat.id === hat.id)
+    if (index === -1)
+      acumHats.push({ id: hat.id, sold: 1})
+    else {
+      acumHats[index].sold++
+    }
+  })
+})
+
+acumHats.sort((a, b) => b.sold - a.sold).splice(0, 3).forEach(hat => {
+  total += hat.sold
+})
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
