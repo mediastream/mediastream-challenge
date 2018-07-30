@@ -32,12 +32,12 @@ const menu = async () => {
     let op = await inquirer.prompt([{
         type: 'list',
         name: 'choice',
-        message: 'Seleccione una función',
+        message: `Seleccione una función para ${repo.name}`,
         choices: [
             'Mostrar información general',
             'Contar repositorios públicos',
-            'Listar últimos posts de Placeholder',
-            'Crear post de prueba en Placeholder',
+            'Listar últimos posts de Typicode',
+            'Crear post de prueba en Typicode',
         ]
     }]);
 
@@ -61,7 +61,7 @@ const menu = async () => {
             menu();
             break;
 
-        case 'Listar últimos 3 posts de Placeholder':
+        case 'Listar últimos posts de Typicode':
             process.stdout.write('\x1b[34mSolicitando..\x1b[m');
             res = await requester('GET')([`https://jsonplaceholder.typicode.com/posts`]);
             for (let i = 0; i<3 ;i++) {
@@ -71,7 +71,7 @@ const menu = async () => {
             menu();
             break;
 
-        case 'Crear post de prueba en Placeholder':
+        case 'Crear post de prueba en Typicode':
             process.stdout.write('\x1b[34mPosteando..\x1b[m');
             res = await requester('POST', null, 'Accept: */*', {title: 'Test', userId:1, body:'This is a test'})(['https://jsonplaceholder.typicode.com/posts']);
             console.log(`\r\x1b[32mOK: \x1b[1m`,res,'\x1b[m\n');

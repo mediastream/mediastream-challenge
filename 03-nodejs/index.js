@@ -26,7 +26,19 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+const limit = process.env.limit || 0;
 
-// TODO
+console.log(limit<1?'\x1b[32mStarted without limits\x1b[m':('\x1b[32mStarted with max',limit,'results\x1b[m'));
+
+app.get('/users', async function (req, res) {
+    let users = await User.find().limit(+limit);
+    let result = 'NAME,EMAIL';
+    for (const i in users) {
+        let user = users[i];
+        result += `\n${user.name},${user.email}`;
+    }
+    res.end(result);
+});
+
 
 app.listen(3000);
