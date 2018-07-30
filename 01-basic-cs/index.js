@@ -25,15 +25,25 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 -> Expected result: 7 + 7 + 9 => 23
 `);
 
-const _ = require('lodash'); // https://lodash.com/docs/4.17.4
+
+const _ = require('lodash');
 const assert = require('assert');
-
 const database = require('./database.json');
+const soldHats = [];
 
 
-const total = 0 // TODO
+for (const customerNth in database) {
+    for (const hatNth in database[customerNth].hats) {
+        const hat = database[customerNth].hats[hatNth];
+        soldHats[hat.id] = soldHats[hat.id] ? ++soldHats[hat.id] : 1;
+    }
+}
+
+
+const sales = _.fromPairs(_.sortBy(_.toPairs(soldHats), 1).reverse()); //stackoverflow/a/41875802
+const total = sales[Object.keys(sales)[0]] +sales[Object.keys(sales)[1]] +sales[Object.keys(sales)[2]];
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-
-console.log('Success!');
+console.log('Success, of course.');
