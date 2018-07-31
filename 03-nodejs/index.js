@@ -1,6 +1,5 @@
 'use strict';
 
-process.env.NODE_NO_WARNINGS=1;
 const express = require('express');
 const mongoose = require('mongoose');
 
