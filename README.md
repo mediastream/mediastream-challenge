@@ -12,7 +12,7 @@ node 01-basic-cs
 
 
 #### Test Nº2 (JS)
-This solution has a nice interactive menu made with `inquirer` to call its different tasks 
+This solution has a nice interactive menu made with `inquirer` to call its different tasks. Start by typing the name of any repository (defaults to `mediastream`) 
 ```
 node 02-javascript
 ``` 

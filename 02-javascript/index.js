@@ -54,7 +54,6 @@ const menu = async () => {
         case 'Mostrar información general':
             process.stdout.write('\x1b[34mSolicitando..\x1b[m');
             res = await requester('GET')([`https://api.github.com/users/${repo.name}`]);
-            console.log(res,);
             process.stdout.write(`\r\x1b[32mNombre: \x1b[1m${res.name}\x1b[m\n`);
             process.stdout.write(`\r\x1b[32mTipo: \x1b[1m${res.type}\x1b[m\n`);
             process.stdout.write(`\r\x1b[32mFecha creación: \x1b[1m${moment(res.created_at).format('LL')}\x1b[m\n`);
