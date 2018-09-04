@@ -45,8 +45,23 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+
+  renderDates(dates) {
+    function handleClick(e) {
+      e.preventDefault();
+      alert(`Index number: ${String(e.target.attributes[0].value)}`);
+    }
+
+    return dates.map((date) => {
+      const newDate = new Date(date);
+      const parsedDate = newDate.getDate() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getFullYear();
+      const index = dates.indexOf(date);
+      return (<li data-id={index} onClick={handleClick}>{parsedDate}</li>);
+    });
+  }
+
   render() {
-    return null;
+    console.log(this);
+    return <div>{this.props.children}<ul>{this.renderDates(this.props.dates)}</ul></div>;
   }
 }
