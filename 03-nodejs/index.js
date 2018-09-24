@@ -23,10 +23,30 @@ const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
+const Json2csvParser = require('json2csv').Parser;
+const json2csvParser = new Json2csvParser({ User });
 
 // Setup Express.js app
 const app = express();
 
-// TODO
+//const router = express.Router();
 
-app.listen(3000);
+app.get("/", (req, res) => {
+
+    User
+    .find({})
+    .then(userRecords => {
+
+        const csv = json2csvParser.parse(userRecords);
+        res.attachment('users.csv')
+        res.setHeader('Content-Type', 'application/text-csv')
+        //output
+        res.end(csv)
+
+    })
+
+});
+
+app.listen(3000, function(){
+    console.log("port 3000");
+});

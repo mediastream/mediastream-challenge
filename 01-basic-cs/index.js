@@ -29,11 +29,32 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+ 
+
+let onlyHats = _.map(database, 'hats');
+/* get only hats */
 
 
-const total = 0 // TODO
+onlyHats = _.flatten(onlyHats); 
+
+/* remove all level array and convert in one level */
+
+let groupbyId = _.countBy(onlyHats, 'id');
+/*shows the amount of hat with the same id, a group by*/
+
+groupbyId = _.orderBy(groupbyId, [], ['desc']);
+/* get just count and sort from highest to lowest */
+
+
+/* add the 3 best selling hat */
+let result = 0;
+for (let i = 0; i < 3; i++) {
+    result += groupbyId[i];
+}
+/* result = 23*/ 
+console.log(result);
 
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+assert.equal(result, 23, `Invalid result: ${result} != 23`);
 
 console.log('Success!');
