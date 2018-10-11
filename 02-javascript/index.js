@@ -6,9 +6,17 @@ console.log(`
 
 Take a look at the 'requester' function.
 
-- What it does?
-- How it's used? Add different use-case examples that covers every functionality.
-- How it is called this design pattern or technique?
+- What does it?
+Answer: Make an HTTP request request AJAX
+
+- How is it used? Add different use-case examples that covers every functionality.
+Answer: requester('PUT', 'https://localhost/register', {id : 10}).then(data => data : person);
+requester('POST', 'https://localhost/register', {name: 'Matheus', age: '23'}).then(data => data : person);
+requester('DELETE', 'https://localhost/register', {id : 10}).then(data => console.log(data));
+
+
+- How is this design pattern or technique?
+Answer: factory
 
 HINT: Use https://api.github.com/users/mediastream
 `);
