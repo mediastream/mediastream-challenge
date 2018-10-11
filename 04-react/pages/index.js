@@ -25,11 +25,11 @@ Example:
 `);
 
 import React from 'react';
+import List from '../component/list'
 
 export default class MyApp extends React.Component {
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
-
     return (
       <div>
         <h1>04 - React</h1>
@@ -40,13 +40,5 @@ export default class MyApp extends React.Component {
         </List>
       </div>
     );
-  }
-}
-
-
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
   }
 }
