@@ -27,13 +27,16 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
+const calcTotal = require('./calcTotal.js');
 
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+const total = calcTotal(database) // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+
