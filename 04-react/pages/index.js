@@ -25,28 +25,66 @@ Example:
 `);
 
 import React from 'react';
+import ReactDOM from 'react-dom';
+import moment from 'moment'
 
-export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-    return (
-      <div>
+const ComponentHeader = () => <div>HEADER</div>
+ class MyApp extends React.Component {
+    render() {
+      const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+
+     return (
+        <div>
         <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+        <List dates={dates} header={ComponentHeader}></List>
+       </div>
+      );
+    }
 }
+
+
 
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
+   // TODO
+   render() {
+     const Header = typeof this.props.header ==='function'? this.props.header:null
+     return(
+      <div>
+        <Header/>
+      <ul>
+        {
+          (this.props.dates || []).map((date,index)=><Row key={index} index={index} date={date}/>)
+        }
+      </ul>
+      </div>
+     )    
   }
 }
+
+class Row extends React.Component{
+  constructor(props){
+    super(props)
+    this.showAlert = this.showAlert.bind(this)
+  }
+  showAlert(){
+    console.log(this.props)
+    alert(this.props.index)
+  }
+  render(){
+    return(
+      <li>
+        <button onClick={this.showAlert}>
+          Ver
+        </button>
+        {moment(this.props.dates).format('DD/MMMM/YYYY')}
+
+
+      </li>
+    )
+  }
+}
+
+
+export default MyApp
