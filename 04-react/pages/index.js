@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment'
 
 export default class MyApp extends React.Component {
   render() {
@@ -43,10 +44,53 @@ export default class MyApp extends React.Component {
   }
 }
 
+const Row = (props) => {
+  const { date, index } = props
+  const formated = moment(date).format('DD-MMM-YYYY')
+  return (<li
+    onClick={() => alert(index)}
+    key={`row${index}`}
+  >
+    {formated}
+  </li>)
+}
 
 class List extends React.Component {
-  // TODO
   render() {
-    return null;
+    const { dates, children } = this.props
+    const rows = dates.map((date, index) => {
+      return Row({ date, index })
+    })
+    const result = <div>
+      {rows}
+      {children}
+    </div>
+    return result;
   }
 }
+
+/*
+Additional comment
+ If given the choice I prefer using react without jsx
+ so the row component end up like this
+
+const create = require('react').createElement
+
+const Row = (props) => {
+  const { date, index } = props
+  const formated = moment(date).format('DD-MMM-YYYY')
+  const result = create(
+    'li',
+    {
+      onClick:() => alert(index)
+      key:`row${index}`
+    }
+    formated
+  )
+  return result
+}
+
+the advantage is that is super easy to unit test
+and also you can replace react with vue, polymer or the next super library
+by changing the create function and making a wraper for it
+*/
