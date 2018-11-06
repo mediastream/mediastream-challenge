@@ -46,20 +46,24 @@ export default class MyApp extends React.Component {
 
 const Row = (props) => {
   const { date, index } = props
-  const formated = moment(date).format('DD-MMM-YYYY')
   return (<li
     onClick={() => alert(index)}
     key={`row${index}`}
   >
-    {formated}
+    {date}
   </li>)
 }
 
 class List extends React.Component {
   render() {
     const { dates, children } = this.props
-    const rows = dates.map((date, index) => {
-      return Row({ date, index })
+    const rows = []
+    dates.forEach((unformated, index) => {
+      const mom = moment(unformated)
+      console.log(mom.isValid())
+      if (!mom.isValid()) return
+      const date = mom.format('DD-MMM-YYYY')
+      rows.push(Row({ date, index }))
     })
     const result = <div>
       {rows}
