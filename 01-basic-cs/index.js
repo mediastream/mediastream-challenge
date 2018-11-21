@@ -25,15 +25,26 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 -> Expected result: 7 + 7 + 9 => 23
 `);
 
-const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
-
 const database = require('./database.json');
+const groupedHatsCount = {}
 
+//console.time("duration");
 
-const total = 0 // TODO
+database.forEach(client => {
+  if (client.hats.length > 0)
+    client.hats.forEach(hat => {
+        const existingHat = groupedHatsCount[hat.id]
+        groupedHatsCount[hat.id] = !isNaN(existingHat) ? existingHat + 1 : 1
+    })
+})
 
-// Throws error on failure
+const sortedHats = Object.values(groupedHatsCount).sort((a, b) => b-a).slice(0, 3)
+let total = 0
+for (let i = 0; i<3; i++) //I know that the limit is 3, in another case I should use the sortedHats length in another var
+    total += sortedHats[i]
+
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-
+//console.timeEnd("duration");
+// Duration tests: 5 times, prom: 0.7926 ms
 console.log('Success!');
