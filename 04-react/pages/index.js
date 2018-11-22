@@ -24,7 +24,9 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+import React, { PureComponent } from 'react';
+import moment from 'moment';
+import { arrayOf, string, node, object, oneOfType, number } from 'prop-types'
 
 export default class MyApp extends React.Component {
   render() {
@@ -43,10 +45,45 @@ export default class MyApp extends React.Component {
   }
 }
 
+const Row = ({ date, index }) =>
+  <h2 onClick={() => alert(index)}>
+    {date.isValid() ? `(${date.format('DD/MMM/YYYY')})` : ''}
+  </h2>
 
-class List extends React.Component {
-  // TODO
+Row.propTypes = {
+  date: object,
+  index: number
+}
+/*
+  This class could be changed to a function comp:
+    const List = ({ dates, children }) => (
+      <div>
+        {children}
+        {dates.map((date, index) =>
+          <Row date={date} key={`row-item-${index}`} index={index} /> 
+        )}
+      </div>
+    )
+*/
+class List extends PureComponent {
+  renderDates = () => 
+    this.props.dates.map((date, index) =>
+      <Row date={moment(new Date(date))} key={`row-item-${index}`} index={index} /> )
+
   render() {
-    return null;
+    return (
+     <div>
+       {this.props.children}
+       {this.renderDates()}
+     </div> 
+    );
   }
+}
+
+List.propTypes = {
+  dates: arrayOf(string),
+  children: oneOfType([
+    arrayOf(node),
+    node
+  ])
 }

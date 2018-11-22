@@ -16,8 +16,8 @@ $ node utils/seed.js
 `);
 
 const express = require('express');
-const morgan = require('morgan');
 const mongoose = require('mongoose');
+const { createWriteStream } = require('fast-csv')
 
 // Setup database
 mongoose.Promise = Promise;
@@ -27,6 +27,20 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.use('/users', (_, res) => {
+    const cursor = User.find().cursor()
+  
+    const filename = 'users.csv';
+    const transformer = doc => ({
+        id: doc._id,
+        name: doc.name
+    })
+    res.setHeader('Content-disposition', `attachment; filename=${filename}`)
+    res.writeHead(200, { 'Content-Type': 'text/csv' })
+  
+    res.flushHeaders()
+  
+    cursor.pipe(createWriteStream({ headers: true }).transform(transformer)).pipe(res)
+})
 
 app.listen(3000);
