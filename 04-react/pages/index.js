@@ -26,6 +26,7 @@ Example:
 
 import React, { PureComponent } from 'react';
 import moment from 'moment';
+import { arrayOf, string, node, object, oneOfType, number } from 'prop-types'
 
 export default class MyApp extends React.Component {
   render() {
@@ -46,21 +47,28 @@ export default class MyApp extends React.Component {
 
 const Row = ({ date, index }) =>
   <h2 onClick={() => alert(index)}>
-    ({moment(date).format('DD/MMM/YYYY')})
+    {date.isValid() ? `(${date.format('DD/MMM/YYYY')})` : ''}
   </h2>
 
+Row.propTypes = {
+  date: object,
+  index: number
+}
 /*
   This class could be changed to a function comp:
-    ({ dates }) =>
+    const List = ({ dates, children }) => (
       <div>
-        {this.props.children}
-        {dates.map(date => <Row {...} />)}
+        {children}
+        {dates.map((date, index) =>
+          <Row date={date} key={`row-item-${index}`} index={index} /> 
+        )}
       </div>
+    )
 */
 class List extends PureComponent {
   renderDates = () => 
     this.props.dates.map((date, index) =>
-      <Row date={date} key={`row-item-${index}`} index={index} /> )
+      <Row date={moment(new Date(date))} key={`row-item-${index}`} index={index} /> )
 
   render() {
     return (
@@ -70,4 +78,12 @@ class List extends PureComponent {
      </div> 
     );
   }
+}
+
+List.propTypes = {
+  dates: arrayOf(string),
+  children: oneOfType([
+    arrayOf(node),
+    node
+  ])
 }
