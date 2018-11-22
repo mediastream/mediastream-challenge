@@ -31,12 +31,12 @@ console.log(`
 `)
 async function main() {
   const getGistsResponse = await requester(methods.GET, base)(['gists'])
-  console.log(`Count of gists: ${getGistsResponse.length}`)
+  console.log(`Get gists response: count of gists => ${getGistsResponse.length}`)
 
   const deleteOrgResponse = await requester(methods.DELETE, base, {
     Authorization: token
   })([`orgs/${deletableOrgId}`])
-  console.log('Delete org response')
+  console.log('Delete org response: ')
   console.log(deleteOrgResponse)
 }
 
