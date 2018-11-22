@@ -24,7 +24,8 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+import React, { PureComponent } from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -43,10 +44,30 @@ export default class MyApp extends React.Component {
   }
 }
 
+const Row = ({ date, index }) =>
+  <h2 onClick={() => alert(index)}>
+    ({moment(date).format('DD/MMM/YYYY')})
+  </h2>
 
-class List extends React.Component {
-  // TODO
+/*
+  This class could be changed to a function comp:
+    ({ dates }) =>
+      <div>
+        {this.props.children}
+        {dates.map(date => <Row {...} />)}
+      </div>
+*/
+class List extends PureComponent {
+  renderDates = () => 
+    this.props.dates.map((date, index) =>
+      <Row date={date} key={`row-item-${index}`} index={index} /> )
+
   render() {
-    return null;
+    return (
+     <div>
+       {this.props.children}
+       {this.renderDates()}
+     </div> 
+    );
   }
 }
