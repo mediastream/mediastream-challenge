@@ -44,8 +44,8 @@ let total = 0
 for (let i = 0; i<3; i++) //I know that the limit is 3, in another case I should use the sortedHats length in another var
     total += sortedHats[i]
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-console.log('complexity time: nm, nlogn => Assuming that n is equal to m then O(n2)')
-console.log('complexity space: n, 1, 1 => O(n)')
+console.log('complexity time: O(nm), O(nlogn) => Assuming that n is equal to m then O(n2)')
+console.log('complexity space: O(n), O(1), O(1) => O(n)')
 //console.timeEnd("duration");
 // Duration test: 5 times, prom: 0.7926 ms
 console.log('Success!');
