@@ -21,7 +21,7 @@ const { createWriteStream } = require('fast-csv')
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://martin:1234567m@ds147520.mlab.com:47520/tests');
+mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
 
 // Setup Express.js app
