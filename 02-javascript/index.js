@@ -21,3 +21,5 @@ function requester(method, base, headers = { Accept: '*/*' }) {
   return (path = []) => fetch((base ? [base, ...path] : path).join('/'), { method, headers })
     .then(r => r.json());
 }
+
+requester('GET', 'https://api.github.com/users/mediastream')().then(r => console.log(r));
