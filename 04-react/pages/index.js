@@ -48,7 +48,7 @@ export default class MyApp extends React.Component {
 class Row extends React.Component {
   render() {
     return (
-      <li onClick={() => alert(this.props.index)} key={this.props.index}>
+      <li onClick={() => alert(this.props.index)}>
         <Moment format="(DD/MMM/YYYY)">
           {this.props.date}
         </Moment>
@@ -64,7 +64,7 @@ class List extends React.Component {
         <h2>{this.props.children}</h2>
         <ul>
           {this.props.dates.map((date, index) => {
-            return <Row date={date} index={index}/>
+            return <Row date={date} index={index} key={index}/>
           })}
         </ul>
       </div>
