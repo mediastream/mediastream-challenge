@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Json2csvParser = require('json2csv').Parser;
 
 // Setup database
 mongoose.Promise = Promise;
@@ -27,6 +28,18 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.get('/users', function (req, res) {
+    const fields = ['name', 'email'];
+    const json2csvParser = new Json2csvParser({ fields });
+    User.find({}, function (err, users) {
+        if (err) {
+            res.status(422).send(err.errors);
+        } else {
+            const data = json2csvParser.parse(users);
+            res.attachment('users.csv');
+            res.status(200).send(data);
+        }
+    });
+});
 
 app.listen(3000);
