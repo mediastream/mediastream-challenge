@@ -11,6 +11,11 @@ You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
 
+  O(2^n) - Order 2^n for Users
+  O(n) - Order N for Hats
+  O(3) - Order 3 for reduce
+  O(2^n) + O(n)+ O(3) = O()
+
 IMPORTANT: Find a balance between performance and legibility (more important).
 
 ---
@@ -30,10 +35,49 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let total = 0 // TODO
+let topHats = []
 
-const total = 0 // TODO
+_.forEach(database, user => {
+  // verified the user has hats
+  if (user.hats.length) {
+
+    //iterate the user's hats
+    _.forEach(user.hats, hat => {
+
+      // find if the hat exits on the tmp array
+      const existIndex = _.findIndex(topHats, { 'id': hat.id });
+
+      return (existIndex !== -1)
+        // if exist acc
+        ? topHats[existIndex].count += 1
+        // if not push a new one
+        : topHats.push({
+          id: hat.id,
+          count: 1
+        })
+    })
+  }
+})
+
+// sort a get the top-3 and return the total
+total = topHats.sort((a, b) => b.count - a.count).slice(0, 3).reduce((a, { count }) => a + count, 0);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
