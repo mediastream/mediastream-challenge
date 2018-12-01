@@ -25,6 +25,8 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types'
+import moment from 'moment'
 
 export default class MyApp extends React.Component {
   render() {
@@ -33,8 +35,8 @@ export default class MyApp extends React.Component {
     return (
       <div>
         <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
+        <List dates={dates}/>
+        <hr/>
         <List dates={dates}>
           <h1>Optional Header</h1>
         </List>
@@ -47,6 +49,29 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    const { children, dates } = this.props
+    return (
+      <div>
+        {children}
+        {dates.map(date => <Row date={moment(date).format('DD/MMM/YYYY')}/>)}
+      </div>
+    )
   }
+}
+
+List.defaultProps = {
+  children: null,
+  dates: []
+}
+
+const Row = ({ date }) => (
+  <p>({date})</p>
+)
+
+Row.defaultProps = {
+  date: 'Date required'
+}
+
+Row.propTypes = {
+  date: PropTypes.string
 }
