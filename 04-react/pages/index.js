@@ -53,7 +53,7 @@ class List extends React.Component {
     return (
       <div>
         {children}
-        {dates.map(date => <Row date={moment(date).format('DD/MMM/YYYY')}/>)}
+        {dates.map((date,index) => <Row date={moment(date).format('DD/MMM/YYYY')} key={`${index}${date}`}/>)}
       </div>
     )
   }
