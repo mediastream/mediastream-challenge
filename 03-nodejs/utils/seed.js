@@ -3,9 +3,14 @@
 const faker = require('faker');
 const _ = require('lodash');
 const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb', {
+  useMongoClient: true
+});
+
+
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('../models/User');
 
 const AMMOUNT = {
