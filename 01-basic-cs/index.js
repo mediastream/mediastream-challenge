@@ -30,8 +30,27 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+//First I need the hats in a variable so i can use them
+const hats = database.reduce((sum, user) => {
+    return [...sum, ...user.hats]
+ }, [])
 
-const total = 0 // TODO
+//them i'm going to count the most solded hats
+ let results = _.countBy(hats, (hat) => hat.id)
+
+//here i'm going to sort them
+ results = (_.sortBy(results)).reverse()
+ 
+
+//here i'll take the top 3
+ results = _.take(results, 3)
+console.log(results)
+
+
+const total = results.reduce((a, b) => a + b)
+
+
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
