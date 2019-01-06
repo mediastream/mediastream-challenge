@@ -46,7 +46,51 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
-  render() {
-    return null;
-  }
+    constructor(props)
+    {
+        super(props)
+        this.state = {}
+    }
+
+    showIndex(index)
+    {
+        alert('My index is ' + index);
+    }
+
+    formatDate(date)
+    {
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        d = new Date(date),
+        year = d.getFullYear(),
+        month = months[d.getMonth()],
+        day = d.getDate();
+
+        return `${day}/${month}/${year}`;
+    }
+
+    render() {
+        const Rows = (this.props.dates !== null) && this.props.dates.map( ( row , i ) => {
+
+            const childrenWithProps = (this.props.children !== null) && React.Children.map(this.props.children , child =>
+                React.cloneElement(child)
+            );
+
+            return (
+                <div key={i}>
+                    { childrenWithProps }
+                    <li onClick={() => this.showIndex(i)} style={{'cursor':'pointer'}}>
+                        { this.formatDate(row)  }
+                    </li>
+                </div>
+            )
+        });
+
+        return (
+            <div>
+                <ul>
+                    {Rows}
+                </ul>
+            </div>
+        );
+    }
 }

@@ -30,8 +30,43 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const existHats = ( obj , searchItem) =>{
+    return _.findIndex( obj , ( item ) =>{
+        return item.id == searchItem;
+    });
+};
 
-const total = 0 // TODO
+let hatsSelled = [];
+let selledCount;
+_.map( database , ( row ) =>{
+    _.map( row.hats , ( r ) => {
+
+        let index = existHats( hatsSelled , r.id);
+        if(index < 0)
+        {
+            hatsSelled.push({ id : r.id , selled : 1 });
+        }
+        else
+        {
+            selledCount = hatsSelled[index].selled;
+            hatsSelled[index].selled = (parseInt(selledCount) + 1);
+        }
+    });
+});
+
+hatsSelled.sort( ( prev , next ) => {
+    return next.selled - prev.selled;
+});
+
+hatsSelled = _.slice(hatsSelled , 0,3);
+
+const total = _.reduce( hatsSelled , ( sum , value , key )=> {
+    return sum + value.selled;
+} , 0 );
+// TODO
+
+console.log({hatsSelled});
+console.log({total});
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
