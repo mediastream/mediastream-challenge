@@ -30,8 +30,17 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
-
-const total = 0 // TODO
+const hatSales = [];
+_.forEach(database, ({ hats }) => {
+  if (hats.length) {
+    _.forEach(hats, ({ id: hatId }) => {
+      if (!hatSales[hatId]) hatSales[hatId] = { sold: 0 };
+      hatSales[hatId].sold += 1;
+    })
+  }
+});
+const [top1, top2, top3] = _.sortBy(Object.values(hatSales).map(({ sold }) => sold)).reverse();
+const total = top1 + top2 + top3 // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
