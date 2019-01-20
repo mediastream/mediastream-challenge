@@ -26,7 +26,24 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
-
 // TODO
+
+app.use(morgan('tiny'));
+
+app.get('/users', async (req, res) => {
+  const usersData = await User.find().select('_id name email');
+  const data = [
+    ['ID', 'Name', 'Email'],
+    ...usersData.map(({ _id, name, email }) => [_id, name, email])
+  ];
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/csv');
+  data.forEach(item => {
+    res.write(item.map(field => {
+      return '"' + field.toString().replace(/\"/g, '""') + '"';
+    }).toString() + '\r\n');
+  });
+  res.end();
+});
 
 app.listen(3000);

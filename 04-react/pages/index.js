@@ -46,7 +46,16 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+
   render() {
-    return null;
+    const { children, dates } = this.props;
+    return (<div>
+      {children && children}
+      {dates.map(date => {
+        const [monthDay, year] = (new Date(date)).toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }).split(',');
+        const [month, day] = monthDay.split(' ');
+        return <p>{`${day}/${month.toLowerCase()}/${year.trim()}`}</p>
+      })}
+    </div>);
   }
 }
