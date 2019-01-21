@@ -31,9 +31,53 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+const total = getTop3Sum(database);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+console.log(`
+aneira's comments:
+
+* Assuming that each document of the JSON represents a user with its purchased hats.
+* If the user is duplicated, I assume that he bought a hat twice (or a different hat, or more than twice, etc.) 
+
+`);
+
+function getTop3Sum(database) {
+    if (!database || database.length === 0) {
+        return 0;
+    }
+    let hatsObject = {};
+    _.forEach(database, function (customer) {
+        if (!customer['hats'] || customer['hats'].length === 0) {
+            return;
+        }
+        _.forEach(customer['hats'], function (hat) {
+            if (hatsObject.hasOwnProperty(hat['id'])) {
+                hatsObject[hat['id']]++;
+            } else {
+                hatsObject[hat['id']] = 1;
+            }
+        });
+    });
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    _.forOwn(hatsObject, function (qty, id) {
+        if (first <= qty) {
+            third = second;
+            second = first;
+            first = qty;
+        } else if (second <= qty) {
+            third = second;
+            second = qty;
+        } else if (third <= qty) {
+            third = qty;
+        }
+    });
+    return first + second + third;
+}
+

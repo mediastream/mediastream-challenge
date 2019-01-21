@@ -26,27 +26,70 @@ Example:
 
 import React from 'react';
 
-export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+function convertDate(dateStr) {
+    const matchesISODate = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/.test(dateStr);
+    if (!matchesISODate) {
+        return 'invalid';
+    }
+    const ts = Date.parse(dateStr);
+    if (isNaN(ts)) {
+        return 'invalid';
+    }
+    const date = new Date(ts);
+    return date.getDate() + '/' + months[date.getMonth()] + '/' + date.getFullYear();
 }
 
+class Row extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            myIndex: this.props.myIndex
+
+        };
+    }
+
+    render() {
+        const myIndex = this.state.myIndex;
+        return <li onClick={function () {
+            alert('My Index is ' + myIndex);
+        }}>{convertDate(this.props.date)}</li>;
+    }
+}
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+    render() {
+        const dates = this.props.dates;
+        const listItems = dates.map((date, index) =>
+            <Row myIndex={index}
+                 key={index.toString()}
+                 date={date}
+
+            />
+        );
+        return (
+            <ul>
+                {listItems}
+            </ul>
+        );
+    }
 }
+
+export default class MyApp extends React.Component {
+    render() {
+        const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+
+        return (
+            <div>
+                <h1>04 - React</h1>
+                <List dates={dates}/>
+                <hr/>
+                <List dates={dates}>
+                    <h1>Optional Header</h1>
+                </List>
+            </div>
+        );
+    }
+}
+
