@@ -1,3 +1,4 @@
+# aneira notes: there are comments in some of the index.js files
 # Mediastream challenge
 
 ## Requisites

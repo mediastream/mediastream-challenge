@@ -26,18 +26,47 @@ Example:
 
 import React from 'react';
 
+const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+function convertDate(dateStr) {
+    const matchesISODate = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/.test(dateStr);
+    if (!matchesISODate) {
+        return 'invalid';
+    }
+    const ts = Date.parse(dateStr);
+    if (isNaN(ts)) {
+        return 'invalid';
+    }
+    const date = new Date(ts);
+    return date.getDate() + '/' + months[date.getMonth()] + '/' + date.getFullYear();
+}
+
 class Row extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            myIndex: this.props.myIndex
+
+        };
+    }
+
     render() {
-        return <li>{this.props.date}</li>;
+        const myIndex = this.state.myIndex;
+        return <li onClick={function () {
+            alert('My Index is ' + myIndex);
+        }}>{convertDate(this.props.date)}</li>;
     }
 }
 
 class List extends React.Component {
     render() {
         const dates = this.props.dates;
-        const listItems = dates.map((date) =>
-            <Row key={date.toString()}
-                 date={date}/>
+        const listItems = dates.map((date, index) =>
+            <Row myIndex={index}
+                 key={index.toString()}
+                 date={date}
+
+            />
         );
         return (
             <ul>

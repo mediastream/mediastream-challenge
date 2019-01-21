@@ -18,12 +18,12 @@
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.8.4",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "fs": "^0.0.2"
   },
   "devDependencies": {
     "faker": "^3.1.0",
     "jest": "^18.1.0",
-    "nodemon": "^1.11.0",
-    "fs": "*"
+    "nodemon": "^1.11.0"
   }
 }
