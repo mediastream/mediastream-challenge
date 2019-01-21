@@ -26,27 +26,41 @@ Example:
 
 import React from 'react';
 
-export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
-
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+class Row extends React.Component {
+    render() {
+        return <li>{this.props.date}</li>;
+    }
 }
-
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+    render() {
+        const dates = this.props.dates;
+        const listItems = dates.map((date) =>
+            <Row key={date.toString()}
+                 date={date}/>
+        );
+        return (
+            <ul>
+                {listItems}
+            </ul>
+        );
+    }
 }
+
+export default class MyApp extends React.Component {
+    render() {
+        const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+
+        return (
+            <div>
+                <h1>04 - React</h1>
+                <List dates={dates}/>
+                <hr/>
+                <List dates={dates}>
+                    <h1>Optional Header</h1>
+                </List>
+            </div>
+        );
+    }
+}
+

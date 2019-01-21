@@ -34,7 +34,7 @@ const app = express();
 app.get('/users', downloadUsers);
 
 function downloadUsers(req,res){
-    let reader = User.find().stream();
+    let reader = User.find({},"name email").stream();
 
     reader.on('error', function (err) {
         console.error('error = ' + err);
