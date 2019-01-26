@@ -10,6 +10,7 @@ We don't care which hats are.
 You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
+O(2^n)
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -30,8 +31,25 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const salesTop3 = database => {
+    let tophats = {};
+    // filters buyers who are buyers of hats
+    database.map(hatbuyer => {
+        if(hatbuyer.hats.length > 0){
+            hatbuyer.hats.map(hat => {
+                tophats[hat.id] = {
+                    name: hat.name,
+                    sales: (tophats.hasOwnProperty(hat.id)) ? tophats[hat.id].sales + 1 : 1
+                };
+            });
+        }
+    });
+    // sort by sales number, reverse order, and take first 3
+    tophats = _.slice(_.sortBy(tophats, th => th.sales).reverse(), 0, 3)
+    return _.sumBy(tophats, hat => hat.sales);
+}
 
-const total = 0 // TODO
+const total = salesTop3(database);
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
