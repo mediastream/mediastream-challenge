@@ -18,15 +18,54 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const fastCsv = require('fast-csv');
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mediastream-challenge');
+mongoose.createConnection('mongodb://127.0.0.1:27017/mediastream-challenge', {
+  useMongoClient: true
+})
 const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
 
 // TODO
+
+const next = promise => {
+  promise.then(doc => {
+    if (doc) {
+      console.log(doc);
+      next(cursor.next());
+    }
+  })
+}
+
+
+const getusers = (req, res) => {
+  const cursor = User.find({}).limit(100);
+
+  const transformer = (doc)=> {
+    return {
+        Id: doc._id,
+        Name: doc.name,
+        Email: doc.email
+    };
+  }
+
+  res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+  res.writeHead(200, { 'Content-Type': 'text/csv' });
+
+  res.flushHeaders();
+
+  var csvStream = fastCsv.createWriteStream({headers: true}).transform(transformer)
+  cursor.cursor().pipe(csvStream).pipe(res);
+}
+
+
+app.use(morgan('stream'));
+app.get('/', (req, res) => res.redirect('/users'));
+app.get('/users', getusers)
+
 
 app.listen(3000);
