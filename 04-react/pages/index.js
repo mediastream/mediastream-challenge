@@ -25,7 +25,7 @@ Example:
 `);
 
 import React from 'react';
-
+import moment from 'moment';
 export default class MyApp extends React.Component {
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
@@ -47,6 +47,38 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    const rowDates = this.props.dates.map((_date, i) => {
+      return <Date index={i} adate={_date} />
+    });
+
+    let optionalText = null;
+
+     if (this.props.children && this.props.children.type == 'h1') {
+      optionalText = this.props.children.props.children;
+    }
+
+     return (
+      <div>
+        <h1>{optionalText}</h1>
+        <ul>{rowDates}</ul>
+      </div>
+    );
   }
 }
+class Date extends React.Component {
+    render() {
+        function handleClick(e) {
+          e.preventDefault();
+          alert('You are on index: ' + e.target.dataset.index)
+        }
+
+        const date = moment(this.props.adate);
+        return (
+          <li style={{cursor: 'pointer'}}>
+            <div data-index={this.props.index} onClick={handleClick}>
+              {date.format('DD/MMM/YYYY')}
+            </div>
+          </li>
+        );
+  }
+} 
