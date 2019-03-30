@@ -10,6 +10,8 @@ We don't care which hats are.
 You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
+R: O(n^2) (Time complexity)
+   O(n)   (Space complexity)
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -30,8 +32,24 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let numSoldByHat = {};
+for (const user of database) {
+  for (const hat of user.hats) {
+    if (!numSoldByHat[hat.id]) {
+      numSoldByHat[hat.id] = 0;
+    }
 
-const total = 0 // TODO
+    numSoldByHat[hat.id]++;
+  }
+}
+
+const numSalesDescOrder = _.orderBy(numSoldByHat, [], ['desc']);
+
+let total = 0;
+const top = (numSalesDescOrder.length > 3)? 3 : numSalesDescOrder.length;   // Top-X most selling
+for (let i = 0; i < top; i++) {
+  total += numSalesDescOrder[i];
+}
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

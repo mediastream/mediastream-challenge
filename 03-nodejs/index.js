@@ -27,6 +27,29 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+const stream = require('stream');
+
+app.get('/users', async (req, res, next) => {
+  try {
+    let objToCsvStream = new stream.Transform({objectMode: true});
+    objToCsvStream._transform = function(chunk, encoding, callback) {
+      let transChunk = `${Object.values(chunk._doc)}\n`;
+      this.push(transChunk);
+      callback();
+    };
+
+    let userCursor = await User.find().cursor();
+
+    const fileName = 'Users.csv'
+    res.set('Content-disposition', `attachment; filename=${fileName}`)
+    res.set('Content-Type', 'application/octet-stream');
+    res.status(200);
+    
+    userCursor.pipe(objToCsvStream).pipe(res);
+  } catch(err) {
+    console.error(err);
+  }
+});
+
 
 app.listen(3000);
