@@ -28,5 +28,27 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+const routes = express.Router();
 
+routes.get('/users', async (req, res) => {
+  let hasHeader = false;
+  res.setHeader('Content-disposition', 'attachment; filename=users.csv');
+  res.contentType('csv');
+  
+  await User.find().stream().on('data', item => {
+    if(!hasHeader) {
+      hasHeader = true;
+      res.write('Name, E-mail' + '\n');
+    }
+    res.write(`${item.name},${item.email}` + '\n');
+  }).on('close', () => {
+    res.end()
+  }).on('error', () => {
+    res.status(500).send('ERROR DOWNLOADING CSV.');
+  });
+});
+
+//APPLY APP TO USE ROUTES
+app.use(morgan('dev'));
+app.use(routes);
 app.listen(3000);
