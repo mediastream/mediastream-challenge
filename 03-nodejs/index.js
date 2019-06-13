@@ -27,6 +27,23 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.use(morgan('tiny'));
 
-app.listen(3000);
+app.get('/users', async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.setHeader('Content-Type', 'text/csv');
+    res.write(`"id","name","email"\r\n`);
+    users.forEach(user => {
+      res.write(`"${user._id}","${user.name}","${user.email}"\r\n`);
+    });
+    res.status(200);
+    res.end();
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.listen(3000, () => {
+  console.log(`Server listening on https://localhost:3000`);
+});
