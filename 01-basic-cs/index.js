@@ -30,8 +30,29 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let hatsSold =
+  database
+    .map(items => items.hats)
+    .reduce((accumulator, currentValue) => {
+      return accumulator.concat(currentValue)
+    })
 
-const total = 0 // TODO
+let hatsSoldById = _.groupBy(hatsSold, 'id')
+
+let hatsSoldByIdWithSalesCounter = _.toArray(_.mapValues(hatsSoldById, (hats, id) => {
+  return {
+    id: id,
+    sold: hats.length
+  }
+}))
+
+let hatsSoldByIdWithSalesCounterInOrder = _.orderBy(hatsSoldByIdWithSalesCounter, ['sold'], ['desc'])
+
+let topThreeMostSellingHats = hatsSoldByIdWithSalesCounterInOrder.slice(0, 3)
+
+const total = topThreeMostSellingHats
+  .map(hats => hats.sold)
+  .reduce((accumulator, currentValue) => accumulator + currentValue)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
