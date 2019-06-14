@@ -43,10 +43,55 @@ export default class MyApp extends React.Component {
   }
 }
 
-
+// List: component
 class List extends React.Component {
-  // TODO
   render() {
-    return null;
+    let dates = this.props.dates.map((date, i) => <Row key={i} date={new Date(date)} index={i} />);
+    let children = this.props.children;
+    return (
+      <div>
+        {children}
+        <ul>{dates}</ul>
+      </div>
+    );
   }
+}
+
+// List: validations
+List.propTypes = {
+  dates: React.PropTypes.array.isRequired
+}
+
+List.defaultProps = {
+  dates: []
+}
+
+// Row: component
+class Row extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: '', componentIsMounted: false};
+  }
+  componentDidMount() {
+    this.state.componentIsMounted = true
+    let date = this.props.date.toLocaleDateString().split('/');
+    let months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'noc', 'dic'];
+    this.setState({date: `${date[0]}/${months[date[1] - 1]}/${date[2]}`});
+  }
+  consoleIndex = e => {
+    const { index } = this.props;
+    if (this.state.componentIsMounted) alert(`index: ${index}`);
+  }
+  render() {
+    return (
+      <li>
+        <button onClick={this.consoleIndex}>{this.state.date}</button>
+      </li>
+    );
+  }
+}
+
+// Row: validations
+Row.propTypes = {
+  date: React.PropTypes.object.isRequired
 }
