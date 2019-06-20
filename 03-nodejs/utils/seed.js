@@ -1,13 +1,13 @@
 'use strict';
 
-const faker = require('faker');
+var faker = require('faker');
 const _ = require('lodash');
 const mongoose = require('mongoose');
-mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/mediastream-challenge');
+
+//var randomName = faker.name.findName();
+mongoose.connect('mongodb://localhost/mediastream-challenge',{ useNewUrlParser: true });
 const User = require('../models/User');
-
 const AMMOUNT = {
   USERS: 100000,
 };
