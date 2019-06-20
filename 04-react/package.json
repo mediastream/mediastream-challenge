@@ -3,8 +3,11 @@
     "start": "next"
   },
   "dependencies": {
-    "next": "^1.2.3",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "moment": "^2.24.0",
+    "next": "^8.1.0",
+    "package.json": "^2.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
