@@ -30,8 +30,28 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+//const total = 0 // TODO
 
-const total = 0 // TODO
+/*
+    Solution here
+*/
+
+// look for hats
+const new_hat = database.reduce((hat, index) => {
+    return hat.concat(index.hats)
+}, [])
+// Count sold
+const hats = new_hat.reduce((hat, index) => {
+    if(hat[index.id]) {
+        hat[index.id] = hat[index.id] + 1  
+    } else {
+        hat[index.id] = 1
+    }
+    return hat
+}, {})
+
+const finds = Object.values(hats).filter(hat => hat >= 7)
+const total = finds.reduce((a, b) => a + b)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

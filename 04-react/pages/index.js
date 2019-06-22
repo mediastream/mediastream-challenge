@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class MyApp extends React.Component {
   render() {
@@ -46,7 +47,34 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
-  render() {
-    return null;
+  constructor(props) {
+    super(props)
   }
+
+  getIndex(index) {
+    alert(index)
+  }
+
+  render() {
+
+    const fechas = this.props.dates.map((item , i) => {
+      const fecha = new Date(item)
+      return (
+        <li key={i} onClick={this.getIndex.bind(this, i)}> { fecha.getDate() + '/'
+             + fecha.toLocaleString('es-ES', { month: 'short' }) + '/' 
+             + fecha.getFullYear() } 
+        </li>
+      )
+    })
+
+    return (
+      <ul>
+        { fechas }
+      </ul>
+    );
+  }
+}
+
+List.propTypes = {
+  dates: PropTypes.array.isRequired
 }
