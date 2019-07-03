@@ -738,6 +738,11 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+express-csv@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/express-csv/-/express-csv-0.6.0.tgz#db792d85b262207e561d6362ba39a1e681e3d503"
+  integrity sha1-23kthbJiIH5WHWNiujmh5oHj1QM=
+
 express@^4.14.1:
   version "4.14.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.14.1.tgz#646c237f766f148c2120aff073817b9e4d7e0d33"
