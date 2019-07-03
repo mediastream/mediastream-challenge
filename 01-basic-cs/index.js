@@ -30,8 +30,31 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let sales = [];
 
-const total = 0 // TODO
+_.each(database, (client) => {
+  const { hats } = _.pick(client, ['hats']);
+  _.each(hats, hat => sales.push(hat));
+});
+
+const salesByHat = _
+  .chain(sales)
+  .groupBy('id')
+  .values()
+  .map((hats) => {
+    return ({ hat: hats[0].id, sales: hats.length });
+  })
+  .value();
+
+const top3 = _
+  .chain(salesByHat)
+  .sortBy('sales')
+  .reverse()
+  .slice(0, 3)
+  .map(({ sales }) => sales)
+  .value();
+
+const total = _.sum(top3); // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

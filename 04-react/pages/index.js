@@ -25,6 +25,8 @@ Example:
 `);
 
 import React from 'react';
+import { PropTypes } from 'prop-types';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -46,7 +48,26 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  static propTypes = {
+    children: PropTypes.node,
+    dates: PropTypes.arrayOf(PropTypes.string)
+  }
+
+  handleClick = index => alert(`selected index: ${index}`);
+  
   render() {
-    return null;
+    const { children, dates } = this.props;
+    return (
+      <ul>
+        { children }
+        {
+          dates.map((date, i) => (
+            <li key={i} onClick={() => this.handleClick(i)}>
+              {moment(date).format('(DD/MMM/YYYY)')}
+            </li>
+          ))
+        }
+      </ul>
+    );
   }
 }

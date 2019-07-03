@@ -28,5 +28,28 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+const csv = require('express-csv');
+const _ = require('lodash'); // https://lodash.com/docs/4.17.4
+
+const router = express.Router();
+
+router.get('/', function(req, res) {
+  User.find({}, 'name email', (error, users) => {
+    if (error) res.status(500).send(error);
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=\"' + 'users-' + Date.now() + '.csv\"'
+    );
+    const headers = _.keys(users[0]._doc);
+    const usersData = _.map(
+      users,
+      (user) => _.values(user._doc)
+    );
+    const data = [headers, ...usersData];
+    res.status(200).csv(data);
+  });
+});
+
+app.use('/users', router);
 
 app.listen(3000);
