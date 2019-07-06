@@ -41,12 +41,31 @@ export default class MyApp extends React.Component {
       </div>
     );
   }
-}
+};
 
 
 class List extends React.Component {
   // TODO
+
+  handleEvent (event) {
+    console.log(event);
+    alert("clicked key: " + event);
+  };
+
   render() {
-    return null;
+    return (
+      <div>
+        {this.props.dates.map((date, index) => <Row key={index} details={this.handleEvent} id={index} date={date}/>) }
+      </div>
+    );
   }
-}
+};
+
+class Row extends React.Component {
+  // TODO
+  render() {
+    return (
+      <li onClick={this.props.details.bind(this, this.props.id)}> {this.props.date} </li>
+    );
+  }
+};
