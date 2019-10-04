@@ -25,6 +25,9 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import Row from '../components/Row';
 
 export default class MyApp extends React.Component {
   render() {
@@ -45,8 +48,46 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
+
   render() {
-    return null;
+
+    const { children } = this.props;
+
+    return  (
+      <div>
+        { children }
+        <h1>List of dates</h1>
+        { this.props.dates.map((date, key) => (
+
+          <Row date={dateFormat(date)} handleClickDate={handleClickDate} index={key} key={key} />
+        ))}
+      </div>
+    );
   }
+}
+
+/**
+ * 
+ * @param index 
+ */
+function handleClickDate(index) {
+  alert("Index: " + index)
+}
+
+/**
+ * hace un format de la fecha
+ * @param date 
+ */
+function dateFormat(date) {
+  const d = moment.utc(date);
+  return d.format('DD/MMM/YYYY ').toString();
+}
+
+List.propTypes = {
+  children: PropTypes.node,
+  dates: PropTypes.array.isRequired
+};
+
+List.defaultProps = {
+  children : '',
 }
