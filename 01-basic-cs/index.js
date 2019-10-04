@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 console.log(`
 1.
@@ -25,15 +25,71 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 -> Expected result: 7 + 7 + 9 => 23
 `);
 
-const _ = require('lodash'); // https://lodash.com/docs/4.17.4
-const assert = require('assert');
+const _ = require("lodash"); // https://lodash.com/docs/4.17.4
+const assert = require("assert");
 
-const database = require('./database.json');
-
-
-const total = 0 // TODO
+const database = require("./database.json");
+const hats = getHats(database);
+const quantityTop = getQuantityTop(hats, 3);
+const total = _.sum( quantityTop );
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+
+
+/**
+ * Retorna el top de elementos según su cantidad
+ * 
+ * @param element
+ * @param quantity
+ */
+function getQuantityTop(element, quantity) {
+  let list = _.orderBy(element, ["quantity"], ["desc"]);
+
+  let i = 0;
+  let topList = [];
+
+  for (let hat of list) {
+    topList.push(hat.quantity);
+    i++;
+
+    if (i === quantity) {
+      break;
+    }
+  }
+
+  return topList;
+}
+
+/**
+ * Retorna la lista de sombreros
+ * y la cantidad de veces que se ha vendido
+ *
+ * @param database
+ * @return Array
+ */
+function getHats(database) {
+  let hats = [];
+
+  _.forEach(database, user => {
+    _.forEach(user.hats, hat => {
+      const existHat = _.find(hats, { id: hat.id });
+
+      if (existHat) {
+        // si ya existe aumentamos la cantidad de ventas
+        existHat.quantity += 1;
+      } else {
+        // insertamos un nuevo sombrero a la lista
+        let newHat = {};
+        newHat.id = hat.id;
+        newHat.quantity = 1;
+        hats.push(newHat);
+      }
+    });
+  });
+
+  return hats;
+}
