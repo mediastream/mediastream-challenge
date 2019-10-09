@@ -11,6 +11,32 @@ You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
 
+    O() notation resume the complexity in memory and execution time of an algorithm.
+    
+The big of the following algorithm is:
+
+    O(a+b+c)
+
+When    
+    a -> number of users
+    b -> number of total hats
+    c -> number of unique hats
+    
+Algorithm
+
+    1. Users must be mapped into hats => a
+    2. User hat list must be concatenated => 2a
+    3. Hats must be mapped into unique uuids => 2a+b+1
+    4. Unique hat uuids must be mapped into hat counts => 2a+2b+c+1
+    5. List of count of hats must be ordered => 2a+2b+2c+1
+    6. Only 3 first values must be sliced => 2a+2b+2c+2
+    7. List of 3 first values must be reduced into a value => 2a+2b+2c+5
+
+If n = O(n2) &&
+    2n+1 = O(n) 
+    2a+2b+2c+5 = O(a+b+c)
+    
+
 IMPORTANT: Find a balance between performance and legibility (more important).
 
 ---
@@ -32,8 +58,8 @@ const database = require('./database.json');
 
 
 const total = (() => {
-    let hats = database.map((user) => user.hats)
-        .reduce((acc, cur) => acc.concat(cur), []);
+    let hats = database.map((user) => user.hats) // Map into hats
+        .reduce((acc, cur) => acc.concat(cur), []); // Reduce and concat
 
     return [... new Set(hats.map((hat) => hat.id))].map((uuid) =>
         hats.filter(hat => hat.id === uuid).length
