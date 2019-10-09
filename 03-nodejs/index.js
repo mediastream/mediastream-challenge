@@ -37,6 +37,7 @@ app.get("/users", async function (req, res) {
     let csv = users.map((user) => `${user.name},${user.email}\n`).join('');
 
     // Set content-type and send csv generated
+    res.setHeader('Content-disposition', 'attachment; filename=users.csv');
     res.set('Content-Type', 'text/csv');
     res.send(csv);
 });
