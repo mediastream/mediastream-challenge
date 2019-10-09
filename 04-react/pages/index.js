@@ -29,33 +29,32 @@ import PropTypes from 'prop-types'
 import moment from 'moment';
 
 export default class MyApp extends React.Component {
-    render() {
-        const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+  render() {
+    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-        return (
-            <div>
-                <h1>List Component</h1>
-                <List dates={dates} />
-                <h1>List Component with child</h1>
-                <List dates={dates}>
-                    <h2>Child</h2>
-                </List>
-            </div>
-        );
-    }
+    return (
+      <div>
+        <h1>04 - React</h1>
+        <List dates={dates} />
+        <hr />
+        <List dates={dates}>
+          <h1>Optional Header</h1>
+        </List>
+      </div>
+    );
+  }
 }
 
-
 class List extends React.Component {
-    render() {
-        const { dates, children } = this.props;
-        return (
-            <div>
-                { children }
-                <ul>{ dates.map((date, i) => <Row key={i} index={i} date={date} />) }</ul>
-            </div>
-        );
-    }
+  render() {
+    const { dates, children } = this.props;
+    return (
+      <div>
+        { children }
+        <ul>{ dates.map((date, i) => <Row key={i} index={i} date={date} />) }</ul>
+      </div>
+    );
+  }
 }
 
 List.propTypes = {
