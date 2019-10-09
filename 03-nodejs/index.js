@@ -27,6 +27,18 @@ const User = require('./models/User');
 // Setup Express.js app
 const app = express();
 
-// TODO
+app.get("/users", async function (req, res) {
+    // Fetch from database
+    let users = await User.find({}, (error, users) => {
+        return users
+    });
+
+    // Map into csv
+    let csv = users.map((user) => `${user.name},${user.email}\n`).join('');
+
+    // Set content-type and send csv generated
+    res.set('Content-Type', 'text/csv');
+    res.send(csv);
+});
 
 app.listen(3000);
