@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 console.log(`
 3.
@@ -15,18 +15,38 @@ $ node utils/seed.js
 -> Warning: It contains hundreds of entities and our production server is quite small
 `);
 
-const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+const express = require("express");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const csv = require("csv-express");
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
+mongoose.connect("mongodb://localhost/mediastream-challenge");
+const User = require("./models/User");
 
 // Setup Express.js app
 const app = express();
 
 // TODO
+app.get("/users", (req, res) => {
+  const filename = "users.csv";
+  User.find(
+    {},
+    {
+      __v: false,
+      _id: false,
+    },
+  )
+    .lean()
+    .exec({}, function(err, users) {
+      if (err) res.send(err);
+
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", filename);
+      res.csv(users, true);
+    });
+});
 
 app.listen(3000);

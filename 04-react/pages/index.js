@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 console.log(`
 4.
@@ -24,18 +24,21 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+import React from "react";
+import moment from "moment";
+import PropTypes from "prop-types";
 
 export default class MyApp extends React.Component {
   render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+    const dates = ["2017-02-20T13:33:52.889Z", "2013-06-25T14:31:24.888Z"];
+    const newDates = dates.map(data => new Date(data));
 
     return (
       <div>
         <h1>04 - React</h1>
-        <List dates={dates} />
+        <List dates={newDates} />
         <hr />
-        <List dates={dates}>
+        <List dates={newDates}>
           <h1>Optional Header</h1>
         </List>
       </div>
@@ -43,10 +46,27 @@ export default class MyApp extends React.Component {
   }
 }
 
-
 class List extends React.Component {
   // TODO
+  showId = id => {
+    alert(`index: ${id}`);
+  };
+
   render() {
-    return null;
+    const { dates, children } = this.props;
+    return (
+      <ul>
+        {dates.map((value, index) => (
+          <li key={index} onClick={() => this.showId(index)}>
+            {children}
+            {moment(value).format("d/MMM/YYYY")}
+          </li>
+        ))}
+      </ul>
+    );
   }
 }
+
+List.propTypes = {
+  dates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+};
