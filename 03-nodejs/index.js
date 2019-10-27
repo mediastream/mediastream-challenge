@@ -29,4 +29,45 @@ const app = express();
 
 // TODO
 
+//1 - create the GET Users endpont
+app.get('/users', function(req, res) {
+  //Set the response header to download csv file
+  usersCall((err, results) => {
+    if (err) {
+      res.send('error');
+    }
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename="' + 'users-' + Date.now() + '.csv"'
+    );
+    res.send(formatCSVOutput(results));
+  });
+});
+
+const usersCall = function(cb) {
+  User.find()
+    .limit(2)
+    .exec(function(err, users) {
+      cb(err, users);
+    });
+};
+
+const formatCSVOutput = function(users) {
+  const output = [];
+
+  let headers = ['id', 'name', 'email'];
+  output.push(headers);
+
+  users.forEach(d => {
+    const row = [];
+    row.push(`${d._id}`);
+    row.push(`${d.name}`);
+    row.push(`${d.email}`);
+    output.push(row.join());
+  });
+
+  return output.join('\n');
+};
+
 app.listen(3000);
