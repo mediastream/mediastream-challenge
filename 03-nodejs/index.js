@@ -47,7 +47,6 @@ app.get('/users', function(req, res) {
 
 const usersCall = function(cb) {
   User.find()
-    .limit(2)
     .exec(function(err, users) {
       cb(err, users);
     });
