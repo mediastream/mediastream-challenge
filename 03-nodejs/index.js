@@ -33,10 +33,10 @@ app.get('/users', async (req, res) => {
     try {
         res.setHeader('Content-Type', 'text/csv');
         res.setHeader('Content-Disposition', `attachment; filename=\"users-${Date.now()}.csv\"`);
-        const data = await User.find({}).lean()
-        return stringify(data, { header: true }).pipe(res)
+        const data = await User.find({}).lean();
+        return stringify(data, { header: true }).pipe(res);
     } catch (error) {
-        return res.status(500).json({ error })
+        return res.status(500).json({ error });
     }
 })
 
