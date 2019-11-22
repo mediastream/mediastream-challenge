@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
   render() {
@@ -47,6 +48,22 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    const { children, dates } = this.props
+    return (
+      <div>
+        {children}
+        <ul>
+          {
+            dates.map((date, i) =>
+              <li
+                key={i}
+                onClick={() => alert(`Date number: ${i + 1}`)}>
+                {moment(date).isValid() ? moment(date).format('[(]DD/MMM/YYYY[)]') : 'Incorrect date'}
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    )
   }
 }

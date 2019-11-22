@@ -31,7 +31,20 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+let total = 0
+// TODO
+//New array to push all hats
+let data = []
+database.forEach(client => data.push(...client.hats))
+//Count by id match
+const count = _.countBy(data, 'id')
+data = [];
+//Iterate object and convert this to array (for sort and slice)
+Object.keys(count).forEach(hat => data.push([hat, count[hat]]))
+//Sort by quantity
+data.sort((a, b) => b[1] - a[1]);
+//Get the first 3 and add to total
+data.slice(0, 3).map(a => total += a[1])
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
