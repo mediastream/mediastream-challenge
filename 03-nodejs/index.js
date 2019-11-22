@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const stringify = require('csv-stringify');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +29,15 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.get('/users', async (req, res) => {
+    try {
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename=\"users-${Date.now()}.csv\"`);
+        const data = await User.find({}).lean()
+        return stringify(data, { header: true }).pipe(res)
+    } catch (error) {
+        return res.status(500).json({ error })
+    }
+})
 
 app.listen(3000);
