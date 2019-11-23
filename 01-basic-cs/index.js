@@ -30,8 +30,36 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+// let filteredHats = _.filter(database, f => { return f.hats.length > 0 })
+// let ids = _.map(filteredHats, f => {
+//     return _.map(f.hats, h => {
+//         return h.id
+//     })
+// })
+// let order = _.orderBy(ids, [function (o) {
+//     return o.length;
+// }])
+// console.log(order)
 
-const total = 0 // TODO
+let filtered = database.filter(x => { return x.hats.length > 0})
+let ids = []
+
+filtered.forEach(f => {
+    f.hats.forEach(h => {
+        ids.push(h.id)
+    })
+})
+
+let grouped = _.groupBy(ids)
+grouped = Object.keys(grouped).map(k => ({ id: k, items: grouped[k]}))
+
+let orderBy = _.orderBy(grouped, ['', i => {
+    return i.items.length
+}], ['desc', 'desc'])
+
+let top = orderBy.slice(0, 3)
+
+const total = top.reduce((a, b) => { return a + b.items.length }, 0)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
