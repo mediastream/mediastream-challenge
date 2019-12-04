@@ -30,10 +30,22 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let hats = [];
 
-const total = 0 // TODO
+//iterando sobre los filtrados
+
+_.map(_.filter(database, (x) => x.hats.length > 0), (x) => {
+    hats = _.concat(hats, x.hats);
+});
+
+// Ordenando los sombreros y tomando los tres primeros para sumarlos
+const total =  _.sum(_.orderBy(_.countBy(hats, 'id'), null, ['desc']).slice(0,3));
+
+//The total sum of result is the sum of the ordered hats
+console.log(`total is ${total}`);
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-
 console.log('Success!');
+console.log('La complejidad para este algoritmo es Lineal  = 3(n)');

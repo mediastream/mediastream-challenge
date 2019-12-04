@@ -24,9 +24,30 @@ mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
 
+
 // Setup Express.js app
 const app = express();
 
-// TODO
+const fs = require('fs');
+const { parse } = require('json2csv');
+app.get("/users",(req,res)=>{
+  User.find({},(err,data)=>{
+    let fields = ["nombre", "email"];
+    const obj = { fields };
+    try {
+      const f = parse(data, obj);
+      const buf = new Buffer(f)
+      fs.writeFile('./users.csv', buf, (err2) => {
+      if (err2) console.log(err)
+        console.log('csv guardado en users.csv');
+        res.send('csv guardado en users.csv');           
+    });
+    } catch (err) {
+      console.error(err);
+    }
+  });
+});    
+  
+
 
 app.listen(3000);

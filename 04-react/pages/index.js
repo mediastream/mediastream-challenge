@@ -25,6 +25,9 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+
 
 export default class MyApp extends React.Component {
   render() {
@@ -47,6 +50,40 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    return (
+      <div>
+        {this.props.children}
+        <ul>
+        {
+          this.props.dates.map((item,index) => {
+            return (
+              <Row date={moment(item)} index={index} key={index} />
+            );
+          })
+        }
+        </ul>
+      </div>
+    )
   }
 }
+
+class Row extends React.Component {
+  render() {
+    const handleOnClick = ()=>{
+        alert(`You clicked on Index Nº ${this.props.index}`);
+    }
+    return (
+      <li onClick={handleOnClick} >
+        {this.props.date.format("DD/MMM/YYYY").toLowerCase()}
+      </li>
+    );
+  }
+}
+Row.propTypes = {
+  date: PropTypes.instanceOf(moment).isRequired,
+  index: PropTypes.number.isRequired,
+};
+List.propTypes = {
+  dates: PropTypes.array.isRequired
+};
+
