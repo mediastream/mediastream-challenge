@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +29,28 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.get('/users', (req, res) => {
+
+    User.find((err, usuarios) => {
+
+        if (err) {
+            res.status(500).json({
+                status: 500,
+                err
+            });
+        } else {
+            fs.writeFile('./userDatabase.cvs', usuarios, (err) => {
+                if (err) {
+                    res.status(500).json({
+                        status: 500,
+                        err
+                    });
+                } else {
+                    res.status(200).send('base de datos descargada');
+                }
+            });
+        }
+    });
+});
 
 app.listen(3000);
