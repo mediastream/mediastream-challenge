@@ -31,7 +31,19 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+const hats = database.map((user) => user.hats).reduce((prev, curr) => prev.concat(curr), []);
+
+const grouped = _.groupBy(hats, (b) => { return b.id})
+
+const orderByLength = _.orderBy(grouped,  (o) => {
+  return o.length;
+}, ["desc"]).slice(0, 3)
+
+const total = _.reduce(orderByLength, (len, arr) => { 
+  len += arr.length;
+  return len;
+}, 0);
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
