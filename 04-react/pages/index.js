@@ -20,24 +20,27 @@ Take a look at the MyApp component, you should not modify it.
 
 NOTE: You can use ES7+ here and install any library not tied to React.
 Example:
-- lodash: OK
+- lodash: bien
 - react-dates: NOPE
 `);
 
 import React from 'react';
+import moment from 'moment'
 
 export default class MyApp extends React.Component {
+
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
     return (
       <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
+          <h1>04 - React</h1>
+          <list/>
+          <List dates={dates} />
+          <hr />
+          <List dates={dates}>
+            <h1>Optional Header</h1>
+          </List>
       </div>
     );
   }
@@ -45,8 +48,37 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+  
+  constructor(props){
+    
+    super(props);
+    this.state = {
+      lista: props
+    };
+      this.aca = this.aca.bind(this);
+    }
+
+    aca(esto) {
+      esto.preventDefault();
+      alert('haz clickeado = '+ esto.target.name)
+    }
+
+   formato(entra){
+      return moment(entra).format("YYYY-MM-DD");   
+   }
+   render() {
+    return (
+      <div>
+          {this.state.lista.dates.map(( e, index)=>
+                 <div key ={index}>
+                    <li>
+                        <a name={index+1} onClick={this.aca} key ={index}>
+                            {this.formato(e) }
+                        </a>
+                     </li>
+                 </div>
+              )}
+      </div>
+  );
+}
 }
