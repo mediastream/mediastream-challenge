@@ -21,7 +21,7 @@ const mongoose = require('mongoose');
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://root:root123@ds227332.mlab.com:27332/pbstr', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/mediastream-challenge', { useNewUrlParser: true });
 
 const User = require('./models/User');
 

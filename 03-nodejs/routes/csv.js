@@ -3,6 +3,6 @@ const router = express.Router();
 const controller = require('../controllers/csv');
 
 /* GET . */
-router.get('/export/csv', controller.exportToCsv);
+router.get('/users', controller.exportToCsv);
 
 module.exports = router;
