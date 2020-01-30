@@ -30,8 +30,35 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let result = [];
 
-const total = 0 // TODO
+// changing data structure
+database.map((user) => {
+    user.hats.map(hat => {
+        result.push({ id: hat.id })
+    })
+});
+
+// counting ocurrences of id
+result = _(result)
+    .groupBy('id')
+    .map((items, id) => ({ id, score: items.length }))
+    .value()
+
+// sorting array
+result = _.orderBy(result, ['hats', function (o) {
+    return o.score;
+}], ["desc", "desc"]);
+
+result = result.slice(0, 3)
+
+result = result.reduce(function (prev, cur) {
+    return prev + cur.score;
+}, 0);
+
+console.log(result);
+
+const total = result// TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

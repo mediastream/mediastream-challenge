@@ -27,26 +27,76 @@ Example:
 import React from 'react';
 
 export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+    render() {
+        const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+        return (
+            <div>
+                <h1>04 - React</h1>
+                <List dates={dates} />
+                <hr />
+                <List dates={dates}>
+                    <h1>Optional Header</h1>
+                </List>
+            </div>
+        );
+    }
 }
 
 
 class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { dates } = this.props;
+
+        const listDates = dates.map((date, index) => {
+            return (
+                <Row key={index} date={date} index={index} />
+            )
+        });
+
+        return (
+            <div>
+                <ul>
+                    {listDates}
+                </ul>
+            </div>
+        );
+    }
+}
+
+
+class Row extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.options = { day: 'numeric', month: 'short', year: 'numeric' }
+        this.formatter = new Intl.DateTimeFormat('pt-BR', this.options)
+    }
+
+    formatDate = (date) => {
+        const dateString = this.formatter.formatToParts(date).map(({ type, value }) => {
+            switch (type) {
+                case 'literal': return `/`;
+                default: return value;
+            }
+        }).reduce((string, part) => string + part);
+
+        return dateString;
+    }
+
+    onClickHandler = (index) => {
+        alert(index)
+    }
+
+    render() {
+        const { index, date } = this.props;
+        let d = new Date(date);
+        d = this.formatDate(d)
+
+        return <li onClick={() => this.onClickHandler(index)}>({d})</li>;
+    }
 }
