@@ -21,12 +21,17 @@ const mongoose = require('mongoose');
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/mediastream-challenge');
+mongoose.connect('mongodb://root:root123@ds227332.mlab.com:27332/pbstr', { useNewUrlParser: true });
+
 const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
 
-// TODO
+var csvRouter = require('./routes/csv');
+
+app.use(morgan('dev'));
+
+app.use('/', csvRouter);
 
 app.listen(3000);
