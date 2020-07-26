@@ -5,7 +5,9 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/mediastream-challenge');
+mongoose.connect('mongodb://localhost/mediastream-challenge', {
+  useMongoClient: true,
+});
 const User = require('../models/User');
 
 const AMMOUNT = {
