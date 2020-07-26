@@ -22,7 +22,7 @@ Hat(872f5fc4-515f-416d-9ec6-3488da2bd74a) sold 6.
 Hat(048d8fbf-7653-461f-a59c-68c73b8855e5) sold 7.
 Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 
--> Expected result: 7 + 7 + 9 => 23
+-> Expected sellingHats: 7 + 7 + 9 => 23
 `);
 
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
@@ -30,10 +30,25 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let sellingHats = [];
 
-const total = 0 // TODO
+// Step 1 - Extracting hats from database
+database.map((user) => {
+  user.hats.map(hat => sellingHats.push({ id: hat.id }));
+});
+
+// Step 2 - Group hats by id and add it's sell frequency
+sellingHats = _(sellingHats).groupBy('id').map((hat, id) => ({ id, sellFrequency: hat.length })).value();
+
+// Step 3 - Order hats in descendent order and extract the top 3 and sum it sell frequency
+const total = _.orderBy(sellingHats, ['hats', (hat) => hat.sellFrequency], ["desc", "desc"])
+  .slice(0, 3)
+  .reduce((acc, el) => acc + el.sellFrequency, 0);
+
+// See the result!
+console.log("total", total);
 
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+assert.equal(total, 23, `Invalid sellingHats: ${total} != 23`);
 
 console.log('Success!');
