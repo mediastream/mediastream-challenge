@@ -30,10 +30,19 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let hats_data = [];
 
-const total = 0 // TODO
 
-// Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+database.map((hat_current) => {
+    hat_current.hats.map(hat => hats_data.push({ id: hat.id }));
+});
+
+const total = _.orderBy(_(hats_data).groupBy('id').map((hat, id) =>
+    ({ id, sold: hat.length })).value(),
+    ['hats', (hat) => hat.sold], ["desc", "desc"])
+    .slice(0, 3).reduce((acc, el) => acc + el.sold, 0);
+
+
+assert.equal(total, 23, `Invalid hats_data: ${total} != 23`);
 
 console.log('Success!');
