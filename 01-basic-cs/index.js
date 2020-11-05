@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 console.log(`
 1.
@@ -25,10 +25,10 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 -> Expected result: 7 + 7 + 9 => 23
 `);
 
-const _ = require("lodash"); // https://lodash.com/docs/4.17.4
-const assert = require("assert");
+const _ = require('lodash'); // https://lodash.com/docs/4.17.4
+const assert = require('assert');
 
-const database = require("./database.json");
+const database = require('./database.json');
 
 let sellersWithHats = [];
 _.map(database, function (seller) {
@@ -39,10 +39,10 @@ _.map(database, function (seller) {
   }
 });
 
-const sortSellers = _.orderBy(sellersWithHats, "sold", "desc");
+const sortSellers = _.orderBy(sellersWithHats, 'sold', 'desc');
 const topSellers = _.slice(sortSellers, 0, 3);
 
-const total = _.sumBy(topSellers, "sold");
+const total = _.sumBy(topSellers, 'sold');
 
 console.log(`
 ---
@@ -50,11 +50,11 @@ The total sum of the top-3 most selling hats are:
 `);
 
 const message =
-  _.map(topSellers, (seller) => `${seller.sold}`).join(" + ") + ` => ${total}`;
+  _.map(topSellers, (seller) => `${seller.sold}`).join(' + ') + ` => ${total}`;
 
 console.log(`-> Expected result: ${message}`);
 
 // Throws error on failure
 assert.equal(total, 15, `Invalid result: ${total} != 15`);
 
-console.log("Success!");
+console.log('Success!');
