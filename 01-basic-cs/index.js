@@ -30,10 +30,31 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let sellersWithHats = [];
+_.map(database, function (seller) {
+  if (seller.hats.length > 0) {
+    const sold = seller.hats.length;
+    const sellerWithHats = Object.assign({}, { id: seller.id }, { sold });
+    sellersWithHats.push(sellerWithHats);
+  }
+});
 
-const total = 0 // TODO
+const sortSellers = _.orderBy(sellersWithHats, 'sold', 'desc');
+const topSellers = _.slice(sortSellers, 0, 3);
+
+const total = _.sumBy(topSellers, 'sold');
+
+console.log(`
+---
+The total sum of the top-3 most selling hats are:
+`);
+
+const message =
+  _.map(topSellers, (seller) => `${seller.sold}`).join(' + ') + ` => ${total}`;
+
+console.log(`-> Expected result: ${message}`);
 
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+assert.equal(total, 15, `Invalid result: ${total} != 15`);
 
 console.log('Success!');
