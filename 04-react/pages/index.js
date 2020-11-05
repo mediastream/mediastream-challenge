@@ -25,6 +25,8 @@ Example:
 `);
 
 import React from 'react';
+import { List } from '../components/List';
+import { Header } from "../components/Header";
 
 export default class MyApp extends React.Component {
   render() {
@@ -32,21 +34,13 @@ export default class MyApp extends React.Component {
 
     return (
       <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
+        <h1 style={{ 'color': 'red' }}>04 custon click</h1>
         <hr />
         <List dates={dates}>
-          <h1>Optional Header</h1>
+          <Header />
         </List>
       </div>
     );
   }
 }
 
-
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
-}
