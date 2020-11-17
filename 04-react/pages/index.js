@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import List from '../components/List';
 
 export default class MyApp extends React.Component {
   render() {
@@ -40,13 +41,5 @@ export default class MyApp extends React.Component {
         </List>
       </div>
     );
-  }
-}
-
-
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
   }
 }

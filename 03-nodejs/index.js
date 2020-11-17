@@ -18,6 +18,7 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const usersRouter = require('./routes/users');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +29,6 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+usersRouter(app);
 
 app.listen(3000);
