@@ -42,9 +42,9 @@ _.forEach(database, (seller) => {
   });
 });
 
-const topHats = _.orderBy(hats, 'sold', 'desc');
-const topSellers = _.slice(topHats, 0, 3);
-const total = _.sumBy(topSellers, 'sold');
+const orderedHats = _.orderBy(hats, 'sold', 'desc');
+const topHats = _.slice(orderedHats, 0, 3);
+const total = _.sumBy(topHats, 'sold');
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
