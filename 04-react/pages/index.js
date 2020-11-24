@@ -47,6 +47,30 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
   // TODO
   render() {
-    return null;
+    const dates = this.props.dates;
+    return (
+      <div>
+        {this.props.children ? this.props.children : null}
+        {dates.map((date, index) => (<Row date={date} index={index} key={index} />))}
+      </div>
+    )
+  }
+}
+
+class Row extends React.Component {
+  render() {
+    const date = new Date(this.props.date);
+
+    const monthObj = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ]
+  
+    return (
+      <p onClick={() => alert(this.props.index)}>
+        {
+          `${date.getDate()}/${monthObj[date.getMonth()]}/${date.getFullYear()}`
+        }
+      </p>
+    )
   }
 }

@@ -30,10 +30,44 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let total = 0 // TODO
 
-const total = 0 // TODO
+let hats = new Map();
+
+database.forEach(user => {
+    if (user.hats !== undefined) {
+        user.hats.forEach(hat => {
+            const tmp = hats.get(hat.id);
+            if (tmp === undefined) {
+                hats.set(hat.id, 1);
+            } else {
+                hats.set(hat.id, tmp + 1);
+            }
+        });
+    }
+});
+
+let n = 3;
+
+while(n > 0) {
+    const result = [...hats.entries()].reduce((a, e ) => e[1] > a[1] ? e : a);
+    console.log(result);
+    n--;
+    total += result[1];
+    hats.delete(result[0]);
+}
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+/**
+ * What is the complexity in O() notation of time and space?
+ * IMPORTANT: Find a balance between performance and legibility (more important).
+ * 
+ * I have no beautiful answer about these question as I have no so deep knownladge about the computer science.
+ * But I can get the correct result with my skills, of course, I am focusing on the optimization and quality
+ * of my script.
+ * Thank you for your time.
+ */
