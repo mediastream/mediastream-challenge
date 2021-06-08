@@ -25,7 +25,22 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
+const months = {
+  0: 'jan',
+  1: 'feb',
+  2: 'mar',
+  3: 'apr',
+  4: 'may',
+  5: 'jun',
+  6: 'jul',
+  7: 'aug',
+  8: 'sep',
+  9: 'oct',
+  10: 'nov',
+  11: 'dec'
+};
 export default class MyApp extends React.Component {
   render() {
     const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
@@ -45,8 +60,30 @@ export default class MyApp extends React.Component {
 
 
 class List extends React.Component {
-  // TODO
   render() {
-    return null;
+    const { dates, children } = this.props;
+
+    const converToLocale = dates.map((date) => {
+      const currentDate = new Date(date);
+      const month = months[currentDate.getMonth()];
+      let arr = currentDate.toLocaleDateString().split('/');
+      arr[1] = month;
+
+      return arr.join('/');
+    });
+
+    return (
+      <div>
+        {children}
+        {converToLocale.map((i, idx) => (
+          <div onClick={() => { alert(idx); }} key={idx}>{i}</div>
+        ))}
+      </div>
+    );
   }
 }
+
+List.propTypes = {
+  children: PropTypes.node,
+  dates: PropTypes.arrayOf(PropTypes.string).isRequired
+};

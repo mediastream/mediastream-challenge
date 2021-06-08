@@ -22,11 +22,9 @@ const mongoose = require('mongoose');
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
 
-// TODO
-
+app.use('/', require('./routers'));
 app.listen(3000);

@@ -30,8 +30,14 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+function getTopSellingHatsSum(hats) {
+  const sortedArr = _.sortBy(hats);
+  const [hat1, hat2, hat3] = sortedArr.slice(-3);
+  return hat1 + hat2 + hat3; // Space complexity - O(1)
+}
 
-const total = 0 // TODO
+const soldHats = database.map(user => user.hats.length); // Space complexity - O(k), where k = number of hats information.
+const total = getTopSellingHatsSum(soldHats) // Time complexity - O(nlog(n))
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
