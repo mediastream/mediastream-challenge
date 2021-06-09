@@ -36,8 +36,13 @@ function getTopSellingHatsSum(hats) {
   return hat1 + hat2 + hat3; // Space complexity - O(1)
 }
 
-const soldHats = database.map(user => user.hats.length); // Space complexity - O(k), where k = number of hats information.
+let soldHats = _.flatten(_.map(database, 'hats')); // Time complexity- O(n) Space complexity - O(k), where k = number of hats data
+soldHats = _.values(_.countBy(soldHats, 'id')); // Time complexity - O(klog(k))
+
 const total = getTopSellingHatsSum(soldHats) // Time complexity - O(nlog(n))
+
+//Overall Time complexity  - O(n + nlog(n) + klog(k))
+// Overall Space complexity - O(k)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
