@@ -31,9 +31,56 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
+/* Utilizando lodash */
+
+let total = 0 // TODO
+
+console.time('count')
+total = _(database)
+  .map((item) => item.hats)
+  .flatten()// 
+  .countBy('id')
+  .orderBy([], ['desc'])
+  .slice(0, 3)
+  .sum()
+
+console.timeEnd('count')
+
+console.time('count')
+
+
+/* Utilizando el estandar EcmaScript 6^ */
+let acumm = database                      //1
+        .map((item) => item.hats)         //n
+        .flat()                           //n
+        .reduce((hatsSold, current) => {
+          if(!hatsSold[current.id]){
+            hatsSold[current.id] = 1
+          } else {
+            hatsSold[current.id] ++
+          }
+          return hatsSold
+        },{})                          //n
+
+let totals = Object.values(acumm)      
+let top3 = totals.sort((a,b) => b - a) //nlogn
+                  .splice(0,3)         //n
+total = top3.reduce((a,b)=> a+b)       //n
+
+// Complejidad O(nlogn)
+console.timeEnd('count')
+
+
+// Desconozco la complejidad utilizando las funciones que provee lodash, pero utilizando js vanilla
+// con ES6^ la complejidad es de nlog tomando en cuenta que la mayoría de estas funciones de orden superior
+// iteran la colección hasta n para realizar cada operación y 'sort' recorre y compara para ordenar con 
+// una complejidad de nlogn
+
+// Los resultados respecto al tiempo de ejecución muestran que la segunda implementación es mas eficiente y no
+// necesariamente menos legible.
+
 
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`);
+//assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
