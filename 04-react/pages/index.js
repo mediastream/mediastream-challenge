@@ -14,7 +14,7 @@ and on click must 'alert()' its index in the list.
 Also, the 'List' component should receive an optional child as a header.
 Remember to validate the props.
 
-The implementation **must focus on performance**.
+The implementation must focus on performance.
 
 Take a look at the MyApp component, you should not modify it.
 
@@ -25,6 +25,15 @@ Example:
 `);
 
 import React from 'react';
+import PropTypes from 'prop-types';
+
+const transformDate = (date) => {
+  date = new Date(date);
+  const day = date.toLocaleString('default', { day: '2-digit' });
+  const month = date.toLocaleString('default', { month: 'short' });
+  const year = date.toLocaleString('default', { year: 'numeric' });
+  return `${day}/${month.substr(0,3)}/${year}`;
+};
 
 export default class MyApp extends React.Component {
   render() {
@@ -43,10 +52,43 @@ export default class MyApp extends React.Component {
   }
 }
 
-
 class List extends React.Component {
-  // TODO
   render() {
-    return null;
+    const { children, dates } = this.props;
+    return (
+      <ul>
+        {children}
+        {dates.map((date, index) => {
+          return <Row date={date} index={index} key={index} />;
+        })}
+        <style jsx>{`
+          ul {
+            list-style: none;
+          }
+          .item {
+            color: blue;
+            cursor: pointer;
+            padding: 10px;
+          }
+        `}</style>
+      </ul>
+    );
   }
 }
+
+List.propTypes = {
+  dates: PropTypes.array.isRequired
+};
+
+class Row extends React.Component {
+  render() {
+    const { index, date } = this.props;
+    const showAlert = () => alert(`This is the date with index ${index}`);
+    return <li onClick={showAlert} className="item">{transformDate(date)}</li>;
+  }
+}
+
+Row.propTypes = {
+  date: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired
+};
