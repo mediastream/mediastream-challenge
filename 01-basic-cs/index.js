@@ -10,7 +10,8 @@ We don't care which hats are.
 You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
-O(n)
+O(n) pues en el caso de buscar la información se recorre todo el arreglo de datos, es decir, la totalidad de registros (n), para obtener información completa.
+En cuanto al tiempo se utiliza la funcion console.time obteniendo un tiempo de respuesta promedio de 5.5ms. Sin embargo, es relativo, influye la capacidad de hardware del servidor.
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -29,6 +30,9 @@ Hat(32266d28-5092-4a69-afb3-90fafd46e04a) sold 9.
 const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
+//Inicio de tiempo de ejecución
+console.time('Process');
+
 const database = require('./database.json');
 
 const sellingHats = _.flatMap(database, ({ hats }) =>
@@ -43,3 +47,5 @@ const total = count.slice(count.length - 3).reduce((a, b) => a + b) // TODO
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+console.timeEnd('Process');
