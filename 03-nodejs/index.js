@@ -26,7 +26,7 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
-
+app.use(require('./routes/index'));
 // TODO
 
 app.listen(3000);

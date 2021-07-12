@@ -1,28 +1,29 @@
 {
-  "name": "mediastream-challenge",
-  "version": "1.0.0",
-  "description": "JS challenges for super-powered candidates",
-  "main": "index.js",
-  "repository": {},
-  "author": "Patricio López <lopezjuripatricio@gmail.com>",
-  "license": "UNLICENCED",
-  "scripts": {
-    "1": "nodemon 01-basic-cs/",
-    "2": "nodemon 02-javascript/",
-    "3": "nodemon 03-nodejs/",
-    "4": "cd 04-react; npm start"
-  },
-  "dependencies": {
-    "express": "^4.14.1",
-    "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.4",
-    "moment": "^2.17.1",
-    "mongoose": "^4.8.4",
-    "morgan": "^1.8.1"
-  },
-  "devDependencies": {
-    "faker": "^3.1.0",
-    "jest": "^18.1.0",
-    "nodemon": "^1.11.0"
-  }
+    "name": "mediastream-challenge",
+    "version": "1.0.0",
+    "description": "JS challenges for super-powered candidates",
+    "main": "index.js",
+    "repository": {},
+    "author": "Patricio López <lopezjuripatricio@gmail.com>",
+    "license": "UNLICENCED",
+    "scripts": {
+        "1": "nodemon 01-basic-cs/index",
+        "2": "nodemon 02-javascript/",
+        "3": "nodemon 03-nodejs/",
+        "4": "cd 04-react; npm start"
+    },
+    "dependencies": {
+        "express": "^4.14.1",
+        "isomorphic-fetch": "^2.2.1",
+        "lodash": "^4.17.4",
+        "moment": "^2.17.1",
+        "mongoose": "^4.8.4",
+        "morgan": "^1.8.1",
+        "objects-to-csv": "^1.3.6"
+    },
+    "devDependencies": {
+        "faker": "^3.1.0",
+        "jest": "^18.1.0",
+        "nodemon": "^1.11.0"
+    }
 }

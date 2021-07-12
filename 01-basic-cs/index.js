@@ -10,6 +10,7 @@ We don't care which hats are.
 You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
+O(n)
 
 IMPORTANT: Find a balance between performance and legibility (more important).
 
@@ -30,8 +31,13 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+const sellingHats = _.flatMap(database, ({ hats }) =>
+    _.map(hats, hat => ({...hat }))
+);
 
-const total = 0 // TODO
+const count = _(_.countBy(sellingHats, 'id')).sortBy().value();
+
+const total = count.slice(count.length - 3).reduce((a, b) => a + b) // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
