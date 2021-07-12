@@ -8,9 +8,6 @@ async function createCsvFile(data) {
     // Save to file:
     await csv.toDisk('./03-nodejs/public/test.csv');
 
-    // Return the CSV file as string:
-    console.log(await csv.toString());
-
     return 'test.csv'
 };
 
