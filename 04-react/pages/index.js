@@ -30,19 +30,15 @@ export default class MyApp extends React.Component {
     render() {
         const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-        return ( <
-            div >
-            <
-            h1 > 04 - React < /h1> <
-            List dates = { dates }
-            /> <
-            hr / >
-            <
-            List dates = { dates } >
-            <
-            h1 > Optional Header < /h1> < /
-            List > <
-            /div>
+        return ( 
+            <div>
+                <h1 > 04 - React </h1> 
+                <List dates = { dates }/> 
+                <hr/>
+                <List dates = { dates }>
+                <h1> Optional Header </h1> 
+                </List > 
+            </div>
         );
     }
 }
@@ -50,16 +46,16 @@ export default class MyApp extends React.Component {
 class List extends React.Component {
     render() {
         const { children, dates } = this.props;
-        return ( <
-            ul > { children } {
-                dates.map((date, index) => {
-                    return <Row date = { date }
-                    index = { index }
-                    key = { index }
-                    />;
-                })
-            } <
-            /ul>
+        return ( 
+            <ul> 
+                { children } {
+                    dates.map((date, index) => {
+                        return <Row date = { date }
+                        index = { index }
+                        key = { index } />;
+                    })
+                } 
+            </ul>
         );
     }
 }
@@ -69,7 +65,6 @@ class Row extends React.Component {
         const { index, date } = this.props;
         const moment = require('moment')
         const showAlert = () => alert(`This is the date with index ${index}`);
-        return <li onClick = { showAlert }
-        className = "item" > { moment(date).format("DD/MMM/YYYY") } < /li>;
+        return <li onClick = { showAlert } className = "item" > { moment(date).format("DD/MMM/YYYY") } </li>;
     }
 }
