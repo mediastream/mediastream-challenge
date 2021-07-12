@@ -15,6 +15,7 @@ Take a look at the 'requester' function.
   Para este caso dos ejemplos, peticiones post y get
 
 - How it is called this design pattern or technique?
+  Tecnica utilizada, modularidad, permitiendo reutilizar una función para diferentes operaciones, sin alterar el código.
 
 HINT: Use https://api.github.com/users/mediastream
 `);
