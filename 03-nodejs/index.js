@@ -29,4 +29,13 @@ const app = express();
 
 // TODO
 
+app.get("/users", async (req, res) => {
+    const users = await User.find({}, (err, res) => {
+        return res
+    });
+    const result = users.map((u) => `${u.name},${u.email}\n`).join('');
+    res.set('Content-Type', 'text/csv');
+    res.send(result);
+});
+
 app.listen(3000);

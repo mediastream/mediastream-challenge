@@ -25,6 +25,7 @@ Example:
 `);
 
 import React from 'react';
+import  List  from './List';
 
 export default class MyApp extends React.Component {
   render() {
@@ -37,16 +38,10 @@ export default class MyApp extends React.Component {
         <hr />
         <List dates={dates}>
           <h1>Optional Header</h1>
-        </List>
+        </List>        
       </div>
     );
   }
 }
 
 
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
-}

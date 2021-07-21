@@ -11,6 +11,8 @@ You can use lodash/underscore (recommended)
 
 What is the complexity in O() notation of time and space?
 
+Answer: the complexity would be O(n)
+
 IMPORTANT: Find a balance between performance and legibility (more important).
 
 ---
@@ -30,10 +32,15 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+var soldHats = _.flatMap(database, ({ hats }) =>
+_.map(hats, hat => ({...hat }))
+);
 
-const total = 0 // TODO
+const counter = _(_.countBy(soldHats, 'id')).sortBy().value();
+
+const total = counter.slice(counter.length - 3).reduce((a, b) => a + b) // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
-
+console.log(total);
 console.log('Success!');
