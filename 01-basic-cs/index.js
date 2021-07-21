@@ -31,8 +31,35 @@ const assert = require('assert');
 const database = require('./database.json');
 
 
-const total = 0 // TODO
-
+let total = 0 // TODO
+const products = [];
+const productsAll = [];
+let count = []
+_.forEach(database, function(value) {
+    if (value.hats.length > 0) {
+        _.forEach(value.hats, function(hat) {
+            productsAll.push(hat);
+        });
+        _.forEach(value.hats, function(hat) {
+            let isFind = _.find(products, x => x.id === hat.id);
+            if (!isFind) {
+                products.push(hat);
+            }
+        });
+    }
+  });
+_.forEach(products, function(product) {
+    const id = product.id;
+    const result = _.filter(productsAll, function(x) { return x.id === id; });
+    count.push({result: result.length, id});
+  });
+count = count.sort((a, b) => (a.result < b.result) ? 1 : -1);
+const Best_sale = _.chunk(count, 3);
+_.forEach(Best_sale[0], function(Best_sale) {
+    total += Number(Best_sale.result);
+    console.log('Hat('+ Best_sale.id + ') sold ' + Best_sale.result + '.');
+});
+console.log('-> Expected result: ' +  Best_sale[0][0]['result'] + ' + ' + Best_sale[0][1]['result'] + ' + ' + Best_sale[0][2]['result'] + ' => ' + total);
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 

@@ -46,7 +46,33 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  constructor(props) {
+    super(props);
+    this.state = {
+      children: {content: props.children ? props.children.props.children : '', type: props.children ? props.children.type : ''}
+    }
+    
+  }
+  handleEvent(date) {
+    alert(date);
+  }
   render() {
-    return null;
+    const month = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const items = this.props.dates.map((date, index) => {
+    const date_format = '(' + new Date(date).getDay() + '/' + month[new Date(date).getMonth()] + '/' + new Date(date).getFullYear() + ')';
+      return (
+        <li key={index}> 
+          <button onClick={() => this.handleEvent(index)}>{date_format}</button>
+        </li>
+      );
+    });
+    return (
+      <div>
+        <h1>{this.props.children}</h1>
+        <ul>
+          {items}
+        </ul>
+      </div>
+    );
   }
 }
