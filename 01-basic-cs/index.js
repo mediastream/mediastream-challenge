@@ -29,11 +29,22 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+const { concat } = require('lodash');
 
 
-const total = 0 // TODO
+let total = 0 // TODO
+let hatsCollection = []
+
+_.map(_.filter(database, (reg) => reg.hats.length != 0), function (obj) { hatsCollection = _.concat(hatsCollection, obj.hats)});
+
+let parcial = _.orderBy(_.countBy(hatsCollection, 'id'), null, ['desc'])
+
+total = _.sum(parcial.slice(0,3))
+
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+console.log('Creo que la notacion BigO debe ser O(log n)')
