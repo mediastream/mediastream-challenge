@@ -18,6 +18,8 @@ $ node utils/seed.js
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+//const { AsyncParser } = require('json2csv');
+const { parseAsync } = require('json2csv');
 
 // Setup database
 mongoose.Promise = Promise;
@@ -28,5 +30,25 @@ const User = require('./models/User');
 const app = express();
 
 // TODO
+app.get("/users", (req, res) => {
+  User.find().exec((err, users) => {
+    if (err) {
+      return res.status(400).json(err)
+    }
+
+    const fields = [ 'name', 'email']
+    const opts = { fields };
+
+    parseAsync(users, opts)
+      .then(csv => {
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csv);
+      })
+      .catch(err => res.status(400).json({
+        ok: false,
+        message: "Download failed!"
+      }));
+  });
+});
 
 app.listen(3000);
