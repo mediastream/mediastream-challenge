@@ -59,6 +59,6 @@ console.log(`
 console.log(`
 - How it is called this design pattern or technique?
 
-    A:/ At the first view think is maybe a Immediately-invoked function expressions or a part of a "Module pattern".
+    A:/ Is posssibly a factory function or a part of a "Module pattern", 
 
 `);
