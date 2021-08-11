@@ -13,12 +13,16 @@
     "4": "cd 04-react; npm start"
   },
   "dependencies": {
-    "express": "^4.14.1",
+    "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.4",
+    "json2csv": "^5.0.6",
+    "lodash": "^4.17.21",
     "moment": "^2.17.1",
-    "mongoose": "^4.8.4",
-    "morgan": "^1.8.1"
+    "mongodb": "^4.1.0",
+    "mongoose": "^4.13.21",
+    "morgan": "^1.8.1",
+    "prop-types": "^15.7.2",
+    "react-moment": "^1.1.1"
   },
   "devDependencies": {
     "faker": "^3.1.0",
