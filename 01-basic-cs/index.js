@@ -29,11 +29,34 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+const { Console } = require('console');
 
+const sumOfTop3Hats = () => { 
+    let hatFreq = new Map();
+    database.forEach(obj => {
+        obj.hats.forEach( hat => {
+            if (hatFreq.get(hat.id) === undefined){
+            hatFreq.set(hat.id, 1);
+        } else {
+            hatFreq.set(hat.id, hatFreq.get(hat.id) + 1);
+        }
+    });
+});
 
-const total = 0 // TODO
+let hatCount = new Uint8Array(hatFreq.values());
+hatCount.sort((a, b) => b - a);
+
+return (hatCount[0]+hatCount[1]+hatCount[2])
+}
+
+const total = sumOfTop3Hats(); // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
 
 console.log('Success!');
+
+console.log(`
+Time Complexity  O(|Customers|*|hats|)
+Space Complexity  O(|hats|)
+`)

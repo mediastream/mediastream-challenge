@@ -26,7 +26,31 @@ const User = require('./models/User');
 
 // Setup Express.js app
 const app = express();
+console.log(`Visit: http://localhost:3000/user
+`)
 
 // TODO
+app.get('/user' , async (req , res) => {
+    try {
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Disposition", "attachment;filename=user.csv");
+
+        const users = await User.find();        
+        const csvHeader = "_id,name,email\n";
+
+        res.status(200);
+
+        res.write(csvHeader);
+
+        users.forEach(user => {
+            res.write(`${user._id},${user.name},${user.email}\n`);
+        })
+        res.end();
+
+    } catch (error) {
+        console.log(error);
+        res.send("Export Failed");
+    }
+})
 
 app.listen(3000);
