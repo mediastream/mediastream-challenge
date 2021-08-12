@@ -46,7 +46,26 @@ export default class MyApp extends React.Component {
 
 class List extends React.Component {
   // TODO
+  DateFormat(RecievedDate){
+    let OutputDate = new Date(RecievedDate);
+    var month = ["jan", "feb", "mar", "apr", "may", "jun","jul", "aug", "sep", "oct", "nov", "dec"];
+    return OutputDate.getDate()+'/'+month[OutputDate.getMonth()]+'/'+OutputDate.getFullYear();
+  }
+ 
+
   render() {
-    return null;
+    let dates = this.props.dates;
+    let a = this.props.children;
+    const listedDates = dates.map((date,index) =>
+      <li onClick={ () => { 
+        alert("Index is "+ index); 
+        }}
+        >
+        {this.DateFormat(date)}
+      </li>
+    );
+    return(
+    <ul>{listedDates}</ul>
+    )
   }
 }
