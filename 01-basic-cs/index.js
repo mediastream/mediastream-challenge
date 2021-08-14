@@ -30,8 +30,21 @@ const assert = require('assert');
 
 const database = require('./database.json');
 
+let hatsSelled = {};
 
-const total = 0 // TODO
+database.forEach((seller) => {
+  seller.hats.forEach((hat =>{
+    hatsSelled[hat.id] !== undefined ? 
+      hatsSelled[hat.id] = ++hatsSelled[hat.id] :
+      hatsSelled[hat.id] = 1;
+  }))
+});
+
+let matrix = _.toPairs(hatsSelled);
+
+var sortedPairs = _.sortBy(matrix, function (p) {return -p[1]});
+
+const total = sortedPairs[0][1] + sortedPairs[1][1] + sortedPairs[2][1];
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);

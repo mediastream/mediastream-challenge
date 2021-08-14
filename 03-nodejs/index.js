@@ -16,16 +16,34 @@ $ node utils/seed.js
 `);
 
 const express = require('express');
-const morgan = require('morgan');
 const mongoose = require('mongoose');
+const fastcsv = require("fast-csv");
+const fs = require("fs");
 
 // Setup database
 mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/mediastream-challenge');
-const User = require('./models/User');
+const User = require('./models/User')
+
+const ws = fs.createWriteStream("mongodb_fastcsv.csv");
 
 // Setup Express.js app
 const app = express();
+
+app.get('/users', async function (req, res) {
+  var users = await User.find({});
+  fastcsv
+  .write(users, { headers: true, transform: function(row){
+    return {
+        Name: row.name,
+        Email: row.email
+    };
+} })
+  .on("finish", function() {
+    console.log("mongodb_fastcsv.csv");
+  })
+  .pipe(ws);
+})
 
 // TODO
 

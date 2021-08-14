@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 console.log(`
 4.
@@ -14,7 +14,7 @@ and on click must 'alert()' its index in the list.
 Also, the 'List' component should receive an optional child as a header.
 Remember to validate the props.
 
-The implementation **must focus on performance**.
+The implementation *must focus on performance*.
 
 Take a look at the MyApp component, you should not modify it.
 
@@ -24,29 +24,50 @@ Example:
 - react-dates: NOPE
 `);
 
-import React from 'react';
+("use strict");
 
-export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+import React from "react";
+import moment from 'moment';
+import PropTypes from 'prop-types'
 
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+const MyApp = () => {
+  const dates = ["2017-02-20T13:33:52.889Z", "2013-06-25T14:31:24.888Z"];
+  return (
+    <div>
+      <h1>04 - React</h1>
+      <List dates={dates} />
+      <hr />
+      <List dates={dates}>
+        <h1>Optional Header</h1>
+      </List>
+    </div>
+  );
+};
+
+const List = (props) => {
+  return (
+    <div>
+      {props.children}
+      <ul>
+        {props.dates.map((date, index) => {
+          return <Row date={date} index={index} key={index} />;
+        })}
+      </ul>
+    </div>
+  );
+};
+
+const Row = ({index, date}) => {
+  return (
+    <li onClick={() => alert(index)}>
+      Date:{moment(date).format("DD/MMM/YYYY")}
+    </li>
+  );
+};
+
+Row.propTypes = {
+  index: PropTypes.number,
+  date: PropTypes.string,
 }
 
-
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
-}
+export default MyApp;

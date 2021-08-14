@@ -3,8 +3,9 @@
     "start": "next"
   },
   "dependencies": {
+    "moment": "^2.29.1",
     "next": "^1.2.3",
-    "react": "^15.4.2",
+    "react": "^15.7.0",
     "react-dom": "^15.4.2"
   }
 }
