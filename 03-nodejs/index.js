@@ -22,7 +22,7 @@ const Json2csvParser = require('json2csv').Parser;
 
 // Setup database
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://root:123qwe@localhost/mediastream-challenge');
+mongoose.connect('mongodb://localhost/mediastream-challenge');
 const User = require('./models/User');
 
 // Setup Express.js app
