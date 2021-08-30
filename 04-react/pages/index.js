@@ -25,28 +25,36 @@ Example:
 `);
 
 import React from 'react';
+import moment from 'moment';
 
 export default class MyApp extends React.Component {
-  render() {
-    const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
+    render() {
+        const dates = ['2017-02-20T13:33:52.889Z', '2013-06-25T14:31:24.888Z'];
 
-    return (
-      <div>
-        <h1>04 - React</h1>
-        <List dates={dates} />
-        <hr />
-        <List dates={dates}>
-          <h1>Optional Header</h1>
-        </List>
-      </div>
-    );
-  }
+        return (
+            <div>
+                <h1>04 - React</h1>
+                <List dates={dates} />
+                <hr />
+                <List dates={dates}>
+                    <h1>Optional Header</h1>
+                </List>
+            </div>
+        );
+    }
 }
 
 
-class List extends React.Component {
-  // TODO
-  render() {
-    return null;
-  }
+const List = (props) => {
+    return (
+        <div>
+            { props.children }
+            <ul>{ props.dates.map((date, index) => <Row date={date} onClick={() => alert(`index: ${index}`)}/>) }</ul>
+        </div>
+    )
+}
+
+const Row = (props) => {
+    const date = new moment(props.date);
+    return <li style={{cursor: 'pointer'}} onClick={props.onClick}>({ date.format('DD/MMM/yyyy')})</li>
 }
