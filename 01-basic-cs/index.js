@@ -29,9 +29,38 @@ const _ = require('lodash'); // https://lodash.com/docs/4.17.4
 const assert = require('assert');
 
 const database = require('./database.json');
+const filterDatabase = _.filter(database, element => element.hats.length > 0);
 
+const hatList = _.map(filterDatabase, element => {
+    return _
+        .chain(element.hats)
+        .groupBy('id')
+        .map((element, key) => {
+            return {
+                id: key,
+                total: element.length
+            }
+        })
+        .value()
+});
 
-const total = 0 // TODO
+const flatHatList = hatList.flat(1);
+const totalOfHats = _
+    .chain(flatHatList)
+    .groupBy('id')
+    .map((element, key) => {
+        return {
+            id: key,
+            total: element.length
+        }
+    })
+    .sortBy('total')
+    .reverse()
+    .slice(0, 3)
+    .sumBy('total')
+    .value();
+
+const total = totalOfHats // TODO
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`);
