@@ -1,7 +1,11 @@
 import './assets/styles.css'
-import { useState } from 'react'
-
+import React from 'react'
 export default function Exercise01 () {
+  const cart = [{
+    id: 0,
+    name: '',
+    price: 0
+  }]
   const movies = [
     {
       id: 1,
@@ -24,41 +28,16 @@ export default function Exercise01 () {
       price: 5
     }
   ]
-
-  const discountRules = [
-    {
-      m: [3, 2],
-      discount: 0.25
-    },
-    {
-      m: [2, 4, 1],
-      discount: 0.5
-    },
-    {
-      m: [4, 2],
-      discount: 0.1
-    }
-  ]
-
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
-  ])
-
   const getTotal = () => 0 // TODO: Implement this
-
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {
+          movies.map(o => (
+            <li className="movies__list-card" key={o.id}>
               <ul>
-                <li>
+                <li className="item" >
                   ID: {o.id}
                 </li>
                 <li>
@@ -68,17 +47,18 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => console.log('clic')}>
                 Add to cart
               </button>
             </li>
-          ))}
+          ))
+          }
         </ul>
       </div>
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li className="movies__cart-card" key={x.id}>
               <ul>
                 <li>
                   ID: {x.id}
