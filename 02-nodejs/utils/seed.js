@@ -2,6 +2,10 @@
 
 const faker = require('faker')
 const _ = require('lodash')
+const mongoose = require('mongoose')
+mongoose.Promise = Promise
+
+mongoose.connect('mongodb://localhost/mediastream-challenge')
 const User = require('../models/User')
 
 const AMMOUNT = {
@@ -16,4 +20,5 @@ const users = _.times(AMMOUNT.USERS, n => ({
 User.insertMany(users).then(() => {
   console.log('Seed complete')
   process.exit(0)
-}, console.error.bind(console))
+}, console.error.bind(console)
+)

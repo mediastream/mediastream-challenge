@@ -1,19 +1,15 @@
-'use strict'
-
-const _ = require('lodash') // https://lodash.com/docs/4.17.4
-const assert = require('assert')
-
 const database = require('./database.json')
-
-const total = 0 // TODO
-
+const hatsSelled = {}
+const assert = require('assert')
+const _ = require('lodash')
+database.forEach((seller) => {
+  seller.hats.forEach(hat => {
+    hatsSelled[hat.id] !== undefined ? hatsSelled[hat.id] = ++hatsSelled[hat.id] : hatsSelled[hat.id] = 1
+  })
+})
+const matrix = _.toPairs(hatsSelled)
+const sortedPairs = _.sortBy(matrix, function (p) { return -p[1] })
+const total = sortedPairs[2][1] + sortedPairs[1][1] + sortedPairs[0][1]
 // Throws error on failure
-assert.equal(total, 23, `Invalid result: ${total} != 23`)
-
-console.log('Success!')
-
-/**
- * Time and space complexity in O() notation is:
- *   - time complexity: TODO
- *   - space complexity: TODO
- */
+assert.equal(total, 23)
+console.log(sortedPairs[2][1] + ' ' + sortedPairs[1][1] + ' ' + sortedPairs[0][1] + ' ' + total + ' Success!')
