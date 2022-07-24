@@ -9,3 +9,6 @@ We need to create a route that downloads the entire database to a .csv file.
 
 ## Tasks
 1) Create `GET /users` endpoint to stream the CSV response
+
+## Docker
+- Run `docker-compose up` to start MongoDB

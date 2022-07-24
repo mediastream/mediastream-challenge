@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -40,23 +40,95 @@ export default function Exercise01 () {
     }
   ]
 
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
-  ])
+  const [discount, setDiscount] = useState(0)
+  const [cart, setCart] = useState([])
 
-  const getTotal = () => 0 // TODO: Implement this
+  function getRule (cart, rules) {
+    if (cart.length) {
+      for (const rule of rules) {
+        let hits = 0
+        for (const item of cart) {
+          if (rule.m.includes(item.id)) {
+            hits += 1
+          }
+        }
+        if (rule.m.length === hits) {
+          return rule
+        }
+      }
+
+      return null
+    }
+    return null
+  }
+
+  useEffect(() => {
+    setDiscount(getRule(cart, discountRules)?.discount || 0)
+  }, [cart])
+  console.log(discount)
+  const addToCart = (id) => {
+    setCart((prev) => {
+      const movieInTheCart = prev.find(p => p.id === id)
+      // Check if movie is already in the cart
+      if (movieInTheCart) {
+        return prev.map(p => {
+          if (p.id === id) {
+            return {
+              ...p,
+              quantity: p.quantity + 1
+            }
+          }
+          return p
+        })
+      }
+      return [...prev, { ...movies.find(m => m.id === id), quantity: 1 }]
+    })
+  }
+
+  const increaseQuantity = (id) => {
+    setCart(prev => {
+      return prev.map(p => {
+        if (p.id === id) {
+          return {
+            ...p,
+            quantity: p.quantity + 1
+          }
+        }
+        return p
+      })
+    })
+  }
+
+  const decreaseQuantity = (id) => {
+    setCart(prev => {
+      const movieInTheCart = prev.find(p => p.id === id)
+      if (movieInTheCart.quantity === 1) {
+        return [...prev].filter(p => p.id !== id)
+      }
+
+      return prev.map(p => {
+        if (p.id === id) {
+          return {
+            ...p,
+            quantity: p.quantity - 1
+          }
+        }
+        return p
+      })
+    })
+  }
+
+  const getTotal = () => cart.reduce((prev, current) => {
+    const subTotal = (current.quantity * current.price)
+    return prev + subTotal - subTotal * discount
+  }, 0)
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o, key) => (
+            <li className="movies__list-card" key={key}>
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +140,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o.id)}>
                 Add to cart
               </button>
             </li>
@@ -77,8 +149,8 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x, key) => (
+            <li className="movies__cart-card" key={key}>
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,13 +163,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => decreaseQuantity(x.id)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => increaseQuantity(x.id)}>
                   +
                 </button>
               </div>
