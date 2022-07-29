@@ -51,6 +51,10 @@
   border-radius: .2em;
 }
 
+.movies__cart h2 {
+  margin-bottom: .5em;
+}
+
 .movies__cart-card {
   background-color: #333333;
   margin-bottom: 1rem;
@@ -71,6 +75,7 @@
   display: flex;
   align-items: center;
   margin-top: .5em;
+  justify-content: space-between;
 }
 
 .movies__cart-card span {
@@ -87,6 +92,22 @@
 }
 
 .movies__cart-total {
-  margin-top: 1em;
   font-size: 1.25em;
+  display: flex;
+  justify-content: space-between;
+  margin: .75em;
+}
+
+.movies__cart-total button {
+  background-color: var(--ms-green);
+  border: none;
+  cursor: pointer;
+  font-size: .6m;
+  border-radius: .25em;
+}
+
+.empty-cart {
+  min-height: 3em;
+  text-align: center;
+  padding-top: 1em;
 }
