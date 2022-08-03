@@ -1,12 +1,9 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const userSchema = new Schema({
+  name: { type: String },
+  email: { type: String }
+}, { collections: 'users' })
+userSchema.index({ name: 1, email: 1 })
 
-// Setup database
-mongoose.Promise = Promise
-mongoose.connect('mongodb://localhost/mediastream-challenge')
-
-const User = mongoose.model('User', {
-  name: String,
-  email: String
-})
-
-module.exports = User
+module.exports = mongoose.model('User', userSchema)
