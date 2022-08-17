@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import { React, useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -25,6 +25,7 @@ export default function Exercise01 () {
     }
   ]
 
+  /*
   const discountRules = [
     {
       m: [3, 2],
@@ -38,7 +39,7 @@ export default function Exercise01 () {
       m: [4, 2],
       discount: 0.1
     }
-  ]
+  ] */
 
   const [cart, setCart] = useState([
     {
@@ -49,14 +50,15 @@ export default function Exercise01 () {
     }
   ])
 
+  setCart()
   const getTotal = () => 0 // TODO: Implement this
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o, index) => (
+            <li key={index} className="movies__list-card">
               <ul>
                 <li>
                   ID: {o.id}
@@ -77,8 +79,8 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x, index) => (
+            <li key={index} className="movies__cart-card">
               <ul>
                 <li>
                   ID: {x.id}
