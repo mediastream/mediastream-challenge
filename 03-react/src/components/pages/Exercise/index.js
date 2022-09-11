@@ -87,7 +87,7 @@ export default function Exercise01 () {
       return e.id
     })
     
-    //no estaba claro si habia que hacer sumar los descuentos si ocurrian varian coincidencias, asumi, sumarlas 
+    //it was not clear whether to have the discounts added up if there were any coincidences, so I assumed, add them up. 
     discountRules?.map( discountRule => {
    
       if(discountRule.m.every( el => movies.includes(el)) === true){
