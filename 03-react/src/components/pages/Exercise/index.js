@@ -1,7 +1,8 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Exercise01 () {
+  
   const movies = [
     {
       id: 1,
@@ -40,6 +41,8 @@ export default function Exercise01 () {
     }
   ]
 
+
+
   const [cart, setCart] = useState([
     {
       id: 1,
@@ -48,15 +51,61 @@ export default function Exercise01 () {
       quantity: 2
     }
   ])
+  const addMovie = (film) => {
+    if( cart.filter( m => m.id == film.id).length == 0){
+      setCart([...cart,{
+        id: film.id,
+        name: film.name,
+        price: film.price,
+        quantity:1
+      }])
+    }
+  }
+  const DecrementQuantity = (x) => {
+    let cartCopy = [...cart];
+    let elementIndex = cartCopy.findIndex( e => e.id === x.id)
+    
+    cartCopy[elementIndex].quantity --
+    if(cartCopy[elementIndex].quantity === 0){
+      cartCopy.splice(elementIndex,1)
+    }
+    setCart(cartCopy)
+  }
+  const IncrementQuantity = (x) => {
+    let cartCopy = [...cart];
+    let elementIndex = cartCopy.findIndex( e => e.id === x.id)
+    cartCopy[elementIndex].quantity ++
+    setCart(cartCopy)
+  }
+  const getTotal = () => {
+    let total = 0
+    let discountAmount = 0;
+    if(cart.length === 0) return 0;
 
-  const getTotal = () => 0 // TODO: Implement this
+    let movies = cart.map( e => {
+      total += e.price * e.quantity
+      return e.id
+    })
+    
+    //it was not clear whether to have the discounts added up if there were any coincidences, so I assumed, add them up. 
+    discountRules?.map( discountRule => {
+   
+      if(discountRule.m.every( el => movies.includes(el)) === true){
+        discountAmount += discountRule.discount
+      }
+    })
 
+    return total - (discountAmount * total)
+  }
+  useEffect(()=>{
+    console.log(cart)
+  },[cart])
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o,i) => (
+            <li key={`movies_keys_${i}`} className="movies__list-card">
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +117,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addMovie(o)}>
                 Add to cart
               </button>
             </li>
@@ -77,8 +126,8 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x,i) => (
+            <li key={`movies_keys_${i}`} className="movies__cart-card">
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,13 +140,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => DecrementQuantity(x)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => IncrementQuantity(x)}>
                   +
                 </button>
               </div>

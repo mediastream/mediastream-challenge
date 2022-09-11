@@ -3,7 +3,10 @@ There is a database of users and their hats at './database.json'.
 
 ## Tasks
 1) Find the total sum of the top-3 most selling hats. You can use lodash/underscore <strong>(recommended)</strong>
+    A: 
 2) What is the complexity in O() notation of time and space? Complete the comment with the right answer.
+
+    A: the complexity in O() time and space notation is 0(n^2) since we use 2 for bucles, with an unknown number of elements, i.e., each for bucle is variable and nested, therefore the complexity is quadratic, i.e. O(n^2).
 
 > IMPORTANT: Find a balance between performance and legibility.
 
