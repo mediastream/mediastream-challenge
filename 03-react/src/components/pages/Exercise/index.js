@@ -1,5 +1,7 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
+
+const _ = require('lodash')
 
 export default function Exercise01 () {
   const movies = [
@@ -25,7 +27,7 @@ export default function Exercise01 () {
     }
   ]
 
-  const discountRules = [
+  const _discountRules = [
     {
       m: [3, 2],
       discount: 0.25
@@ -49,14 +51,68 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => {
+    console.log(checkCombination(cart))
+    const discount = checkCombination(cart)
+    let total = 0
+    cart.forEach(movie => {
+      total += movie.price * movie.quantity || 0
+    })
+
+    return discount.apply ? (total - (total * discount.discount)) : total
+  } // TODO: Implement this
+
+  const checkCombination = (arr) => {
+    const curIndex = _.map(arr, 'id')
+    const discount = _discountRules.map(discount => {
+      return _.isEqualWith(_.compact(curIndex), discount.m)
+        ? {
+            apply: _.isEqualWith(_.compact(curIndex), discount.m),
+            discount: discount.discount
+          }
+        : false
+    })
+    return _.compact(discount)[0] || false
+  }
+
+  const addToCart = (o) => {
+    setCart(currentCart => [...currentCart, { ...o, quantity: 1 }])
+  }
+
+  const incrementQuantity = (x, i) => {
+    setCart(prevState => {
+      const newState = prevState.map((cart, index) => {
+        if (cart.id === x.id && index === i) {
+          return { ...cart, quantity: x.quantity + 1 }
+        }
+        return cart
+      })
+      return newState
+    })
+  }
+
+  const decrementQuantity = (x, i) => {
+    setCart(prevState => {
+      const newState = prevState.map((cart, index) => {
+        if (cart.quantity === 1 && index === i) {
+          return {}
+        }
+        if (cart.id === x.id && index === i) {
+          return { ...cart, quantity: x.quantity - 1 }
+        }
+        return cart
+      })
+      return newState
+    })
+  }
+  // const removeFromCart = (o) => {}
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o, i) => (
+            <li className="movies__list-card" key={i}>
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +124,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onChange={getTotal} onClick={() => addToCart(o)}>
                 Add to cart
               </button>
             </li>
@@ -77,8 +133,9 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x, i) => (
+            x.quantity > 0
+              ? <li className="movies__cart-card" key={i}>
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,17 +148,18 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onChange={getTotal} onClick={() => decrementQuantity(x, i)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onChange={getTotal} onClick={() => incrementQuantity(x, i)}>
                   +
                 </button>
               </div>
             </li>
+              : null
           ))}
         </ul>
         <div className="movies__cart-total">
