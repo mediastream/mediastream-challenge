@@ -25,9 +25,7 @@ router.get('/users', async function (req, res) {
 
   child.on('message', function (data) {
     res.header('Content-Type', 'text/csv')
-    console.log(data.message)
     res.send(data.message)
-    console.log('child process exited')
   })
 })
 
