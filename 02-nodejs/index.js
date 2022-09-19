@@ -2,6 +2,7 @@
 
 const express = require('express')
 
+// eslint-disable-next-line no-unused-vars
 const User = require('./models/User')
 
 // Setup Express.js app

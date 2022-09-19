@@ -22,8 +22,10 @@
   "dependencies": {
     "express": "^4.14.1",
     "isomorphic-fetch": "^2.2.1",
+    "json2csv": "^5.0.7",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
+    "mongodb": "4.9",
     "mongoose": "^4.8.4",
     "morgan": "^1.8.1"
   },

@@ -71,7 +71,6 @@ const useCart = () => {
       ...item,
       quantity: 1
     }
-    console.log(itemToAdd)
     foundItem
       ? setCart(updateItemQty(itemToAdd, 'increment'))
       : setCart([...cart, itemToAdd])
