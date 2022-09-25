@@ -1,8 +1,8 @@
 import './assets/styles.css'
 import React, { useContext } from 'react'
-import Cart from '../../Cart'
-import Movie from '../../Movie'
-import { CartContext } from '../../../context/CartContext'
+import Cart from '../../components/Cart'
+import Movie from '../../components/Movie'
+import { CartContext } from '../../context/CartContext'
 
 export default function Exercise01 () {
   const { cart, movies, totalCart } = useContext(CartContext)
