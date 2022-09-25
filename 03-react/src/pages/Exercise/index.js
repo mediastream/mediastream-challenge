@@ -4,7 +4,7 @@ import Cart from '../../components/Cart'
 import Movie from '../../components/Movie'
 import { CartContext } from '../../context/CartContext'
 
-export default function Exercise01 () {
+export default function Exercise () {
   const { cart, movies, totalCart } = useContext(CartContext)
 
   return (
