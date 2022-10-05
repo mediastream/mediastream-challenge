@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Exercise from './components/pages/Exercise'
+import Exercise from './pages/Excersise'
 
 function App () {
   return (
