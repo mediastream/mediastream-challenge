@@ -1,12 +1,12 @@
 'use strict'
-
 const express = require('express')
-
-const User = require('./models/User')
+const { router } = require('./routes')
 
 // Setup Express.js app
 const app = express()
 
 // TODO: everything else
+
+app.use(router)
 
 app.listen(3000)
