@@ -1,5 +1,7 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React from 'react'
+// import InputNumber from 'rc-input-number'
+// import { useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -25,38 +27,38 @@ export default function Exercise01 () {
     }
   ]
 
-  const discountRules = [
-    {
-      m: [3, 2],
-      discount: 0.25
-    },
-    {
-      m: [2, 4, 1],
-      discount: 0.5
-    },
-    {
-      m: [4, 2],
-      discount: 0.1
-    }
-  ]
+  // const discountRules = [
+  //   {
+  //     m: [3, 2],
+  //     discount: 0.25
+  //   },
+  //   {
+  //     m: [2, 4, 1],
+  //     discount: 0.5
+  //   },
+  //   {
+  //     m: [4, 2],
+  //     discount: 0.1
+  //   }
+  // ]
 
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
-  ])
+  // const [cart, setCart] = useState([
+  //   {
+  //     id: 1,
+  //     name: 'Star Wars',
+  //     price: 20,
+  //     quantity: 2
+  //   }
+  // ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  // const getTotal = () => 0 // TODO: Implement this
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li className="movies__list-card" key={''}>
               <ul>
                 <li>
                   ID: {o.id}
@@ -67,6 +69,9 @@ export default function Exercise01 () {
                 <li>
                   Price: ${o.price}
                 </li>
+                <li>
+                  Quantity: <input type="number"/>
+                </li>
               </ul>
               <button onClick={() => console.log('Add to cart', o)}>
                 Add to cart
@@ -75,7 +80,7 @@ export default function Exercise01 () {
           ))}
         </ul>
       </div>
-      <div className="movies__cart">
+      {/* <div className="movies__cart">
         <ul>
           {cart.map(x => (
             <li className="movies__cart-card">
@@ -107,7 +112,7 @@ export default function Exercise01 () {
         <div className="movies__cart-total">
           <p>Total: ${getTotal()}</p>
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
