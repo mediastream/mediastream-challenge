@@ -20,5 +20,8 @@ module.exports = {
     'react', 'react-hooks', 'jest'
   ],
   rules: {
+    'no-unused-vars': 'warn',
+    'react/jsx-key': 'warn',
+    'react/react-in-jsx-scope': 'warn'
   }
 }
