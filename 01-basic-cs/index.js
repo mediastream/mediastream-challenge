@@ -30,6 +30,6 @@ console.log('Success!')
 
 /**
  * Time and space complexity in O() notation is:
- *   - time complexity: O(n^2) because of nested objects
+ *   - time complexity: O(n)
  *   - space complexity: O(n)
  */
