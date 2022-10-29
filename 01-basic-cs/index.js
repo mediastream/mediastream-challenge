@@ -5,7 +5,23 @@ const assert = require('assert')
 
 const database = require('./database.json')
 
-const total = 0 // TODO
+const hatsByQuantity = {}
+
+// Assuming most selling hats means most quantity
+database.forEach((seller) => {
+  // Add each hat into object tracking total quantity for each
+  seller.hats.forEach((hat) => {
+    if (!hatsByQuantity[hat.id]) {
+      hatsByQuantity[hat.id] = 1
+    } else {
+      hatsByQuantity[hat.id] += 1
+    }
+  })
+})
+
+const soldQty = Object.values(hatsByQuantity)
+const mostSold = soldQty.sort((a, b) => b - a).slice(0, 3)
+const total = _.sum(mostSold)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`)
@@ -14,6 +30,6 @@ console.log('Success!')
 
 /**
  * Time and space complexity in O() notation is:
- *   - time complexity: TODO
- *   - space complexity: TODO
+ *   - time complexity: O(n^2) because of nested objects
+ *   - space complexity: O(n)
  */
