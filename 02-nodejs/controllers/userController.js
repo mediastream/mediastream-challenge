@@ -18,9 +18,13 @@ controller.download = async (req, res) => {
       value: 'email'
     }
   ]
-  const data = await User.find().lean()
+  try {
+    const data = await User.find().lean()
 
-  return downloadResource(res, 'users.csv', fields, data)
+    return downloadResource(res, 'users.csv', fields, data)
+  } catch (error) {
+    res.status(500).json({ error })
+  }
 }
 
 module.exports = controller
