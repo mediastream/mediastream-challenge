@@ -1,12 +1,11 @@
 'use strict'
-
+// importar controlador
+const userController = require('./controllers/userController')
 const express = require('express')
-
-const User = require('./models/User')
 
 // Setup Express.js app
 const app = express()
 
-// TODO: everything else
+app.get('/users', userController.download)
 
 app.listen(3000)
