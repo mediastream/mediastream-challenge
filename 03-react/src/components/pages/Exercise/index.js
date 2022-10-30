@@ -1,5 +1,5 @@
+import React, { useState } from 'react'
 import './assets/styles.css'
-import { useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -41,22 +41,71 @@ export default function Exercise01 () {
   ]
 
   const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const alreadyAdded = (id) => {
+    return cart.find(item => item.id === id)
+  }
+
+  const getTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0)
+  }
+
+  const addToCart = (item) => {
+    item.quantity = 1
+    item.subtotal = item.price * item.quantity
+    // 👇️ push to end of state array
+    setCart(current => [...current, { ...item }])
+  }
+
+  const increment = (item) => {
+    const quantity = item.quantity + 1
+    const subtotal = item.price * quantity
+
+    // 👇️ find item in state array and increment quantity
+    setCart(current => current.map(i => i.id === item.id ? { ...i, quantity, subtotal } : i))
+  }
+
+  const decrement = (item) => {
+    const quantity = item.quantity - 1
+    const subtotal = item.price * quantity
+    // 👇️ find item in state array and decrement quantity
+    setCart(current => current.map(i => i.id === item.id ? { ...i, quantity, subtotal } : i))
+
+    // 👇️ remove item from state array if quantity is 0
+    setCart(current => current.filter(i => i.id !== item.id || i.quantity > 0))
+  }
+
+  const totalDiscount = () => {
+    // calculate discount based on discountRules property m, compare with cart ids
+
+    for (let i = 0; i < discountRules.length; i++) {
+      const rule = discountRules[i]
+      const ruleIds = rule.m
+      const ruleDiscount = rule.discount
+
+      const cartIds = cart.map(item => item.id)
+      const cartIdsSorted = cartIds.sort()
+      const ruleIdsSorted = ruleIds.sort()
+
+      if (JSON.stringify(cartIdsSorted) === JSON.stringify(ruleIdsSorted)) {
+        return ruleDiscount * 100
+      }
+    }
+
+    return 0
+  }
+
+  const totalAfterDiscount = () => {
+    return getTotal() - (getTotal() * (totalDiscount() / 100))
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li className="movies__list-card" key={o.id}>
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +117,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o)} disabled={alreadyAdded(o.id)}>
                 Add to cart
               </button>
             </li>
@@ -76,9 +125,10 @@ export default function Exercise01 () {
         </ul>
       </div>
       <div className="movies__cart">
-        <ul>
+        {cart.length
+          ? <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li className="movies__cart-card" key={x.id}>
               <ul>
                 <li>
                   ID: {x.id}
@@ -89,23 +139,27 @@ export default function Exercise01 () {
                 <li>
                   Price: ${x.price}
                 </li>
+                <li>
+                  Subtotal: ${x.subtotal}
+                </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => decrement(x)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => increment(x)}>
                   +
                 </button>
               </div>
             </li>
           ))}
         </ul>
+          : <span>There are no items in the cart</span>}
         <div className="movies__cart-total">
-          <p>Total: ${getTotal()}</p>
+          <p>Total: ${getTotal()} - Discount: {totalDiscount()}% = ${totalAfterDiscount()}</p>
         </div>
       </div>
     </section>
