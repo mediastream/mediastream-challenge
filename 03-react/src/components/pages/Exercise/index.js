@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -25,7 +25,7 @@ export default function Exercise01 () {
     }
   ]
 
-  const discountRules = [
+  /* const discountRules = [
     {
       m: [3, 2],
       discount: 0.25
@@ -38,7 +38,7 @@ export default function Exercise01 () {
       m: [4, 2],
       discount: 0.1
     }
-  ]
+  ] */
 
   const [cart, setCart] = useState([
     {
@@ -49,16 +49,51 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => cart.reduce((res, val) => (val.price * val.quantity) + res, 0)
+
+  const sumarItem = (cartId) => {
+    setCart((oldCarts) => [
+      ...oldCarts.map((item) =>
+        item.id === cartId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    ])
+  }
+
+  const restarItem = (cartId) => {
+    setCart((oldCarts) =>
+      [
+        ...oldCarts.map((item) => {
+          if (item.id === cartId && item.quantity <= 1) return null
+          if (item.id === cartId && item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 }
+          } else {
+            return item
+          }
+        })
+      ].filter((item) => item)
+    )
+  }
+
+  const agregarCarrito = (cart) => {
+    setCart((oldCarts) => {
+      if (oldCarts.find((item) => item.id === cart.id)) {
+        return [
+          ...oldCarts.map((item) =>
+            item.id === cart.id ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        ]
+      } else return [...oldCarts, { ...cart, quantity: 1 }]
+    })
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li className="movies__list-card" key={o.id}>
               <ul>
-                <li>
+                <li >
                   ID: {o.id}
                 </li>
                 <li>
@@ -68,7 +103,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => agregarCarrito(o)}>
                 Add to cart
               </button>
             </li>
@@ -78,7 +113,7 @@ export default function Exercise01 () {
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li className="movies__cart-card" key={x.id}>
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,13 +126,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => restarItem(x.id)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => sumarItem(x.id)}>
                   +
                 </button>
               </div>

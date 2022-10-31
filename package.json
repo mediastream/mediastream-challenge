@@ -11,9 +11,9 @@
   },
   "scripts": {
     "1": "nodemon 01-basic-cs/",
-    "2": "nodemon 02-nodejs/",
+    "2": "nodemon --max-old-space-size=4096 02-nodejs/",
     "3": "cd 03-react; npm start",
-    "lint": "eslint .",
+    "lint": "eslint ./",
     "postinstall": "cd 03-react && npm i"
   },
   "pre-commit": [
@@ -22,6 +22,7 @@
   "dependencies": {
     "express": "^4.14.1",
     "isomorphic-fetch": "^2.2.1",
+    "json-2-csv": "^3.17.2",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.8.4",
