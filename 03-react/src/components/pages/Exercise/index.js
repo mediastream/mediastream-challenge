@@ -1,5 +1,6 @@
+import { useState, React } from 'react'
 import './assets/styles.css'
-import { useState } from 'react'
+import _ from 'lodash'
 
 export default function Exercise01 () {
   const movies = [
@@ -45,18 +46,75 @@ export default function Exercise01 () {
       id: 1,
       name: 'Star Wars',
       price: 20,
-      quantity: 2
+      quantity: 2,
+      total: 40,
+      subtotal: 40,
+      discount: 0,
+      discountValue: 0
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => {
+    return _.sumBy(cart, 'subtotal')
+  }
+
+  const increment = x => {
+    const tmpCart = _.map(cart, el => el.id === x.id
+      ? { ...el, quantity: el.quantity + 1 }
+      : el)
+    calcCart(tmpCart)
+  }
+
+  const decrement = x => {
+    const tmpCart = _.map(cart, el => el.id === x.id
+      ? { ...el, quantity: el.quantity - 1 }
+      : el)
+    calcCart(_.filter(tmpCart, el => el.quantity > 0))
+  }
+
+  const calcCart = cart => {
+    const newCart = _.map(cart, el => {
+      return {
+        ...el,
+        total: el.quantity * el.price,
+        discount: 0,
+        subtotal: el.quantity * el.price,
+        discountValue: 0
+      }
+    })
+
+    _.forEach(discountRules, rule => {
+      const items = _.filter(newCart, el => _.includes(rule.m, el.id))
+      if (items.length === rule.m.length) {
+        items.forEach(rItem => {
+          newCart.forEach(el => {
+            if (el.id === rItem.id) {
+              el.discount += rule.discount
+              el.discountValue = el.total * el.discount
+              el.subtotal = el.total - el.discountValue
+            }
+          })
+        })
+      }
+    })
+    setCart(newCart)
+  }
+
+  const addToCart = x => {
+    const found = _.find(cart, el => el.id === x.id)
+    if (!found) {
+      calcCart([...cart, { ...x, quantity: 1 }])
+    } else {
+      increment(x)
+    }
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o, k) => (
+            <li key={k} className="movies__list-card">
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +126,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o)}>
                 Add to cart
               </button>
             </li>
@@ -77,8 +135,8 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x, k) => (
+            <li key={k} className="movies__cart-card">
               <ul>
                 <li>
                   ID: {x.id}
@@ -87,17 +145,30 @@ export default function Exercise01 () {
                   Name: {x.name}
                 </li>
                 <li>
-                  Price: ${x.price}
+                  Unit Price: ${x.price}
                 </li>
+                {x.discount > 0
+                  ? <>
+                      <li>
+                        Discount: {x.discount * 100}%
+                      </li>
+                      <li>
+                        Subtotal: ${x.subtotal} (save ${x.discountValue})
+                      </li>
+                    </>
+                  : <li>
+                      Subtotal: ${x.subtotal}
+                    </li>
+                }
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => decrement(x)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => increment(x)}>
                   +
                 </button>
               </div>
