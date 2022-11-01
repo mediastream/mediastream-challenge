@@ -32,6 +32,6 @@ console.log('Success!')
 
 /**
  * Time and space complexity in O() notation is:
- *   - time complexity: TODO
- *   - space complexity: TODO
+ *   - time complexity: The complexity in this solution is O(n^2) (I was about to sleep and remembered that this question hasn't was answered. Sorry)
+ *   - space complexity: O(n²)
  */
