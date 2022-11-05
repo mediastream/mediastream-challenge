@@ -2,10 +2,11 @@
 
 const express = require('express')
 
-const User = require('./models/User')
+const UserRoutes = require('./routes/users.routes')
 
 // Setup Express.js app
 const app = express()
+app.use('/users', UserRoutes)
 
 // TODO: everything else
 
