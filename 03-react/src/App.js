@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React, { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Exercise from './components/pages/Exercise'
 
 function App () {
