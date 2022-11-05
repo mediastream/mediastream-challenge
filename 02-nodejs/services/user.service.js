@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const { parse } = require('json2csv')
 
 const UserService = {
   createUserCSV: async function (req, res) {
