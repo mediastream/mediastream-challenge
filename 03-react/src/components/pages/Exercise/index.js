@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
