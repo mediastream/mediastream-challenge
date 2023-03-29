@@ -42,15 +42,11 @@ export default function Exercise01 () {
   ]
 */
 
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
-  ])
+  const [cart, setCart] = useState([])
 
+  const addToCart = movie => {
+    setCart(prevCart => [...prevCart, movie])
+  }
   const getTotal = () => 0 // TODO: Implement this
 
   return (
@@ -67,13 +63,15 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o)}>
                 Add to cart
               </button>
             </li>
           ))}
         </ul>
       </div>
+
+      {cart.length > 0 &&
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
@@ -100,9 +98,11 @@ export default function Exercise01 () {
             </li>
           ))}
         </ul>
-        <div className="movies__cart-total">
-          <p>Total: ${getTotal()}</p>
-        </div>
+      </div>
+      }
+
+      <div className="movies__cart-total">
+        <p>Total: ${getTotal()}</p>
       </div>
     </section>
   )
