@@ -126,7 +126,7 @@ export default function Exercise01 () {
                   Name: {x.name}
                 </li>
                 <li>
-                  Price: ${x.price}
+                  Price per unit: ${x.price} / Total unit price: ${x.price * x.quantity}
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
