@@ -59,9 +59,6 @@ export default function Exercise01 () {
             <li className="movies__list-card" key={o.id}>
               <ul>
                 <li>
-                  ID: {o.id}
-                </li>
-                <li>
                   Name: {o.name}
                 </li>
                 <li>
@@ -80,9 +77,6 @@ export default function Exercise01 () {
           {cart.map(x => (
             <li className="movies__cart-card" key={x.id}>
               <ul>
-                <li>
-                  ID: {x.id}
-                </li>
                 <li>
                   Name: {x.name}
                 </li>
