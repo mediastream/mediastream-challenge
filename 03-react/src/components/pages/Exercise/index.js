@@ -25,6 +25,7 @@ export default function Exercise01 () {
     }
   ]
 
+  /*
   const discountRules = [
     {
       m: [3, 2],
@@ -39,6 +40,7 @@ export default function Exercise01 () {
       discount: 0.1
     }
   ]
+*/
 
   const [cart, setCart] = useState([
     {
