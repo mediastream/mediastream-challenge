@@ -76,6 +76,20 @@ export default function Exercise01 () {
     }
   }
 
+  const handleDecrease = movie => {
+    if (movie.quantity === 1) {
+      setCart(prevCart => prevCart.filter(v => v.id !== movie.id))
+    } else {
+      movie.quantity -= 1
+      setCart(prevCart => [...prevCart])
+    }
+  }
+
+  const handleIncrease = movie => {
+    movie.quantity += 1
+    setCart(prevCart => [...prevCart])
+  }
+
   const getTotal = () => 0 // TODO: Implement this
 
   return (
@@ -114,13 +128,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => handleDecrease(x)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => handleIncrease(x)}>
                   +
                 </button>
               </div>
