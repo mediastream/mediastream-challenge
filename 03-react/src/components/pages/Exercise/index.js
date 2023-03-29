@@ -50,7 +50,6 @@ export default function Exercise01 () {
     }
 
     const movie = cart.find(v => v.id === movieId)
-    console.debug('fuck', cart)
     return movie
   }
 
