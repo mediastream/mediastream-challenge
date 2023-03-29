@@ -90,7 +90,9 @@ export default function Exercise01 () {
     setCart(prevCart => [...prevCart])
   }
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => {
+    return cart.reduce((total, v) => (total += v.price * v.quantity), 0)
+  }
 
   return (
     <section className="exercise01">
