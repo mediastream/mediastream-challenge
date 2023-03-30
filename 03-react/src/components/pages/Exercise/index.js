@@ -42,31 +42,12 @@ export default function Exercise01 () {
 
   const [cart, setCart] = useState([])
 
-  const getMovieFromCart = movieId => {
-    if (cart.length === 0) {
-      return {}
-    }
-
-    const movie = cart.find(v => v.id === movieId)
-    return movie
-  }
-
-  const incrementMovieQty = movieId => {
-    const movie = getMovieFromCart(movieId)
-    movie.quantity += 1
-  }
-
   const addToCart = movie => {
-    // if no movies yet, just add the first one
-    if (cart.length === 0) {
-      movie.quantity = 1
-      setCart([movie])
-      return
-    }
     // check if movie already exists on the cart
-    const movieIds = new Set(cart.map(v => v.id))
-    if (movieIds.has(movie.id)) {
-      incrementMovieQty(movie.id)
+    if (cart.find(item => item.id === movie.id)) {
+      const cartMovie = cart.find(v => v.id === movie.id)
+      cartMovie.quantity += 1
+
       setCart(prevCart => [...prevCart])
     } else { // set `quantity` member
       movie.quantity = 1
