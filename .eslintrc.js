@@ -19,6 +19,11 @@ module.exports = {
   plugins: [
     'react', 'react-hooks', 'jest'
   ],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   rules: {
   }
 }
