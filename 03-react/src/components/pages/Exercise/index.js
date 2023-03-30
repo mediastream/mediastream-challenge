@@ -25,7 +25,6 @@ export default function Exercise01 () {
     }
   ]
 
-  /*
   const discountRules = [
     {
       m: [3, 2],
@@ -40,7 +39,6 @@ export default function Exercise01 () {
       discount: 0.1
     }
   ]
-*/
 
   const [cart, setCart] = useState([])
 
@@ -92,6 +90,29 @@ export default function Exercise01 () {
 
   const getTotal = () => {
     return cart.reduce((total, v) => (total += v.price * v.quantity), 0)
+  }
+
+  const getDiscount = () => {
+    const movieIds = new Set(cart.map(v => v.id))
+    const discountsToApply = discountRules.map(rule =>
+      rule.m.every(id => movieIds.has(id)))
+
+    // Note: this adds up all discounts without control, so it can add up
+    // more than 100% discount (with a different set of discount rules),
+    // which is clearly bad. But I'm adhering to README.md assignment
+    // A possible solution would be to select the biggest discount and
+    // apply only that one
+    const discount = discountsToApply.map((value, index) => {
+      return value ? discountRules[index].discount : 0
+    })
+      .reduce((total, v) => (total += v))
+
+    return discount
+  }
+
+  const getTotalWithDiscount = () => {
+    const total = getTotal()
+    return total - total * getDiscount()
   }
 
   return (
@@ -148,6 +169,8 @@ export default function Exercise01 () {
 
       <div className="movies__cart-total">
         <p>Total: ${getTotal()}</p>
+        <p>Discount: {getDiscount()}</p>
+        <p>Total after discounts: ${getTotalWithDiscount()}</p>
       </div>
     </section>
   )
