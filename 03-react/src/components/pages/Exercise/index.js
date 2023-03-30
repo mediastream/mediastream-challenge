@@ -145,14 +145,14 @@ export default function Exercise01 () {
             </li>
           ))}
         </ul>
+
+        <div className="movies__cart-total">
+          <p>Total: ${getTotal()}</p>
+          <p>Discount: {getDiscount()}</p>
+          <p>Total after discounts: ${getTotalWithDiscount()}</p>
+        </div>
       </div>
       }
-
-      <div className="movies__cart-total">
-        <p>Total: ${getTotal()}</p>
-        <p>Discount: {getDiscount()}</p>
-        <p>Total after discounts: ${getTotalWithDiscount()}</p>
-      </div>
     </section>
   )
 }
