@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -40,27 +40,69 @@ export default function Exercise01 () {
     }
   ]
 
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Star Wars',
-      price: 20,
-      quantity: 2
-    }
-  ])
+  const [cart, setCart] = useState([])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const addToCart = movie => {
+    // if movie already exists on the cart just increase quantity
+    if (cart.find(item => item.id === movie.id)) {
+      setCart(prevCart => prevCart.map(m =>
+        m.id === movie.id
+          ? ({ ...m, quantity: m.quantity + 1 })
+          : m))
+    } else { // set `quantity` member
+      movie.quantity = 1
+      setCart(prevCart => [...prevCart, movie])
+    }
+  }
+
+  const handleDecrease = movie => {
+    if (movie.quantity === 1) {
+      setCart(prevCart => prevCart.filter(v => v.id !== movie.id))
+    } else {
+      movie.quantity -= 1
+      setCart(prevCart => [...prevCart])
+    }
+  }
+
+  const handleIncrease = movie => {
+    movie.quantity += 1
+    setCart(prevCart => [...prevCart])
+  }
+
+  const getTotal = () => {
+    return cart.reduce((total, v) => (total += v.price * v.quantity), 0)
+  }
+
+  const getDiscount = () => {
+    const movieIds = new Set(cart.map(v => v.id))
+    const discountsToApply = discountRules.map(rule =>
+      rule.m.every(id => movieIds.has(id)))
+
+    // Note: this adds up all discounts without control, so it can add up
+    // more than 100% discount (with a different set of discount rules),
+    // which is clearly bad. But I'm adhering to README.md assignment
+    // A possible solution would be to select the biggest discount and
+    // apply only that one
+    const discount = discountsToApply.map((value, index) => {
+      return value ? discountRules[index].discount : 0
+    })
+      .reduce((total, v) => (total += v))
+
+    return discount
+  }
+
+  const getTotalWithDiscount = () => {
+    const total = getTotal()
+    return total - total * getDiscount()
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li className="movies__list-card" key={o.id}>
               <ul>
-                <li>
-                  ID: {o.id}
-                </li>
                 <li>
                   Name: {o.name}
                 </li>
@@ -68,46 +110,49 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o)}>
                 Add to cart
               </button>
             </li>
           ))}
         </ul>
       </div>
+
+      {cart.length > 0 &&
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li className="movies__cart-card" key={x.id}>
               <ul>
-                <li>
-                  ID: {x.id}
-                </li>
                 <li>
                   Name: {x.name}
                 </li>
                 <li>
-                  Price: ${x.price}
+                  Price per unit: ${x.price} / Total unit price: ${x.price * x.quantity}
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => handleDecrease(x)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => handleIncrease(x)}>
                   +
                 </button>
               </div>
             </li>
           ))}
         </ul>
+
         <div className="movies__cart-total">
           <p>Total: ${getTotal()}</p>
+          <p>Discount: {getDiscount()}</p>
+          <p>Total after discounts: ${getTotalWithDiscount()}</p>
         </div>
       </div>
+      }
     </section>
   )
 }
