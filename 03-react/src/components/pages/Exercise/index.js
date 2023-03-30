@@ -43,12 +43,12 @@ export default function Exercise01 () {
   const [cart, setCart] = useState([])
 
   const addToCart = movie => {
-    // check if movie already exists on the cart
+    // if movie already exists on the cart just increase quantity
     if (cart.find(item => item.id === movie.id)) {
-      const cartMovie = cart.find(v => v.id === movie.id)
-      cartMovie.quantity += 1
-
-      setCart(prevCart => [...prevCart])
+      setCart(prevCart => prevCart.map(m =>
+        m.id === movie.id
+          ? ({ ...m, quantity: m.quantity + 1 })
+          : m))
     } else { // set `quantity` member
       movie.quantity = 1
       setCart(prevCart => [...prevCart, movie])
