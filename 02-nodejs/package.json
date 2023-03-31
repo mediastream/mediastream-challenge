@@ -1,0 +1,18 @@
+{
+  "name": "02-nodejs",
+  "version": "1.0.0",
+  "description": "We need to create a route that downloads the entire database to a .csv file.\r > <strong>WARNING:</strong> Database contains hundreds of entities and our production server is quite small. Make sure the solution to implement can perform with little resources.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "faker": "^3.1.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.0.3"
+  }
+}
