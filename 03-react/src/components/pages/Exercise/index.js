@@ -1,5 +1,5 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Exercise01 () {
   const movies = [
@@ -49,14 +49,56 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const [currentDiscount, setCurrentDiscount] = useState(0)
+
+  useEffect(() => {
+    calculateDiscount()
+  }, [cart.length])
+
+  const calculateDiscount = () => {
+    for (const rule of discountRules) {
+      const match = rule.m.every(m => cart.some(item => item.id === m))
+      if (match) {
+        setCurrentDiscount(rule.discount)
+        break
+      }
+    }
+  }
+
+  const getTotal = () => {
+    return cart.reduce((m, movie) => m + (movie.price * movie.quantity), 0) * Math.abs(currentDiscount - 1)
+  }
+
+  const getMovieById = (id) => {
+    return cart.find(m => id === m.id)
+  }
+
+  const addToCart = (movie) => {
+    const existingMovie = getMovieById(movie.id)
+    if (existingMovie) {
+      setCart(cart.map(c => {
+        return c.id === existingMovie.id ? { ...c, quantity: c.quantity + 1 } : c
+      }))
+    } else {
+      setCart([...cart, { ...movie, quantity: 1 }])
+    }
+  }
+
+  const removeMovie = (movieId) => {
+    const existingMovie = getMovieById(movieId)
+    if (existingMovie && existingMovie.quantity !== 1) {
+      setCart(cart.map(c => {
+        return c.id === movieId ? { ...c, quantity: c.quantity - 1 } : c
+      }))
+    } else setCart(cart.filter(c => c.id !== movieId))
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li key={o.id} className="movies__list-card">
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +110,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCart(o)}>
                 Add to cart
               </button>
             </li>
@@ -78,7 +120,7 @@ export default function Exercise01 () {
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li key={x.id} className="movies__cart-card">
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,13 +133,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => removeMovie(x.id)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => addToCart(x)}>
                   +
                 </button>
               </div>
