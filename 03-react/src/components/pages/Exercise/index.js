@@ -1,5 +1,6 @@
 import './assets/styles.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import _ from 'lodash'
 
 export default function Exercise01 () {
   const movies = [
@@ -49,26 +50,56 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => {
+    let discount = 0
+    const movies = cart.map((m) => m.id)
+
+    discountRules.forEach((rule) => {
+      console.log(rule.m.every((val) => movies.includes(val)))
+      if (rule.m.every((val) => movies.includes(val))) {
+        discount += rule.discount
+      }
+    })
+
+    const total = _.chain(cart)
+      .map((m) => m.price * m.quantity)
+      .sum()
+      .value()
+
+    return total - total * discount
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
+          {movies.map((o) => (
+            <li className="movies__list-card" key={o.id}>
               <ul>
-                <li>
-                  ID: {o.id}
-                </li>
-                <li>
-                  Name: {o.name}
-                </li>
-                <li>
-                  Price: ${o.price}
-                </li>
+                <li>ID: {o.id}</li>
+                <li>Name: {o.name}</li>
+                <li>Price: ${o.price}</li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button
+                onClick={() => {
+                  const cartCopy = [...cart]
+                  const index = _.findIndex(cartCopy, { id: o.id })
+                  if (index > -1) {
+                    cartCopy[index].quantity = cartCopy[index].quantity + 1
+                    setCart(cartCopy)
+                  } else {
+                    setCart([
+                      ...cart,
+                      {
+                        id: o.id,
+                        name: o.name,
+                        price: o.price,
+                        quantity: 1
+                      }
+                    ])
+                  }
+                }}
+              >
                 Add to cart
               </button>
             </li>
@@ -77,27 +108,41 @@ export default function Exercise01 () {
       </div>
       <div className="movies__cart">
         <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
+          {cart.map((x) => (
+            <li className="movies__cart-card" key={x.id}>
               <ul>
-                <li>
-                  ID: {x.id}
-                </li>
-                <li>
-                  Name: {x.name}
-                </li>
-                <li>
-                  Price: ${x.price}
-                </li>
+                <li>ID: {x.id}</li>
+                <li>Name: {x.name}</li>
+                <li>Price: ${x.price}</li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button
+                  onClick={() => {
+                    const cartCopy = [...cart]
+                    const index = _.findIndex(cartCopy, { id: x.id })
+                    if (index > -1) {
+                      if (cartCopy[index].quantity > 1) {
+                        cartCopy[index].quantity = cartCopy[index].quantity - 1
+                      } else {
+                        cartCopy.splice(index, 1)
+                      }
+                      setCart(cartCopy)
+                    }
+                  }}
+                >
                   -
                 </button>
-                <span>
-                  {x.quantity}
-                </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <span>{x.quantity}</span>
+                <button
+                  onClick={() => {
+                    const cartCopy = [...cart]
+                    const index = _.findIndex(cartCopy, { id: x.id })
+                    if (index > -1) {
+                      cartCopy[index].quantity = cartCopy[index].quantity + 1
+                      setCart(cartCopy)
+                    }
+                  }}
+                >
                   +
                 </button>
               </div>
