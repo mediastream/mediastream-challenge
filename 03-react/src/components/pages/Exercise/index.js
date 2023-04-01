@@ -49,14 +49,68 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const getTotal = () => {
+    const { total, ids } = cart.reduce((acc, item) => {
+      acc.total += item.price * item.quantity
+      acc.ids.push(item.id)
+      return acc
+    }, { total: 0, ids: [] })
+
+    let discount = 0
+
+    discountRules.forEach(rule => {
+      if (rule.m.every(v => ids.includes(v)) && discount < rule.discount) {
+        discount = rule.discount
+      }
+    })
+
+    return total - (total * discount)
+  }
+
+  const addToCardHandler = (item) => {
+    setCart((prev) => {
+      const existingItemIndex = prev.findIndex((m) => m.id === item.id)
+
+      if (existingItemIndex !== -1) {
+        const newCart = [...prev]
+
+        newCart[existingItemIndex] = {
+          ...newCart[existingItemIndex],
+          quantity: newCart[existingItemIndex].quantity + 1
+        }
+
+        return newCart
+      }
+
+      return [...prev, { ...item, quantity: 1 }]
+    })
+  }
+
+  const changeQuantityHandler = (item, quantity) => {
+    setCart((prev) => {
+      const existingItemIndex = prev.findIndex((m) => m.id === item.id)
+
+      const newCart = [...prev]
+
+      newCart[existingItemIndex] = {
+        ...newCart[existingItemIndex],
+        quantity: newCart[existingItemIndex].quantity + quantity
+      }
+
+      if (newCart[existingItemIndex].quantity === 0) {
+        newCart.splice(existingItemIndex, 1)
+      }
+
+      return newCart
+    })
+  }
 
   return (
     <section className="exercise01">
       <div className="movies__list">
         <ul>
           {movies.map(o => (
-            <li className="movies__list-card">
+            <li key={`movie-list-item-${o.id}`} className="movies__list-card">
               <ul>
                 <li>
                   ID: {o.id}
@@ -68,7 +122,7 @@ export default function Exercise01 () {
                   Price: ${o.price}
                 </li>
               </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
+              <button onClick={() => addToCardHandler(o)}>
                 Add to cart
               </button>
             </li>
@@ -78,7 +132,7 @@ export default function Exercise01 () {
       <div className="movies__cart">
         <ul>
           {cart.map(x => (
-            <li className="movies__cart-card">
+            <li key={`movies-cart-item-${x.id}`} className="movies__cart-card">
               <ul>
                 <li>
                   ID: {x.id}
@@ -91,13 +145,13 @@ export default function Exercise01 () {
                 </li>
               </ul>
               <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
+                <button onClick={() => changeQuantityHandler(x, -1)}>
                   -
                 </button>
                 <span>
                   {x.quantity}
                 </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
+                <button onClick={() => changeQuantityHandler(x, 1)}>
                   +
                 </button>
               </div>

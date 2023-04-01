@@ -8,7 +8,8 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'plugin:jest/recommended',
-    'standard'
+    'standard',
+    'plugin:react/jsx-runtime'
   ],
   parserOptions: {
     ecmaFeatures: {

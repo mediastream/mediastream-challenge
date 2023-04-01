@@ -1,11 +1,24 @@
 'use strict'
 
-const _ = require('lodash') // https://lodash.com/docs/4.17.4
 const assert = require('assert')
 
 const database = require('./database.json')
 
-const total = 0 // TODO
+const hats = database.reduce((acc, user) => {
+  user.hats.forEach((hat) => {
+    if (!acc[hat.id]) {
+      acc[hat.id] = 0
+    }
+    acc[hat.id]++
+  })
+
+  return acc
+}, {})
+
+const total = Object.entries(hats)
+  .sort(([, a], [, b]) => b - a)
+  .slice(0, 3)
+  .reduce((acc, [, count]) => (acc += count), 0)
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`)
