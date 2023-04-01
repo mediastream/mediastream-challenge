@@ -5,7 +5,15 @@ const assert = require('assert')
 
 const database = require('./database.json')
 
-const total = 0 // TODO
+const soldHats = _(database)
+  .flatMap('hats')
+  .groupBy('id')
+  .map((hats, id) => ({ id, sold: hats.length }))
+  .orderBy('sold', 'desc')
+  .take(3)
+  .value()
+
+const total = _.sumBy(soldHats, 'sold')
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`)
@@ -14,6 +22,6 @@ console.log('Success!')
 
 /**
  * Time and space complexity in O() notation is:
- *   - time complexity: TODO
- *   - space complexity: TODO
+ *   - time complexity: O(n log n)
+ *   - space complexity: O(n)
  */
