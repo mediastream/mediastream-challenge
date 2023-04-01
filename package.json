@@ -20,12 +20,17 @@
     "lint"
   ],
   "dependencies": {
-    "express": "^4.14.1",
+    "csv-express": "^1.2.2",
+    "csv-write-stream": "^2.0.0",
+    "csv-writer": "^1.6.0",
+    "express": "^4.18.2",
     "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.4",
-    "moment": "^2.17.1",
+    "json2csv": "^6.0.0-alpha.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "mongoose": "^4.8.4",
-    "morgan": "^1.8.1"
+    "mongoose-csv": "^1.1.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "babel-jest": "26.6.0",
