@@ -5,20 +5,18 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: [
-    'plugin:react/recommended',
-    'plugin:jest/recommended',
-    'standard'
-  ],
+  extends: ['plugin:react/recommended', 'plugin:jest/recommended', 'standard'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 12
   },
-  plugins: [
-    'react', 'react-hooks', 'jest'
-  ],
-  rules: {
-  }
+  plugins: ['react', 'react-hooks', 'jest'],
+  settings: {
+    react: {
+      version: '17'
+    }
+  },
+  rules: {}
 }
