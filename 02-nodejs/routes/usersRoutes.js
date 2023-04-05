@@ -5,11 +5,12 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter
 const fs = require('fs')
 const path = require('path')
 
+// crea una ruta para users
 router.get('/users', async (req, res) => {
   const pageSize = 100
   let records = []
   let cursor = null
-
+  // busca datos desde la DB de 100 en 100
   while (true) {
     const query = cursor ? { _id: { $gt: cursor } } : {}
     const pageRecords = await User.find(query)
@@ -22,6 +23,7 @@ router.get('/users', async (req, res) => {
     }
     cursor = pageRecords[pageRecords.length - 1]._id
   }
+  // crea archivo csv
   const csvWriter = createCsvWriter({
     path: path.join(__dirname, 'users.csv'),
     header: [
@@ -30,7 +32,7 @@ router.get('/users', async (req, res) => {
       { id: 'email', title: 'Email' }
     ]
   })
-
+  // inserta datos de usuarios en csv y lo agregar al response
   await csvWriter.writeRecords(records)
   const file = path.join(__dirname, 'users.csv')
   res.download(file, 'users.csv', () => {

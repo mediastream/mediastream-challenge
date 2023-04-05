@@ -2,7 +2,7 @@ import './assets/styles.css'
 import React, { useState } from 'react'
 
 export default function Exercise01 () {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false) // manego de mensajeria
   const movies = [
     {
       id: 1,
@@ -50,6 +50,7 @@ export default function Exercise01 () {
     }
   ])
 
+  // agrega o descuenta cantidades a las peliculas, si es 0 lo remueve del carrito
   const cantidadesHandler = (dato, operacion) => {
     const peliculaActualizada = {
       ...dato,
@@ -62,11 +63,13 @@ export default function Exercise01 () {
     }
   }
 
+  // remueve pelicula del carrito
   const removerCarrito = datos => {
     const carroActualizado = cart.filter(carro => carro.id !== datos.id)
     setCart(carroActualizado)
   }
 
+  // verifica si no esta en carrito y lo agrega
   const AgregarCarrito = (dato) => {
     if (cart.some(carro => carro.id === dato.id)) {
       setError('ya en carrito')
@@ -84,6 +87,7 @@ export default function Exercise01 () {
     }
   }
 
+  // calcula total con descuento
   const getTotal = () => {
     let precio = 0
     const id = []
@@ -95,6 +99,7 @@ export default function Exercise01 () {
     return precio - (precio * descuento)
   }
 
+  // calcula descuento
   const aplicaDescuento = (id) => {
     for (const rule of discountRules) {
       const { m } = rule
