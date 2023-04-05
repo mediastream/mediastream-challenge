@@ -15,7 +15,6 @@ const app = express()
  * response is a CSV file and attaches the file to the response before sending it back to the client.
  **/
 app.get('/users', async (req, res) => {
-  console.log('HERE')
   const users = await User.find({}).exec()
   let content = 'Name, Email\r\n'
   users.forEach(user => { content += `${user.name},${user.email}\r\n` })
