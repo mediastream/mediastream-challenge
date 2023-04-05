@@ -37,6 +37,14 @@ console.log('Success!')
 
 /**
  * Time and space complexity in O() notation is:
- *   - time complexity: TODO
- *   - space complexity: TODO
+ *
+ *   - time complexity: O(NMlog(M))
+ * This function has a temporal complexity of O(NMlog(M)), where N is the number of elements in the database and M
+ * is the number of unique hats. This is because the function iterates through each user in the database and then
+ * iterates through each hat of each user, and for each unique hat an object hats is updated. Then an array of hats
+ * values is sorted and reduced.
+ *
+ *   - space complexity: O(M)
+ * The spatial complexity of this function depends on the number of unique hats in the database, so it is O(M) in the
+ * worst case. This is because an object hats is used to store the count of unique hats.
  */
