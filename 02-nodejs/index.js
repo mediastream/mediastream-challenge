@@ -2,11 +2,10 @@
 
 const express = require('express')
 
-const User = require('./models/User')
-
 // Setup Express.js app
 const app = express()
-
-// TODO: everything else
+// incluimos endpoint en servidor express
+const userRouter = require('./routes/usersRoutes')
+app.use('/', userRouter)
 
 app.listen(3000)
