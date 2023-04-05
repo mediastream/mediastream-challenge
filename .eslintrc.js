@@ -3,22 +3,20 @@ module.exports = {
     browser: true,
     commonjs: true,
     es2021: true,
-    node: true
+    node: true,
   },
   extends: [
     'plugin:react/recommended',
     'plugin:jest/recommended',
-    'standard'
+    'standard',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
-    ecmaVersion: 12
+    ecmaVersion: 12,
   },
-  plugins: [
-    'react', 'react-hooks', 'jest'
-  ],
-  rules: {
-  }
-}
+  plugins: ['react', 'react-hooks', 'jest'],
+  rules: {},
+};
