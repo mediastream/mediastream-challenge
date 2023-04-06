@@ -5,7 +5,7 @@ function App () {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={Exercise} exact />
+        <Route path='/' component={Exercise} exact />
       </Switch>
     </BrowserRouter>
   )
