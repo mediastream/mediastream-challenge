@@ -8,6 +8,10 @@
   justify-content: center;
 }
 
+.titles {
+  padding-bottom: 2em;
+}
+
 .movies__list, .movies__cart {
   width: 24em;
 }
@@ -89,4 +93,8 @@
 .movies__cart-total {
   margin-top: 1em;
   font-size: 1.25em;
+}
+
+.movies__cart-discuont {
+  color: rgb(127, 255, 131);
 }
