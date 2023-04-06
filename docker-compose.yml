@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:4.4.20-rc0-focal
+    container_name: mongodb
+    ports:
+      - "27017:27017"
