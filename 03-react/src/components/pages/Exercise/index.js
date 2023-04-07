@@ -52,11 +52,7 @@ export default function Exercise01 () {
 
     setCart(updatedCart)
   }
-
-  useEffect(() => {
-    console.log('se actualiza cart')
-  }, [cart])
-
+  
   return (
     <section className="exercise01">
       <MovieList movies={movies} handleAddToCart={handleAddToCart} />
