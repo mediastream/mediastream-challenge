@@ -2,10 +2,9 @@
 
 const _ = require('lodash') // https://lodash.com/docs/4.17.4
 const assert = require('assert')
+const { topSelling } = require('./utils/top_selling')
 
-const database = require('./database.json')
-
-const total = 0 // TODO
+const total = topSelling()
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`)
