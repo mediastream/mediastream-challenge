@@ -1,11 +1,12 @@
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Exercise from './components/pages/Exercise'
+import { MovieShop } from './pages/movies-shop/MovieShop'
 
 function App () {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={Exercise} exact />
+        <Route path="/" component={MovieShop} exact />
       </Switch>
     </BrowserRouter>
   )
