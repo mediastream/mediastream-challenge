@@ -1,0 +1,8 @@
+services:
+  mediastream:
+    image: mongo:5.0.0
+    container_name: mediastream-challenge
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
