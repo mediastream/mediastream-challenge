@@ -1,13 +1,17 @@
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Exercise from './components/pages/Exercise'
+import Exercise from './pages/Excercise'
+import { CartContextWrapper } from './context/CartContext'
 
 function App () {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" component={Exercise} exact />
-      </Switch>
-    </BrowserRouter>
+    <CartContextWrapper>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={Exercise} exact />
+        </Switch>
+      </BrowserRouter>
+    </CartContextWrapper>
   )
 }
 
