@@ -1,6 +1,6 @@
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Exercise from './components/pages/Exercise'
-
 function App () {
   return (
     <BrowserRouter>
