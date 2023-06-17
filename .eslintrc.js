@@ -20,5 +20,10 @@ module.exports = {
     'react', 'react-hooks', 'jest'
   ],
   rules: {
+  },
+  settings: {
+    react: {
+      version: '17'
+    }
   }
 }
