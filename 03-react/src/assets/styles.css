@@ -1,0 +1,174 @@
+.exercise01 {
+  background-color: var(--black);
+  color: var(--white);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.section__title {
+  position: absolute;
+  top: 10%;
+  left: 43%;
+  font-size: 2rem;
+}
+
+.movies__list, .movies__cart {
+  width: 24em;
+  height: fit-content;
+  margin-top: 10%;
+  padding: 2rem;
+}
+
+.movies__list {
+  background-color: #222222;
+  border-radius: 20px;
+  margin-right: 2em;
+}
+
+.movies__list-card {
+  background-color: #333333;
+  margin-bottom: 1rem;
+  padding: 12px;
+  border-radius: .5em;
+  position: relative;
+}
+.cart__title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  margin-left: 12px;
+}
+
+.movies__list-card:last-child {
+  margin-bottom: 0;
+}
+
+.movies__list-card ul li {
+  font-size: 1em;
+  line-height: 120%;
+}
+
+.movies__list-card button {
+  background-color: var(--ms-green);
+  border: none;
+  cursor: pointer;
+  font-size: .75em;
+  border-radius: 20px;
+  padding: 5px 15px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.movies__cart {
+  border-radius: .2em;
+}
+.movies__cart .cart__empty {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.movies__cart-card {
+  background-color: #333333;
+  margin-bottom: 1rem;
+  padding: .75em;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.movies__cart-card .movies__cart-card-remove {
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  font-size: 12px;
+  filter: grayscale(0.7);
+  transition: filter 1s cubic-bezier();
+}
+
+.movies__cart-card .movies__cart-card-remove:hover {
+  filter: none;
+}
+
+.movies__cart-card:last-child {
+  margin-bottom: 0;
+}
+
+.movies__cart-card ul li {
+  font-size: 1em;
+  line-height: 120%;
+  display: flex;
+  flex-direction: row;
+}
+
+.movies__cart-card ul li span:nth-child(1) {
+  flex: 0.15
+}
+
+.movies__cart-card ul li span:nth-child(2) {
+  flex: 0.85
+}
+
+.movies__cart-card-quantity {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.movies__cart-card span {
+  margin: 0 .5em;
+}
+
+.movies__cart-card button {
+  background-color: var(--ms-green);
+  border: none;
+  cursor: pointer;
+  font-size: .75em;
+  border-radius: .25em;
+  padding: .25em .5em;
+}
+
+.movies__cart-total {
+  width: 50%;
+  margin-top: 1em;
+  margin-left: auto;
+  font-size: 1.25em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.movies__cart-total p {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+}
+
+.movies__cart-total p:last-of-type {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ffffff;
+}
+
+.movies__cart-total span:nth-child(1) {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+}
+
+.movies__cart-total span:nth-child(2) {
+  flex: 0.3;
+}
+
+.movies__cart-total small {
+  font-size: 12px;
+  margin-top: 5px;
+}
