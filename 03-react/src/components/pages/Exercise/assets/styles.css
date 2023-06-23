@@ -90,3 +90,13 @@
   margin-top: 1em;
   font-size: 1.25em;
 }
+.shopping__cart{
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.movies__cart-total p {
+  padding: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+}
