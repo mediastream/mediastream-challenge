@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import './assets/styles.css'
 import { useState } from 'react'
 
@@ -49,65 +50,107 @@ export default function Exercise01 () {
     }
   ])
 
-  const getTotal = () => 0 // TODO: Implement this
+  const addToCart = (movie) => {
+    const existingMovie = cart.find((item) => item.id === movie.id)
+    if (existingMovie) {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.id === movie.id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      )
+    } else {
+      setCart((prevCart) => [
+        ...prevCart,
+        {
+          id: movie.id,
+          name: movie.name,
+          price: movie.price,
+          quantity: 1
+        }
+      ])
+    }
+  }
+
+  const decrementQuantity = (item) => {
+    const updatedCart = cart.map((x) => {
+      if (x.id === item.id) {
+        const updatedQuantity = x.quantity - 1
+        if (updatedQuantity === 0) {
+          return null
+        }
+        return {
+          ...x,
+          quantity: updatedQuantity
+        }
+      }
+      return x
+    }).filter(Boolean)
+    setCart(updatedCart)
+  }
+
+  const incrementQuantity = (movie) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === movie.id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    )
+  }
+
+  const getTotal = () => {
+    const total = cart.reduce(
+      (accumulator, item) => accumulator + item.price * item.quantity,
+      0
+    )
+
+    const applicableDiscounts = discountRules.filter((rule) =>
+      rule.m.every((movieId) => cart.some((item) => item.id === movieId))
+    )
+
+    const discountAmount = applicableDiscounts.reduce(
+      (accumulator, rule) => accumulator + total * rule.discount,
+      0
+    )
+
+    return total - discountAmount
+  }
 
   return (
     <section className="exercise01">
-      <div className="movies__list">
-        <ul>
-          {movies.map(o => (
-            <li className="movies__list-card">
-              <ul>
-                <li>
-                  ID: {o.id}
-                </li>
-                <li>
-                  Name: {o.name}
-                </li>
-                <li>
-                  Price: ${o.price}
-                </li>
-              </ul>
-              <button onClick={() => console.log('Add to cart', o)}>
-                Add to cart
-              </button>
-            </li>
-          ))}
-        </ul>
+    <div className="movies__list">
+      <ul>
+        {movies.map((movie) => (
+          <li className="movies__list-card" key={movie.id}>
+            <ul>
+              <li>ID: {movie.id}</li>
+              <li>Name: {movie.name}</li>
+              <li>Price: ${movie.price}</li>
+            </ul>
+            <button onClick={() => addToCart(movie)}>Add to cart</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div className="movies__cart">
+      <ul>
+        {cart.map((item) => (
+          <li className="movies__cart-card" key={item.id}>
+            <ul>
+              <li>ID: {item.id}</li>
+              <li>Name: {item.name}</li>
+              <li>Price: ${item.price}</li>
+            </ul>
+            <div className="movies__cart-card-quantity">
+              <button onClick={() => decrementQuantity(item)}>-</button>
+              <span>{item.quantity}</span>
+              <button onClick={() => incrementQuantity(item)}>+</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="movies__cart-total">
+        <p>Total: ${getTotal()}</p>
       </div>
-      <div className="movies__cart">
-        <ul>
-          {cart.map(x => (
-            <li className="movies__cart-card">
-              <ul>
-                <li>
-                  ID: {x.id}
-                </li>
-                <li>
-                  Name: {x.name}
-                </li>
-                <li>
-                  Price: ${x.price}
-                </li>
-              </ul>
-              <div className="movies__cart-card-quantity">
-                <button onClick={() => console.log('Decrement quantity', x)}>
-                  -
-                </button>
-                <span>
-                  {x.quantity}
-                </span>
-                <button onClick={() => console.log('Increment quantity', x)}>
-                  +
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="movies__cart-total">
-          <p>Total: ${getTotal()}</p>
-        </div>
-      </div>
-    </section>
+    </div>
+  </section>
   )
 }
