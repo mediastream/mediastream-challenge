@@ -10,3 +10,7 @@ const User = mongoose.model('User', {
 })
 
 module.exports = User
+
+/*
+  I updated the mongoose version to use newer and more accurate functions.
+*/
