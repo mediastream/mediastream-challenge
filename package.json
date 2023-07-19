@@ -12,7 +12,7 @@
   "scripts": {
     "1": "nodemon 01-basic-cs/",
     "2": "nodemon 02-nodejs/",
-    "3": "cd 03-react; npm start",
+    "3": "cd 03-react && npm start",
     "lint": "eslint .",
     "postinstall": "cd 03-react && npm i"
   },
